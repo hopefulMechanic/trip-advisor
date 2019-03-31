@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>10</x>
+      <y>30</y>
+      <w>380</w>
+      <h>460</h>
+    </coordinates>
+    <panel_attributes>object: Object
+--
+name: String
+owner: Owner
+address: Address
+scores: List&lt;Score&gt;
+comments: List&lt;Comment&gt;
+ecommerce: Ecommerce
+type: enum
+description: String
+creationDate: Date
+telephone: String
+
+--
+- Responsabilities:
+Can notify about updates
+
+--
+- Collaboration
+Has address where it is placed
+Has comments
+Has points
+Has owner that created this object
+Has ecommerce addresses
+
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>460</x>
+      <y>40</y>
+      <w>260</w>
+      <h>210</h>
+    </coordinates>
+    <panel_attributes>object: Address
+--
+street: String
+number: String
+postalCode: String
+city: String
+country: String
+--
+- Responsabilities:
+Can be updated
+--
+- Colaboration:
+Is assigned to object</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>480</x>
+      <y>280</y>
+      <w>210</w>
+      <h>210</h>
+    </coordinates>
+    <panel_attributes>object: Score
+--
+date: Date
+value: Int
+owner: User
+
+--
+- Responsabilities:
+
+--
+- COlaboration: 
+Is assigned to object
+Is assigned by user</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>790</x>
+      <y>50</y>
+      <w>210</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>object: Comment
+--
+text: String
+date: Date
+owner: User
+pictures: List&lt;Picture&gt;
+--
+- Responsabilities: 
+Can be deleted
+Can be updated
+Picture can be added
+
+--
+- Colaboration:
+Is connected with object
+Is created by user</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>760</x>
+      <y>560</y>
+      <w>210</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>object: Owner
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>740</x>
+      <y>290</y>
+      <w>210</w>
+      <h>220</h>
+    </coordinates>
+    <panel_attributes>object: Ecommerce
+--
+facebookUrl: String
+instagramUrl: String
+email: String
+--
+- Responsabilities:
+Can be edited
+Can be added
+
+--
+- Colaboration
+Is added to object</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
