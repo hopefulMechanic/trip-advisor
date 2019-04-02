@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/studies.project.trip-advisor.main.iml" filepath="$PROJECT_DIR$/.idea/modules/studies.project.trip-advisor.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/studies.project.trip-advisor.test.iml" filepath="$PROJECT_DIR$/.idea/modules/studies.project.trip-advisor.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/trip-advisor.iml" filepath="$PROJECT_DIR$/.idea/trip-advisor.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/backend/trip-advisor.backend.iml" filepath="$PROJECT_DIR$/.idea/modules/backend/trip-advisor.backend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/backend/trip-advisor.backend.main.iml" filepath="$PROJECT_DIR$/.idea/modules/backend/trip-advisor.backend.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/backend/trip-advisor.backend.test.iml" filepath="$PROJECT_DIR$/.idea/modules/backend/trip-advisor.backend.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/frontend/trip-advisor.frontend.iml" filepath="$PROJECT_DIR$/.idea/modules/frontend/trip-advisor.frontend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/frontend/trip-advisor.frontend.main.iml" filepath="$PROJECT_DIR$/.idea/modules/frontend/trip-advisor.frontend.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/frontend/trip-advisor.frontend.test.iml" filepath="$PROJECT_DIR$/.idea/modules/frontend/trip-advisor.frontend.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/trip-advisor.main.iml" filepath="$PROJECT_DIR$/.idea/modules/trip-advisor.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/trip-advisor.test.iml" filepath="$PROJECT_DIR$/.idea/modules/trip-advisor.test.iml" />
+    </modules>
+  </component>
+</project>

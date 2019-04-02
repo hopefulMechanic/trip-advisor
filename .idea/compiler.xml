@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel>
+      <module name="studies.project.trip-advisor.main" target="11" />
+      <module name="studies.project.trip-advisor.test" target="11" />
+      <module name="trip-advisor.backend.main" target="11" />
+      <module name="trip-advisor.backend.test" target="11" />
+      <module name="trip-advisor.frontend.main" target="11" />
+      <module name="trip-advisor.frontend.test" target="11" />
+      <module name="trip-advisor.main" target="11" />
+      <module name="trip-advisor.test" target="11" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
