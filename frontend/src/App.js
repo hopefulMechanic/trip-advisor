@@ -5,16 +5,18 @@ import {
   Switch,
   Redirect
 } from "react-router-dom";
-import "./App.css";
 import LoginPage from "./components/LoginPage/LoginPage";
 import Dashboard from "./components/Dashboard/Dashboard";
 import RegisterForm from "./components/RegisterForm/RegisterForm";
 import { LoginService } from "./service/LoginService";
-import Loader from "./components/Loader/Loader";
+import Loader from "./common/Loader/Loader";
+
+import "./App.css";
 
 class App extends Component {
   state = {
-    isAuthenticated: false
+    isAuthenticated: false,
+    loading: true
   };
 
   componentDidMount() {
@@ -22,8 +24,9 @@ class App extends Component {
   }
 
   isUserLoggedin() {
-    LoginService.isUserAutheticated().then(res =>
-      setState({ isAuthenticated: res, loading: false })
+    LoginService.isUserAutheticated().then(
+      res => {}
+      // this.setState({ isAuthenticated: res, loading: false })
     );
   }
 
