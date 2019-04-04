@@ -5,12 +5,13 @@ import {
   Switch,
   Redirect
 } from "react-router-dom";
+
+import { connect } from "react-redux";
 import LoginPage from "./components/LoginPage/LoginPage";
 import Dashboard from "./components/Dashboard/Dashboard";
 import RegisterForm from "./components/RegisterForm/RegisterForm";
 import { LoginService } from "./service/LoginService";
 import Loader from "./common/Loader/Loader";
-
 import "./App.css";
 
 class App extends Component {
@@ -24,9 +25,8 @@ class App extends Component {
   }
 
   isUserLoggedin() {
-    LoginService.isUserAutheticated().then(
-      res => {}
-      // this.setState({ isAuthenticated: res, loading: false })
+    LoginService.isUserAutheticated().then(res =>
+      this.setState({ isAuthenticated: res, loading: false })
     );
   }
 
@@ -37,6 +37,16 @@ class App extends Component {
     ) : (
       <Redirect to="/login" />
     );
+    let routes;
+    if (isAuthenticated) {
+      routes = [{ component: Dashboard, path: "/dashboard" }];
+    } else {
+      routes = [
+        { component: LoginPage, path: "/login" },
+        { component: RegisterForm, path: "/register" }
+      ];
+    }
+
     return (
       <div className="App">
         <div className="container">
@@ -44,9 +54,13 @@ class App extends Component {
             <main>
               {(!loading && (
                 <Switch>
-                  <Route path="/login" component={LoginPage} />
-                  <Route exect path="/dashboard" component={Dashboard} />
-                  <Route exect path="/register" component={RegisterForm} />
+                  {routes.map(route => (
+                    <Route
+                      exect
+                      path={route.path}
+                      component={route.component}
+                    />
+                  ))}
                   {redirect}
                 </Switch>
               )) || <Loader />}
@@ -57,5 +71,9 @@ class App extends Component {
     );
   }
 }
-
-export default App;
+const mapStateToProps = state => {
+  return {
+    isAutheticated: state.isAutheticated
+  };
+};
+export default connect(mapStateToProps)(App);
