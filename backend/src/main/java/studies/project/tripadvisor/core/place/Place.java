@@ -1,25 +1,23 @@
 package studies.project.tripadvisor.core.place;
 
+
+import lombok.Getter;
+import lombok.Setter;
+import studies.project.tripadvisor.core.Address;
+import studies.project.tripadvisor.core.Comment;
+import studies.project.tripadvisor.core.Score;
+
+import java.util.LinkedList;
+
+@Getter
+@Setter
 public class Place {
     private String name;
     private String type;
-    // #TODO add address
-    //private Address address
-    // # TODO add comments
-    //private CommentsList commentsList;
-    // #TODO add score
-    //private ScoresList scoresList;
+    private Address address;
+    private LinkedList<Comment> commentList;
+    private LinkedList<Score> scoresList;
     // #TODO add categories
     // private CategoriesList categoriesList;
     private float score;
-
-//    public CommentsList addComment(String comment) {
-//        return null;
-//    }
-
-//    public score addScore(float score){
-//        return null;
-//    }
-
-
 }
