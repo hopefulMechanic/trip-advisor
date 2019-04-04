@@ -26,11 +26,8 @@ public class PlaceFactoryTest {
 
     @Test
     public void creatingNonExistingPlace(){
-        try {
-            Place place = PlaceFactory.getPlace("nonexisitng");
-        } catch (AssertionError e){
-            assert false;
-        }
+        Place place = PlaceFactory.getPlace("some place");
+        assert place == null;
     }
 
 }
