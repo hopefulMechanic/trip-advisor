@@ -15,23 +15,18 @@ import Loader from "./common/Loader/Loader";
 import "./App.css";
 
 class App extends Component {
-  state = {
-    isAuthenticated: false,
-    loading: true
-  };
-
   componentDidMount() {
     this.isUserLoggedin();
   }
 
   isUserLoggedin() {
-    LoginService.isUserAutheticated().then(res =>
-      this.setState({ isAuthenticated: res, loading: false })
-    );
+    // LoginService.isUserAutheticated().then(res =>
+    //   this.setState({ isAuthenticated: res, loading: false })
+    // );
   }
 
   render() {
-    const { isAuthenticated, loading } = this.state;
+    const { isAuthenticated, loading } = this.props;
     const redirect = isAuthenticated ? (
       <Redirect to="/dashboard" />
     ) : (
@@ -73,7 +68,8 @@ class App extends Component {
 }
 const mapStateToProps = state => {
   return {
-    isAutheticated: state.isAutheticated
+    isAuthenticated: state.auth.isAuthenticated,
+    loading: state.auth.loading
   };
 };
 export default connect(mapStateToProps)(App);
