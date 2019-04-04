@@ -1,4 +1,4 @@
-package studies.project.tripadvisor.database.config;
+package studies.project.tripadvisor.config.dao;
 
 import io.vavr.collection.List;
 import io.vavr.control.Try;
@@ -15,11 +15,10 @@ import java.net.URL;
 @Configuration
 public class H2DaoConfiguration {
 
-    private final List<String> scripts = List.of("/schema/trip-schema.sql");
+    private final List<String> scripts = List.of("/schema/trip-schema.sql", "/schema/trip-schema-id-sequence.sql");
 
     @Bean
-    public DataSource dataSource(@Value("${spring.datasource.dbcp2.initial-size:5}") Integer initialSize,
-                                 @Value("${spring.datasource.dbcp2.max-total:20}") Integer maxTotal) {
+    public DataSource dataSource(@Value("${spring.datasource.dbcp2.initial-size:5}") Integer initialSize, @Value("${spring.datasource.dbcp2.max-total:20}") Integer maxTotal) {
         BasicDataSource basicDataSource = new BasicDataSource();
         basicDataSource.setInitialSize(initialSize);
         basicDataSource.setMaxTotal(maxTotal);
