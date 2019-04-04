@@ -1,5 +1,6 @@
 package studies.project.tripadvisor.core.place;
 
+
 import lombok.Getter;
 import lombok.Setter;
 import studies.project.tripadvisor.core.Address;

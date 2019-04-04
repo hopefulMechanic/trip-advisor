@@ -1,5 +1,6 @@
 package studies.project.tripadvisor.core;
 
+
 import studies.project.tripadvisor.core.place.Commerce;
 import studies.project.tripadvisor.core.place.Place;
 import studies.project.tripadvisor.core.place.Public;
@@ -15,5 +16,4 @@ public class PlaceFactory {
             return null;
         }
     }
-
 }
