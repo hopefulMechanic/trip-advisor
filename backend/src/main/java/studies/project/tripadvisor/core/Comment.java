@@ -5,8 +5,8 @@ import lombok.Setter;
 
 import java.util.Date;
 
-@Getter
 @Setter
+@Getter
 public class Comment {
 
     private String text;
