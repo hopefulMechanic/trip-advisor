@@ -10,19 +10,15 @@ import { connect } from "react-redux";
 import LoginPage from "./components/LoginPage/LoginPage";
 import Dashboard from "./components/Dashboard/Dashboard";
 import RegisterForm from "./components/RegisterForm/RegisterForm";
-import { LoginService } from "./service/LoginService";
 import Loader from "./common/Loader/Loader";
+import Header from "./components/Header/Header";
+import { authAction } from "./store/actions";
 import "./App.css";
 
 class App extends Component {
   componentDidMount() {
-    this.isUserLoggedin();
-  }
-
-  isUserLoggedin() {
-    // LoginService.isUserAutheticated().then(res =>
-    //   this.setState({ isAuthenticated: res, loading: false })
-    // );
+    const { isLogged } = this.props;
+    isLogged();
   }
 
   render() {
@@ -44,13 +40,15 @@ class App extends Component {
 
     return (
       <div className="App">
-        <div className="container">
-          <Router>
+        <Router>
+          {isAuthenticated && <Header />}
+          <div className="container">
             <main>
               {(!loading && (
                 <Switch>
                   {routes.map(route => (
                     <Route
+                      key={route.path}
                       exect
                       path={route.path}
                       component={route.component}
@@ -60,8 +58,8 @@ class App extends Component {
                 </Switch>
               )) || <Loader />}
             </main>
-          </Router>
-        </div>
+          </div>
+        </Router>
       </div>
     );
   }
@@ -72,4 +70,10 @@ const mapStateToProps = state => {
     loading: state.auth.loading
   };
 };
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = {
+  isLogged: authAction.isLogged
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);

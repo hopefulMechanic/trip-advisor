@@ -1,21 +1,28 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import { authAction } from "../../store/actions";
 import Card from "../../common/Card/Card";
-
 class LoginPage extends Component {
   state = { username: "", password: "" };
 
   submitHandler() {
-    console.log(this.state);
+    const { login } = this.props;
+    login(this.state);
   }
 
   handleChange(value, id) {
-    this.setState({ [id]: value });
+    this.setState({ [id]: value, wrongCredetials: false });
   }
 
   render() {
     const { username, password } = this.state;
     return (
-      <Card header={"Login"} class="test">
+      <Card
+        header={"Login"}
+        class="test"
+        footer={<Link to="/register">Register account</Link>}
+      >
         <form
           style={{ width: "400px" }}
           onSubmit={event => {
@@ -50,6 +57,7 @@ class LoginPage extends Component {
           <button
             type="button"
             className="btn btn-primary"
+            disabled={username === "" || password === ""}
             onClick={() => this.submitHandler()}
           >
             Submit
@@ -59,5 +67,10 @@ class LoginPage extends Component {
     );
   }
 }
-
-export default LoginPage;
+const mapDispatchToProps = {
+  login: authAction.login
+};
+export default connect(
+  null,
+  mapDispatchToProps
+)(LoginPage);
