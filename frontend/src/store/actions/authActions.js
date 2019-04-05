@@ -14,7 +14,6 @@ const REGISTER = "REGISTER";
 const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 const REGISTER_FAIL = "REGISTER_FAIL";
 
-//
 const USER_DATA_KEY = "USER_DATA";
 
 // login actions
@@ -23,11 +22,9 @@ const login = payload => {
     LoginService.login(payload)
       .then(res => {
         localStorage.setItem(USER_DATA_KEY, JSON.stringify(res));
-        dispatch(loginSuccess({ isAutheticated: true, data: res }));
+        dispatch(loginSuccess({ data: res }));
       })
-      .catch(err =>
-        loginFail({ isAutheticated: false, wrongCredetials: true })
-      );
+      .catch(err => dispatch(loginFail()));
   };
 };
 
@@ -37,8 +34,7 @@ const loginSuccess = data => ({
 });
 
 const loginFail = data => ({
-  type: LOGIN_FAIL,
-  payload: { ...data }
+  type: LOGIN_FAIL
 });
 
 const isLogged = () => {
@@ -65,7 +61,7 @@ const logout = () => {
 const register = payload => {
   return dispatch => {
     LoginService.register(payload).then(res =>
-      dispatch(registerSuccess({ isAutheticated: true, data: res }))
+      dispatch(registerSuccess({ data: res }))
     );
   };
 };

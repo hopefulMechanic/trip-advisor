@@ -12,15 +12,15 @@ class LoginPage extends Component {
   }
 
   handleChange(value, id) {
-    this.setState({ [id]: value, wrongCredetials: false });
+    this.setState({ [id]: value });
   }
 
   render() {
     const { username, password } = this.state;
+    const { wrongCredetials } = this.props;
     return (
       <Card
         header={"Login"}
-        class="test"
         footer={<Link to="/register">Register account</Link>}
       >
         <form
@@ -30,6 +30,11 @@ class LoginPage extends Component {
             event.preventDefault();
           }}
         >
+          <div className="form-group">
+            {wrongCredetials && (
+              <p className="text-danger"> Wrong Credetials</p>
+            )}
+          </div>
           <div className="form-group">
             <label htmlFor="username">Username</label>
             <input
@@ -67,10 +72,16 @@ class LoginPage extends Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  wrongCredetials: state.auth.wrongCredetials
+});
+
 const mapDispatchToProps = {
   login: authAction.login
 };
+
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(LoginPage);

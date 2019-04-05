@@ -4,7 +4,7 @@ export const LoginService = {
   },
   login: payload => {
     return new Promise((resolve, reject) =>
-      resolve({ name: "Dawid", type: "TEST" })
+      resolve({ name: "TEST", type: "TEST" })
     );
   },
   register: payload => {

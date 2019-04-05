@@ -31,9 +31,9 @@ class Header extends Component {
               </Link>
             </li>
           </ul>
-          <div class="dropdown">
+          <div className="dropdown">
             <button
-              class="btn dropdown-toggle"
+              className="btn dropdown-toggle"
               style={{ background: "none", border: "none", color: "white" }}
               type="button"
               id="userProfile"
@@ -44,11 +44,11 @@ class Header extends Component {
               {user.name}
             </button>
             <div
-              class="dropdown-menu dropdown-menu-right"
+              className="dropdown-menu dropdown-menu-right"
               aria-labelledby="userProfile"
             >
               <button
-                class="dropdown-item"
+                className="dropdown-item"
                 type="button"
                 onClick={() => logout()}
               >

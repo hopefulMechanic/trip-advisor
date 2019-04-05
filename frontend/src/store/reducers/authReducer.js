@@ -3,7 +3,8 @@ import { authActionTypes } from "../actions";
 const initState = {
   isAuthenticated: false,
   user: {},
-  loading: false
+  loading: false,
+  wrongCredetials: false
 };
 
 const authReducer = (state = initState, action) => {
@@ -17,6 +18,7 @@ const authReducer = (state = initState, action) => {
       return {
         ...state,
         loading: false,
+        wrongCredetials: false,
         isAuthenticated: true,
         user: action.payload.data
       };
@@ -30,8 +32,16 @@ const authReducer = (state = initState, action) => {
         user: action.payload.data
       };
     }
-    case authActionTypes.LOGOUT:
     case authActionTypes.LOGIN_FAIL: {
+      return {
+        ...state,
+        loading: false,
+        isAutheticated: false,
+        wrongCredetials: true,
+        user: {}
+      };
+    }
+    case authActionTypes.LOGOUT: {
       return initState;
     }
     default:
