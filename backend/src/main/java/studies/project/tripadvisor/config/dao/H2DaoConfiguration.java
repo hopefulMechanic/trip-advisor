@@ -15,7 +15,7 @@ import java.net.URL;
 @Configuration
 public class H2DaoConfiguration {
 
-    private final List<String> scripts = List.of("/schema/trip-schema.sql", "/schema/trip-schema-id-sequence.sql");
+    private final List<String> scripts = List.of("/trip-schema.sql", "/trip-schema-id-sequence.sql");
 
     @Bean
     public DataSource dataSource(@Value("${spring.datasource.dbcp2.initial-size:5}") Integer initialSize, @Value("${spring.datasource.dbcp2.max-total:20}") Integer maxTotal) {
@@ -24,7 +24,7 @@ public class H2DaoConfiguration {
         basicDataSource.setMaxTotal(maxTotal);
         basicDataSource.setPoolPreparedStatements(true);
         basicDataSource.setDriverClassName("org.h2.Driver");
-        basicDataSource.setUrl("jdbc:h2:mem:test;MODE=Oracle;DB_CLOSE_DELAY=-1");
+        basicDataSource.setUrl("jdbc:h2:mem:;;DB_CLOSE_DELAY=-1");
         executeScripts(basicDataSource);
         return basicDataSource;
     }

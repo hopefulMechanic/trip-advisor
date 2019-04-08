@@ -38,7 +38,7 @@ public class JdbcTripAdvisorUserRepository implements TripAdvisorUserRepository 
         KeyHolder keyHolder = new GeneratedKeyHolder();
         namedParameterJdbcTemplate.update(
                 "INSERT INTO TRIP_ADVISOR_USER (ID, NICKNAME, PASSWORD, FIRST_NAME, LAST_NAME, EMAIL, NOTIFY_MY )" +
-                        "VALUES(SEQ_TRIP_ADVISOR_USER_ID.nextval, :id, :nickname, :password, :firstName, :lastName, :email, :notifyMe)",
+                        "VALUES(SEQ_TRIP_ADVISOR_USER_ID.nextval, :nickname, :password, :firstName, :lastName, :email, :notifyMe)",
                 parameters,
                 keyHolder,
                 new String[]{"ID"});
@@ -60,6 +60,4 @@ public class JdbcTripAdvisorUserRepository implements TripAdvisorUserRepository 
                 new Object[]{id},
                 userMapper);
     }
-
-
 }
