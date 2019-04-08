@@ -1,4 +1,4 @@
-package studies.project.tripadvisor.models;
+package studies.project.tripadvisor.api.models;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,11 +1,11 @@
-package studies.project.tripadvisor.models;
+package studies.project.tripadvisor.api.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import studies.project.tripadvisor.core.Address;
-import studies.project.tripadvisor.core.Comment;
-import studies.project.tripadvisor.core.Score;
+import studies.project.tripadvisor.api.core.Address;
+import studies.project.tripadvisor.api.core.Comment;
+import studies.project.tripadvisor.api.core.Score;
 
 import javax.validation.constraints.NotNull;
 import java.util.LinkedList;
@@ -14,6 +14,8 @@ import java.util.LinkedList;
 @Data
 @AllArgsConstructor
 public class PlaceDTO {
+    private Long id;
+
     @NotNull
     private String name;
 
