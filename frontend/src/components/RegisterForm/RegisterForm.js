@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { authAction } from "../../store/actions";
-import Card from "../../common/Card/Card";
 
 class RegisterForm extends Component {
   state = {

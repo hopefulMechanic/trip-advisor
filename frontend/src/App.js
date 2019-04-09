@@ -5,35 +5,24 @@ import {
   Switch,
   Redirect
 } from "react-router-dom";
-import Dashboard from "./components/Dashboard/Dashboard";
+import Places from "./components/Places/Places";
 import Header from "./components/Header/Header";
 import "./App.scss";
+import PlaceDetail from "./components/Places/PlaceDetail/PlaceDetail";
 
 class App extends Component {
   render() {
-    const routes = [
-      { component: Dashboard, path: "/dashboard" }
-    ];
-
     return (
       <div className="App">
         <Router>
           <Header />
-          <div className="container">
-            <main>
-              <Switch>
-                {routes.map(route => (
-                  <Route
-                    key={route.path}
-                    exect
-                    path={route.path}
-                    component={route.component}
-                  />
-                ))}
-                <Redirect to="/dashboard" />
-              </Switch>
-            </main>
-          </div>
+          <main className="container">
+            <Switch>
+              <Route path={"/places"} exact component={Places} />
+              <Route path={"/places/:id"} exact component={PlaceDetail} />
+              <Redirect to="/places" />
+            </Switch>
+          </main>
         </Router>
       </div>
     );
