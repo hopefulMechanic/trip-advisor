@@ -15,13 +15,7 @@ class Places extends Component {
   }
 
   render() {
-    const { history } = this.props;
-    const data = [
-      { id: 1, name: "test1" },
-      { id: 2, name: "test2" },
-      { id: 3, name: "test3" },
-      { id: 4, name: "test4" }
-    ];
+    const { history, data = [] } = this.props;
 
     return (
       <div className="places">
