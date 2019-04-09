@@ -36,7 +36,7 @@ public class InnerIntegrationTest {
 
         // then
         assertEquals(userToBeSaved.getId(), retrivedUser.getId());
-        assertEquals(userToBeSaved.nickname, retrivedUser.nickname);
+        assertEquals(userToBeSaved.getNickname(), retrivedUser.getNickname());
         assertEquals(userToBeSaved.getPassword(), retrivedUser.getPassword());
         assertEquals(userToBeSaved.getFirstName(), retrivedUser.getFirstName());
         assertEquals(userToBeSaved.getLastName(), retrivedUser.getLastName());

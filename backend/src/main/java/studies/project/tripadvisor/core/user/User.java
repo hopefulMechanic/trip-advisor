@@ -8,7 +8,7 @@ import lombok.Setter;
 public class User {
 
     private int id;
-    public String nickname;
+    private String nickname;
     private String password;
     private String firstName;
     private String lastName;
@@ -16,7 +16,6 @@ public class User {
     private String notifyMe;
 
     public User() {
-
     }
 
     public User(String nickname) {
