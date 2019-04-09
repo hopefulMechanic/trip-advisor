@@ -1,4 +1,5 @@
 import { LoginService } from "../../service/LoginService";
+import $ from "jquery";
 
 // login actions
 const LOGIN = "LOGIN";
@@ -21,6 +22,7 @@ const login = payload => {
   return dispatch => {
     LoginService.login(payload)
       .then(res => {
+        $("#loginModal").modal("hide");
         localStorage.setItem(USER_DATA_KEY, JSON.stringify(res));
         dispatch(loginSuccess({ data: res }));
       })
@@ -39,7 +41,7 @@ const loginFail = data => ({
 
 const isLogged = () => {
   const el = localStorage.getItem(USER_DATA_KEY);
-  let payload = { isAuthenticated: false, data: {} };
+  let payload = { isAuthenticated: false, data: null };
   if (el != null) {
     payload = { isAuthenticated: true, data: JSON.parse(el) };
   }
@@ -60,9 +62,10 @@ const logout = () => {
 // register actions
 const register = payload => {
   return dispatch => {
-    LoginService.register(payload).then(res =>
-      dispatch(registerSuccess({ data: res }))
-    );
+    LoginService.register(payload).then(res => {
+      $("#loginModal").modal("hide");
+      dispatch(registerSuccess({ data: res }));
+    });
   };
 };
 

@@ -2,7 +2,7 @@ import { authActionTypes } from "../actions";
 
 const initState = {
   isAuthenticated: false,
-  user: {},
+  user: null,
   loading: false,
   wrongCredetials: false
 };

@@ -2,12 +2,24 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { authAction } from "../../store/actions";
+import Modal from "../../common/Modal/Modal";
+import LoginForm from "../LoginForm/LoginForm";
+import RegisterForm from "../RegisterForm/RegisterForm";
 
 class Header extends Component {
-  state = {};
+  state = {
+    register: false
+  };
+
+  componentDidMount() {
+    const { isLogged } = this.props;
+    isLogged();
+  }
 
   render() {
+    const { register } = this.state;
     const { user, logout } = this.props;
+    console.log("TCL: Header -> render -> user", user);
     return (
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="navbar-brand">Trip Advisor</div>
@@ -31,32 +43,62 @@ class Header extends Component {
               </Link>
             </li>
           </ul>
-          <div className="dropdown">
-            <button
-              className="btn dropdown-toggle"
-              style={{ background: "none", border: "none", color: "white" }}
-              type="button"
-              id="userProfile"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              {user.name}
-            </button>
-            <div
-              className="dropdown-menu dropdown-menu-right"
-              aria-labelledby="userProfile"
-            >
+          {(user && (
+            <div className="dropdown">
               <button
-                className="dropdown-item"
+                className="btn dropdown-toggle btn__no-border"
+                style={{ background: "none", border: "none", color: "white" }}
                 type="button"
-                onClick={() => logout()}
+                id="userProfile"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
               >
-                logout
+                {user.name}
               </button>
+              <div
+                className="dropdown-menu dropdown-menu-right"
+                aria-labelledby="userProfile"
+              >
+                <button
+                  className="dropdown-item"
+                  type="button"
+                  onClick={() => logout()}
+                >
+                  logout
+                </button>
+              </div>
             </div>
-          </div>
+          )) || (
+            <button
+              className="btn btn__no-border"
+              data-toggle="modal"
+              data-target="#loginModal"
+            >
+              Login
+            </button>
+          )}
         </div>
+        {!user && (
+          <Modal
+            id="loginModal"
+            title={!register ? "Login" : "Register"}
+            footer={
+              <div className="d-flex justify-content-center w-100">
+                <button
+                  type="button"
+                  class="btn btn-link"
+                  onClick={() =>
+                    this.setState({ register: !register ? true : false })
+                  }
+                >
+                  {!register ? "Register account" : "Go to Login"}
+                </button>
+              </div>
+            }
+            content={!register ? <LoginForm /> : <RegisterForm />}
+          />
+        )}
       </nav>
     );
   }
@@ -70,7 +112,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-  logout: authAction.logout
+  logout: authAction.logout,
+  isLogged: authAction.isLogged
 };
 
 export default connect(

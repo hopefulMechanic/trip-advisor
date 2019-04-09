@@ -1,32 +1,21 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { authAction } from "../../store/actions";
-import Card from "../../common/Card/Card";
-
-class RegisterForm extends Component {
-  state = {
-    username: "",
-    password: "",
-    confirmPassword: "",
-    passwordError: false
-  };
+class LoginForm extends Component {
+  state = { username: "", password: "" };
 
   submitHandler() {
-    const { register } = this.props;
-    const { username, password, confirmPassword } = this.state;
-    if (password === confirmPassword) {
-      register({ username, password });
-    } else {
-      this.setState({ passwordError: true });
-    }
+    const { login } = this.props;
+    login(this.state);
   }
 
   handleChange(value, id) {
-    this.setState({ [id]: value, passwordError: false });
+    this.setState({ [id]: value });
   }
-  render() {
-    const { username, password, confirmPassword, passwordError } = this.state;
 
+  render() {
+    const { username, password } = this.state;
+    const { wrongCredetials } = this.props;
     return (
       <form
         onSubmit={event => {
@@ -35,9 +24,7 @@ class RegisterForm extends Component {
         }}
       >
         <div className="form-group">
-          {passwordError && (
-            <p className="text-danger"> Passwords doesnt match</p>
-          )}
+          {wrongCredetials && <p className="text-danger"> Wrong Credetials</p>}
         </div>
         <div className="form-group">
           <label htmlFor="username">Username</label>
@@ -63,18 +50,6 @@ class RegisterForm extends Component {
             id="password"
           />
         </div>
-        <div className="form-group">
-          <label htmlFor="confirmPassword">Confirm Password</label>
-          <input
-            onChange={event =>
-              this.handleChange(event.target.value, "confirmPassword")
-            }
-            value={confirmPassword}
-            type="password"
-            className="form-control"
-            id="confirmPassword"
-          />
-        </div>
         <button
           type="button"
           className="btn btn-primary"
@@ -87,11 +62,16 @@ class RegisterForm extends Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  wrongCredetials: state.auth.wrongCredetials
+});
+
 const mapDispatchToProps = {
-  register: authAction.register
+  login: authAction.login
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
-)(RegisterForm);
+)(LoginForm);
