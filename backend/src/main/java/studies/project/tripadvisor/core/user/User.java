@@ -7,19 +7,23 @@ import lombok.Setter;
 @Getter
 public class User {
 
-    private Long id;
-    public final String nickname;
+    private int id;
+    public String nickname;
     private String password;
     private String firstName;
     private String lastName;
     private String email;
-    private Boolean notifyMe;
+    private String notifyMe;
+
+    public User() {
+
+    }
 
     public User(String nickname) {
         this.nickname = nickname;
     }
 
-    public User(Long id, String nickname, String password, String firstName, String lastName, String email, Boolean notifyMe) {
+    public User(int id, String nickname, String password, String firstName, String lastName, String email, String notifyMe) {
         this.id = id;
         this.nickname = nickname;
         this.password = password;
@@ -27,5 +31,18 @@ public class User {
         this.lastName = lastName;
         this.email = email;
         this.notifyMe = notifyMe;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", nickname='" + nickname + '\'' +
+                ", password='" + password + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", notifyMe=" + notifyMe +
+                '}';
     }
 }

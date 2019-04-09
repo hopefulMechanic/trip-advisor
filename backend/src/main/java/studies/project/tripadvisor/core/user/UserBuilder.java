@@ -2,23 +2,23 @@ package studies.project.tripadvisor.core.user;
 
 public class UserBuilder {
 
-    private Long id;
+    private int id;
+    private String nickname;
     private String password;
     private String firstName;
     private String lastName;
     private String email;
-    private Boolean notifyMe;
-    private User user;
+    private String notifyMe;
 
     public User build() {
-        return user;
+        return new User(id, nickname, password, firstName, lastName, email, notifyMe);
     }
 
     public UserBuilder(String nickname) {
-        user = new User(nickname);
+        this.nickname = nickname;
     }
 
-    public UserBuilder withId(Long id) {
+    public UserBuilder withId(int id) {
         this.id = id;
         return this;
     }
@@ -43,7 +43,7 @@ public class UserBuilder {
         return this;
     }
 
-    public UserBuilder withNotifyMe(Boolean notifyMe) {
+    public UserBuilder withNotifyMe(String notifyMe) {
         this.notifyMe = notifyMe;
         return this;
     }
