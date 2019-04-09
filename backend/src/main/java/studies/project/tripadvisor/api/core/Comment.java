@@ -1,4 +1,4 @@
-package studies.project.tripadvisor.core;
+package studies.project.tripadvisor.api.core;
 
 import lombok.Getter;
 import lombok.Setter;

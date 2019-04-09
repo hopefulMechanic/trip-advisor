@@ -1,9 +1,9 @@
-package studies.project.tripadvisor.core;
+package studies.project.tripadvisor.api.core;
 
 
-import studies.project.tripadvisor.core.place.Commerce;
-import studies.project.tripadvisor.core.place.Place;
-import studies.project.tripadvisor.core.place.Public;
+import studies.project.tripadvisor.api.core.place.Commerce;
+import studies.project.tripadvisor.api.core.place.Place;
+import studies.project.tripadvisor.api.core.place.Public;
 
 public class PlaceFactory {
 
