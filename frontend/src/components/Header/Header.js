@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { authAction } from "../../store/actions";
 import Modal from "../../common/Modal/Modal";
@@ -18,7 +18,8 @@ class Header extends Component {
 
   render() {
     const { register } = this.state;
-    const { user, logout } = this.props;
+    const { user, logout, location } = this.props;
+    console.log("TCL: Header -> render -> location", location);
     console.log("TCL: Header -> render -> user", user);
     return (
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -37,9 +38,12 @@ class Header extends Component {
 
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav mr-auto">
-            <li className="nav-item active">
+            <li
+              className={`nav-item ${location.pathname.includes("/places") &&
+                "active"}`}
+            >
               <Link className="navbar-brand" to="/places">
-                Home
+                Places
               </Link>
             </li>
           </ul>
@@ -87,7 +91,7 @@ class Header extends Component {
               <div className="d-flex justify-content-center w-100">
                 <button
                   type="button"
-                  class="btn btn-link"
+                  className="btn btn-link"
                   onClick={() =>
                     this.setState({ register: !register ? true : false })
                   }
@@ -116,7 +120,9 @@ const mapDispatchToProps = {
   isLogged: authAction.isLogged
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Header);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Header)
+);

@@ -13,3 +13,10 @@
   background: rgba(0, 0, 0, 0.1);
   cursor: pointer;
 }
+
+.active {
+  .navbar-brand {
+    color: rgba(255, 255, 255, 0.3) !important;
+
+  }
+}
