@@ -1,2 +1,2 @@
-export { authAction, authActionTypes } from "./AuthActions";
-export { placeAction, placeActionTypes } from "./PlaceActions";
+export { authAction, authActionTypes } from "./authActions";
+export { placeAction, placeActionTypes } from "./placeActions";
