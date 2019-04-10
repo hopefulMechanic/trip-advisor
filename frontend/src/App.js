@@ -5,14 +5,17 @@ import {
   Switch,
   Redirect
 } from "react-router-dom";
+import { connect } from "react-redux";
+
 import Places from "./components/Places/Places";
 import Header from "./components/Header/Header";
 import "./App.scss";
 import PlaceDetail from "./components/Places/PlaceDetail/PlaceDetail";
 import PlaceForm from "./components/Places/PlaceForm/PlaceForm";
-
 class App extends Component {
   render() {
+    const { isAuthenticated } = this.props;
+    console.log("TCL: App -> render -> isAuthenticated", isAuthenticated);
     return (
       <div className="App">
         <Router>
@@ -20,7 +23,9 @@ class App extends Component {
           <main className="container">
             <Switch>
               <Route path={"/places"} exact component={Places} />
-              <Route path={"/places/new"} exact component={PlaceForm} />
+              {isAuthenticated && (
+                <Route path={"/places/new"} exact component={PlaceForm} />
+              )}
               <Route path={"/places/:id"} exact component={PlaceDetail} />
               <Redirect to="/places" />
             </Switch>
@@ -30,5 +35,7 @@ class App extends Component {
     );
   }
 }
-
-export default App;
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
+export default connect(mapStateToProps)(App);

@@ -37,7 +37,8 @@ class PlaceDetail extends Component {
   }
 
   render() {
-    const { loading, selected = {} } = this.props;
+    const { loading, selected } = this.props;
+		console.log("TCL: PlaceDetail -> render -> selected", selected)
     let address;
     let isCommerce;
     if (selected) {
