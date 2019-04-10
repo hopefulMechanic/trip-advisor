@@ -1,7 +1,7 @@
-export const LoginService = {
+export const AuthService = {
   login: payload => {
     return new Promise((resolve, reject) =>
-      resolve({ name: "TEST", type: "TEST" })
+      resolve({ id: 1, name: "TEST", type: "normal" })
     );
   },
   register: payload => {

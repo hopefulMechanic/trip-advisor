@@ -3,7 +3,7 @@ import { authActionTypes } from "../actions";
 const initState = {
   isAuthenticated: false,
   user: null,
-  loading: false,
+  loading: true,
   wrongCredetials: false
 };
 

@@ -12,6 +12,7 @@ class Header extends Component {
   };
 
   componentDidMount() {
+    console.log("TCL: Header -> componentDidMount -> componentDidMount");
     const { isLogged } = this.props;
     isLogged();
   }
@@ -19,8 +20,6 @@ class Header extends Component {
   render() {
     const { register } = this.state;
     const { user, logout, location } = this.props;
-    console.log("TCL: Header -> render -> location", location);
-    console.log("TCL: Header -> render -> user", user);
     return (
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="navbar-brand">Trip Advisor</div>
@@ -39,7 +38,7 @@ class Header extends Component {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav mr-auto">
             <li
-              className={`nav-item ${location.pathname.includes("/places") &&
+              className={`nav-item ${location.pathname === "/places" &&
                 "active"}`}
             >
               <Link className="navbar-brand" to="/places">

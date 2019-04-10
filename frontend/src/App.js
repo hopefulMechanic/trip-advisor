@@ -9,6 +9,7 @@ import Places from "./components/Places/Places";
 import Header from "./components/Header/Header";
 import "./App.scss";
 import PlaceDetail from "./components/Places/PlaceDetail/PlaceDetail";
+import PlaceForm from "./components/Places/PlaceForm/PlaceForm";
 
 class App extends Component {
   render() {
@@ -19,6 +20,7 @@ class App extends Component {
           <main className="container">
             <Switch>
               <Route path={"/places"} exact component={Places} />
+              <Route path={"/places/create"} exact component={PlaceForm} />
               <Route path={"/places/:id"} exact component={PlaceDetail} />
               <Redirect to="/places" />
             </Switch>

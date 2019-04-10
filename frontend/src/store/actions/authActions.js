@@ -1,4 +1,4 @@
-import { LoginService } from "../../service/LoginService";
+import { AuthService } from "../../service/AuthService";
 import $ from "jquery";
 
 // login actions
@@ -18,9 +18,15 @@ const REGISTER_FAIL = "REGISTER_FAIL";
 const USER_DATA_KEY = "USER_DATA";
 
 // login actions
+
+const loginAction = () => ({
+  type: LOGIN
+});
+
 const login = payload => {
   return dispatch => {
-    LoginService.login(payload)
+    dispatch(loginAction());
+    AuthService.login(payload)
       .then(res => {
         $("#loginModal").modal("hide");
         localStorage.setItem(USER_DATA_KEY, JSON.stringify(res));
@@ -60,9 +66,14 @@ const logout = () => {
 };
 
 // register actions
+const registerAction = () => ({
+  type: REGISTER
+});
+
 const register = payload => {
   return dispatch => {
-    LoginService.register(payload).then(res => {
+    dispatch(registerAction());
+    AuthService.register(payload).then(res => {
       $("#loginModal").modal("hide");
       dispatch(registerSuccess({ data: res }));
     });

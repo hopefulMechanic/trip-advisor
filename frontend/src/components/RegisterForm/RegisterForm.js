@@ -7,14 +7,16 @@ class RegisterForm extends Component {
     username: "",
     password: "",
     confirmPassword: "",
+    type: "normal",
     passwordError: false
   };
 
   submitHandler() {
     const { register } = this.props;
-    const { username, password, confirmPassword } = this.state;
+    const { username, password, confirmPassword, type } = this.state;
     if (password === confirmPassword) {
-      register({ username, password });
+      const user = { username, password, type };
+      register(user);
     } else {
       this.setState({ passwordError: true });
     }
@@ -73,6 +75,25 @@ class RegisterForm extends Component {
             className="form-control"
             id="confirmPassword"
           />
+        </div>
+        <div className="form-group">
+          <div className="custom-control custom-switch">
+            <input
+              type="checkbox"
+              className="custom-control-input"
+              id="accountType"
+              onClick={event => {
+                const { type } = this.state;
+                this.handleChange(
+                  type === "normal" ? "premium" : "normal",
+                  "type"
+                );
+              }}
+            />
+            <label className="custom-control-label" htmlFor="accountType">
+              Commercial
+            </label>
+          </div>
         </div>
         <button
           type="button"
