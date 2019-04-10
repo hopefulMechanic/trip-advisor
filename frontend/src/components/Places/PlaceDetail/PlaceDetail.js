@@ -38,8 +38,10 @@ class PlaceDetail extends Component {
   render() {
     const { loading, selected = {} } = this.props;
     let address;
+    let isCommerce;
     if (selected) {
       address = selected.address;
+      isCommerce = selected.entranceFee > 0;
     }
     return (
       <div className="place-detail">
@@ -47,11 +49,15 @@ class PlaceDetail extends Component {
           <div className="place-detail">
             <Card
               header={
-                <span>
+                <span className="font-weight-bold">
                   {selected.name}
                   {
-                    <span className="ml-2 font-weight-bold">
-                      {selected.entranceFee}$
+                    <span
+                      className={`ml-2 font-weight-bold ${
+                        isCommerce ? "text-danger" : "text-success"
+                      }`}
+                    >
+                      {(isCommerce && `${selected.entranceFee}$`) || "Free"}
                     </span>
                   }
                 </span>
@@ -59,7 +65,7 @@ class PlaceDetail extends Component {
             >
               <div className="container-fluid">
                 <div className="row">
-                  <div className="d-flex justify-content-center align-items-start col-md-12 flex-wrap">
+                  <div className="d-flex justify-content-start align-items-start col-md-12 flex-wrap">
                     {selected.categories.map(category => (
                       <CategoryBadge category={category} />
                     ))}
