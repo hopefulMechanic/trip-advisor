@@ -9,6 +9,10 @@ const GET_PLACES_FAIL = "GET_PLACES_FAIL";
 const GET_PLACE = "GET_PLACE";
 const GET_PLACE_SUCCESS = "GET_PLACE_SUCCESS";
 const GET_PLACE_FAIL = "GET_PLACE_FAIL";
+//add
+const ADD_PLACE = "ADD_PLACE";
+const ADD_PLACE_SUCCESS = "ADD_PLACE_SUCCESS";
+const ADD_PLACE_FAIL = "ADD_PLACE_FAIL";
 
 // ACTIONS
 // LIST
@@ -37,6 +41,7 @@ const getPlacesFail = () => ({
 });
 
 // PLACE
+// GET
 const getPlaceAction = () => ({
   type: GET_PLACE
 });
@@ -61,12 +66,40 @@ const getPlaceFail = () => ({
   type: GET_PLACE_FAIL
 });
 
+// ADD
+const addPlaceAction = () => ({
+  type: ADD_PLACE
+});
+
+const addPlace = (payload, history) => {
+  return dispatch => {
+    dispatch(addPlaceAction());
+    PlaceService.addPlace(payload)
+      .then(res => {
+        history.push("/places");
+        dispatch(addPlaceSuccess());
+      })
+      .catch(err => dispatch(addPlaceFail()));
+  };
+};
+
+const addPlaceSuccess = () => ({
+  type: ADD_PLACE_SUCCESS
+});
+
+const addPlaceFail = () => ({
+  type: ADD_PLACE_FAIL
+});
+
 export const placeActionTypes = {
   GET_PLACES,
   GET_PLACES_SUCCESS,
   GET_PLACES_FAIL,
   GET_PLACE,
   GET_PLACE_SUCCESS,
-  GET_PLACE_FAIL
+  GET_PLACE_FAIL,
+  ADD_PLACE,
+  ADD_PLACE_SUCCESS,
+  ADD_PLACE_FAIL
 };
-export const placeAction = { getPlaces, getPlace };
+export const placeAction = { getPlaces, getPlace, addPlace };

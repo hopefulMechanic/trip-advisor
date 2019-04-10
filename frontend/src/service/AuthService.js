@@ -1,7 +1,9 @@
+import { USER_TYPES } from "../constans";
+
 export const AuthService = {
   login: payload => {
     return new Promise((resolve, reject) =>
-      resolve({ id: 1, name: "TEST", type: "normal" })
+      resolve({ id: 1, name: "TEST", type: USER_TYPES.regular })
     );
   },
   register: payload => {

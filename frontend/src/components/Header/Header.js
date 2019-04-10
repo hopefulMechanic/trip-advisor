@@ -12,7 +12,6 @@ class Header extends Component {
   };
 
   componentDidMount() {
-    console.log("TCL: Header -> componentDidMount -> componentDidMount");
     const { isLogged } = this.props;
     isLogged();
   }

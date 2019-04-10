@@ -10,6 +10,7 @@ import Collection from "../../../common/Collection/Collection";
 
 class PlaceDetail extends Component {
   state = {};
+
   componentDidMount() {
     const { getPlace, match } = this.props;
     getPlace(match.params.id);
@@ -67,7 +68,7 @@ class PlaceDetail extends Component {
                 <div className="row">
                   <div className="d-flex justify-content-start align-items-start col-md-12 flex-wrap">
                     {selected.categories.map(category => (
-                      <CategoryBadge category={category} />
+                      <CategoryBadge key={category} category={category} />
                     ))}
                   </div>
                 </div>

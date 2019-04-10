@@ -46,7 +46,10 @@ class Places extends Component {
           <div className="col-md-12 d-flex flex-wrap align-items-center justify-content-start mt-2">
             <div className="font-weight-bold mr-1">Categories:</div>
             {el.categories.map(category => (
-              <CategoryBadge category={category} />
+              <CategoryBadge
+                key={`${el.name.trim()}-${category}`}
+                category={category}
+              />
             ))}
           </div>
         </div>

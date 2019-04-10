@@ -1,8 +1,14 @@
 import React, { Component } from "react";
-import Card from "../../../common/Card/Card";
 import set from "lodash-es/set";
-import { CATEGORIES_NAMES } from "../../../constans";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+import Card from "../../../common/Card/Card";
+
+import { CATEGORIES_NAMES, PLACE_TYPES, USER_TYPES } from "../../../constans";
 import CategoryBadge from "../../../common/CategoryBadge/CategoryBadge";
+import { placeAction } from "../../../store/actions";
+
+import Loader from "../../../common/Loader/Loader";
 
 class PlaceForm extends Component {
   state = {
@@ -17,19 +23,12 @@ class PlaceForm extends Component {
     },
     categories: [],
     entranceFee: 0,
-    type: "normal"
+    type: PLACE_TYPES.regular
   };
 
   submitHandler() {
-    console.log(this.state);
-    // const { register } = this.props;
-    // const { username, password, confirmPassword, type } = this.state;
-    // if (password === confirmPassword) {
-    //   const user = { username, password, type };
-    //   register(user);
-    // } else {
-    //   this.setState({ error: true });
-    // }
+    const { addPlace, history } = this.props;
+    addPlace(this.state, history);
   }
 
   handleChange(value, id) {
@@ -51,9 +50,19 @@ class PlaceForm extends Component {
       phone,
       categories
     } = this.state;
+    const { user, loading } = this.props;
+    console.log("TCL: PlaceForm -> render -> loading", loading);
     const categoriesKeys = Object.keys(CATEGORIES_NAMES);
-
-    const isValid = true;
+    const isCommercial = user && user.type === USER_TYPES.comercial;
+    const isValid =
+      name !== "" &&
+      line !== "" &&
+      city !== "" &&
+      postalCode !== "" &&
+      country !== "" &&
+      email !== "" &&
+      categories.length > 0 &&
+      phone !== "";
     return (
       <Card header="Create Place">
         <form
@@ -62,29 +71,38 @@ class PlaceForm extends Component {
             event.preventDefault();
           }}
         >
-          <div className="form-row">
-            <div className="col-md-12 mb-2">
-              <div className="form-group">
-                <div className="custom-control custom-switch">
-                  <input
-                    type="checkbox"
-                    className="custom-control-input"
-                    id="accountType"
-                    onClick={event => {
-                      this.handleChange(
-                        type === "normal" ? "premium" : "normal",
-                        "type"
-                      );
-                    }}
-                  />
-                  <label className="custom-control-label" htmlFor="accountType">
-                    Commercial
-                  </label>
+          {isCommercial && (
+            <div className="form-row">
+              <div className="col-md-12 mb-2">
+                <div className="form-group">
+                  <div className="custom-control custom-switch">
+                    <input
+                      type="checkbox"
+                      className="custom-control-input"
+                      id="accountType"
+                      onClick={event => {
+                        this.handleChange(
+                          type === PLACE_TYPES.regular
+                            ? PLACE_TYPES.comercial
+                            : PLACE_TYPES.regular,
+                          "type"
+                        );
+                      }}
+                    />
+                    <label
+                      className="custom-control-label"
+                      htmlFor="accountType"
+                    >
+                      Commercial
+                    </label>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div className="divider" />
+          )}
+
+          {isCommercial && <div className="divider" />}
+
           <div className="form-row">
             <div className="col-md-12 mb-2">
               <label className="float-left font-weight-bold">
@@ -267,7 +285,7 @@ class PlaceForm extends Component {
             disabled={!isValid}
             onClick={() => this.submitHandler()}
           >
-            Submit
+            {(loading && <Loader />) || "Save"}
           </button>
         </form>
       </Card>
@@ -275,4 +293,21 @@ class PlaceForm extends Component {
   }
 }
 
-export default PlaceForm;
+const mapStateToProps = state => {
+  return {
+    user: state.auth.user,
+    loading: state.place.loading,
+    selected: state.place.selected
+  };
+};
+
+const mapDispatchToProps = {
+  addPlace: placeAction.addPlace
+};
+
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(PlaceForm)
+);

@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { authAction } from "../../store/actions";
+import { USER_TYPES } from "../../constans";
 
 class RegisterForm extends Component {
   state = {
     username: "",
     password: "",
     confirmPassword: "",
-    type: "normal",
+    type: USER_TYPES.regular,
     passwordError: false
   };
 
@@ -85,7 +86,9 @@ class RegisterForm extends Component {
               onClick={event => {
                 const { type } = this.state;
                 this.handleChange(
-                  type === "normal" ? "premium" : "normal",
+                  type === USER_TYPES.regular
+                    ? USER_TYPES.comercial
+                    : USER_TYPES.regular,
                   "type"
                 );
               }}

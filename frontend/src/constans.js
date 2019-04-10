@@ -7,3 +7,13 @@ export const CATEGORIES_NAMES = {
   parking: "parking",
   cat1: "cat1"
 };
+
+export const USER_TYPES = {
+  comercial: "comercial",
+  regular: "regular"
+};
+
+export const PLACE_TYPES = {
+  comercial: "comercial",
+  regular: "regular"
+};

@@ -1,4 +1,8 @@
 export const PlaceService = {
+  addPlace: payload => {
+    console.log("TCL: PlaceService add", payload);
+    return new Promise((resolve, reject) => resolve());
+  },
   getPlaces: () => {
     return new Promise((resolve, reject) =>
       resolve([
@@ -16,16 +20,7 @@ export const PlaceService = {
           entranceFee: 12.12,
           email: "asd@qwe.pl",
           phone: "+123123123",
-          categories: [
-            "hotel",
-            "food",
-            "5star",
-            "hotel",
-            "food",
-            "5star",
-            "cat1",
-            "parking"
-          ],
+          categories: ["hotel", "food", "5star", "cat1", "parking"],
           comments: [
             {
               id: 1,
