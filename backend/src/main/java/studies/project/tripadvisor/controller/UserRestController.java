@@ -24,27 +24,27 @@ public class UserRestController {
     }
 
     @GetMapping("/api/users/{userId}")
-    public User getUser(@PathVariable(name="userId")Long userId) {
+    public User getUser(@PathVariable(name = "userId") Long userId) {
         return userService.getUser(userId);
     }
 
     @PostMapping("/api/users")
-    public void saveUser(User user){
+    public void saveUser(User user) {
         userService.saveUser(user);
         System.out.println("User Saved Successfully");
     }
 
     @DeleteMapping("/api/users/{userId}")
-    public void deleteUser(@PathVariable(name="userId")Long userId){
+    public void deleteUser(@PathVariable(name = "userId") Long userId) {
         userService.deleteUser(userId);
         System.out.println("User Deleted Successfully");
     }
 
     @PutMapping("/api/users/{userId}")
     public void updateEmployee(@RequestBody User user,
-                               @PathVariable(name="userId")Long userId){
+                               @PathVariable(name = "userId") Long userId) {
         User u = userService.getUser(userId);
-        if(u != null){
+        if (u != null) {
             userService.updateUser(user);
         }
     }
