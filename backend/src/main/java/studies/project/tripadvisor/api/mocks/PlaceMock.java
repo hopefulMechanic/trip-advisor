@@ -1,5 +1,5 @@
-package studies.project.tripadvisor.api.mocks;
-
-public class PlaceMock {
-
-}
+//package studies.project.tripadvisor.api.mocks;
+//
+//public class PlaceMock {
+//
+//}

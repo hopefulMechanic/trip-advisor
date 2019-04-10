@@ -1,4 +1,4 @@
-package studies.project.tripadvisor.persistance.entities;
-
-public class Address {
-}
+//package studies.project.tripadvisor.persistance.entities;
+//
+//public class Address {
+//}

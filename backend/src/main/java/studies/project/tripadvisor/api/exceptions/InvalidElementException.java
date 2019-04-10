@@ -1,4 +1,4 @@
-package studies.project.tripadvisor.api.exceptions;
-
-public class InvalidElementException extends Exception {
-}
+//package studies.project.tripadvisor.api.exceptions;
+//
+//public class InvalidElementException extends Exception {
+//}
