@@ -56,6 +56,7 @@ export const PlaceService = {
           comments: [],
           categories: ["food", "5star", "cat1", "parking"],
           owner: {
+            id: 1,
             name: "Gima krakow"
           }
         }

@@ -90,7 +90,7 @@ class PlaceDetail extends Component {
                     <div className="text-left">{selected.description}</div>
                   </div>
                 </div>
-                <div class="divider" />
+                <div className="divider" />
                 <div className="row">
                   <div className="col-md-12">
                     <div className="font-weight-bold text-left">Comments:</div>

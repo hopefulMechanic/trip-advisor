@@ -20,7 +20,7 @@ class App extends Component {
           <main className="container">
             <Switch>
               <Route path={"/places"} exact component={Places} />
-              <Route path={"/places/create"} exact component={PlaceForm} />
+              <Route path={"/places/new"} exact component={PlaceForm} />
               <Route path={"/places/:id"} exact component={PlaceDetail} />
               <Redirect to="/places" />
             </Switch>

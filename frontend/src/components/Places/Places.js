@@ -59,7 +59,18 @@ class Places extends Component {
     return (
       <div className="places">
         <Card header="Places List">
-          {user != null && !loading && <div className="d-flex">buttons</div>}
+          {user != null && !loading && (
+            <button
+              type="button"
+              className="btn btn-secondary"
+              onClick={() => {
+                history.push(`/places/new`);
+              }}
+            >
+              New Place
+            </button>
+          )}
+          <div className="divider" />
           {(!loading && (
             <Collection
               onDoubleClick={id => {
