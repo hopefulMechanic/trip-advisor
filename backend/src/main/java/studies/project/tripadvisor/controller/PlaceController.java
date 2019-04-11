@@ -46,9 +46,12 @@ public class PlaceController {
         placeService.deletePlace(placeId);
     }
 
-//    @PutMapping("/api/places/{placeId}")
-//    public void updatePlace(@RequestBody Place place, @PathVariable(name = "placeId") Long placeId) {
-//
-//    }
+    @PutMapping("/places/{placeId}")
+    public ResponseEntity updatePlace(@RequestBody Place place, @PathVariable(name = "placeId") Long placeId) throws ElementNotFoundException {
+        Place p = placeService.getPlace(placeId);
+        place.setId(placeId);
+        placeService.updatePlace(place);
+        return ResponseEntity.status(HttpStatus.CREATED).body(place);
+    }
 
 }

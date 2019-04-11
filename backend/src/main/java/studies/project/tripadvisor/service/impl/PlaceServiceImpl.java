@@ -52,8 +52,9 @@ public class PlaceServiceImpl implements PlaceService {
         placeRepository.deleteById(placeId);
     }
 
-    // TODO
     public void updatePlace(Place place) {
         log.info("PlaceService: updatePlace");
+        log.info(place.toString());
+        placeRepository.save(place);
     }
 }
