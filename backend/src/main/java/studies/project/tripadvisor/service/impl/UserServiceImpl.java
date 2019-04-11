@@ -24,8 +24,8 @@ public class UserServiceImpl implements UserService {
         return users;
     }
 
-    public User getUser(Long userId) {
-        Optional<User> optEmp = userRepository.findById(userId);
+    public User getUser(String userNickname) {
+        Optional<User> optEmp = userRepository.findById(userNickname);
         return optEmp.get();
     }
 
@@ -33,8 +33,8 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
-    public void deleteUser(Long userId){
-        userRepository.deleteById(userId);
+    public void deleteUser(String userNickname){
+        userRepository.deleteById(userNickname);
     }
 
     public void updateUser(User user) {

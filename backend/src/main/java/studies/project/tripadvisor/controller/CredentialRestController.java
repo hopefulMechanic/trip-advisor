@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import studies.project.tripadvisor.entity.Credential;
+import studies.project.tripadvisor.entity.User;
 import studies.project.tripadvisor.service.CredentialService;
+import studies.project.tripadvisor.service.UserService;
 
 @RestController
 @RequestMapping("api/auth")
@@ -18,20 +20,26 @@ public class CredentialRestController {
     @Autowired
     private CredentialService credentialService;
 
+    @Autowired
+    private UserService userService;
+
     public void setCredentialService(CredentialService credentialService) {
         this.credentialService = credentialService;
     }
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
 
     @PostMapping("/login")
-    public HttpStatus loginUser(@RequestBody() Credential credential) {
+    public User loginUser(@RequestBody() Credential credential) {
         if (checkCredential(credential)) {
-            return NO_OK;
+            return null;
         }
         Credential retrivedCredential = credentialService.getCredential(credential.getUserName());
         if (credential.getPassword().equals(retrivedCredential.getPassword())) {
-            return OK;
+            return userService.getUser(credential.getUserName());
         } else {
-            return NO_OK;
+            return null;
         }
     }
 
@@ -41,6 +49,10 @@ public class CredentialRestController {
             return NO_OK;
         } else {
             credentialService.saveCredential(credential);
+            User user = new User();
+            user.setNickname(credential.getUserName());
+            user.setPassword(credential.getPassword());
+            userService.saveUser(user);
             return OK;
         }
     }

@@ -23,9 +23,9 @@ public class UserRestController {
         return users;
     }
 
-    @GetMapping("/api/users/{userId}")
-    public User getUser(@PathVariable(name = "userId") Long userId) {
-        return userService.getUser(userId);
+    @GetMapping("/api/users/{userNickname}")
+    public User getUser(@PathVariable(name = "userNickname") String userNickname) {
+        return userService.getUser(userNickname);
     }
 
     @PostMapping("/api/users")
@@ -34,16 +34,16 @@ public class UserRestController {
         System.out.println("User Saved Successfully");
     }
 
-    @DeleteMapping("/api/users/{userId}")
-    public void deleteUser(@PathVariable(name = "userId") Long userId) {
-        userService.deleteUser(userId);
+    @DeleteMapping("/api/users/{userNickname}")
+    public void deleteUser(@PathVariable(name = "userNickname") String userNickname) {
+        userService.deleteUser(userNickname);
         System.out.println("User Deleted Successfully");
     }
 
-    @PutMapping("/api/users/{userId}")
+    @PutMapping("/api/users/{userNickname}")
     public void updateEmployee(@RequestBody User user,
-                               @PathVariable(name = "userId") Long userId) {
-        User u = userService.getUser(userId);
+                               @PathVariable(name = "userNickname") String userNickname) {
+        User u = userService.getUser(userNickname);
         if (u != null) {
             userService.updateUser(user);
         }

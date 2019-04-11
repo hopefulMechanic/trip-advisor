@@ -13,9 +13,6 @@ public class User {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(name="USER_NICKNAME")
     private String nickname;
 
     @Column(name="USER_PASSWORD")
@@ -40,8 +37,7 @@ public class User {
         this.nickname = nickname;
     }
 
-    public User(Long id, String nickname, String password, String firstName, String lastName, String email, String notifyMe) {
-        this.id = id;
+    public User(String nickname, String password, String firstName, String lastName, String email, String notifyMe) {
         this.nickname = nickname;
         this.password = password;
         this.firstName = firstName;
@@ -53,7 +49,6 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
                 ", nickname='" + nickname + '\'' +
                 ", password='" + password + '\'' +
                 ", firstName='" + firstName + '\'' +

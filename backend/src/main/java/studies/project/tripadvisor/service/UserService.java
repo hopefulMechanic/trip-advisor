@@ -8,11 +8,11 @@ public interface UserService {
 
     public List<User> retrieveUsers();
 
-    public User getUser(Long userId);
+    public User getUser(String userNickname);
 
     public void saveUser(User user);
 
-    public void deleteUser(Long userId);
+    public void deleteUser(String userNickname);
 
     public void updateUser(User user);
 }
