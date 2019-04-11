@@ -1,37 +1,54 @@
-//package studies.project.tripadvisor.api.controllers;
+package studies.project.tripadvisor.controller;
+
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import studies.project.tripadvisor.entity.Place;
+import studies.project.tripadvisor.exception.ElementNotFoundException;
+import studies.project.tripadvisor.exception.NoContentException;
+import studies.project.tripadvisor.service.PlaceService;
+
+import java.util.List;
+
+@Slf4j
+@RestController
+@RequestMapping("api")
+public class PlaceController {
+
+    @Autowired
+    private PlaceService placeService;
+
+    public void setUserService(PlaceService placeService) {
+        this.placeService = placeService;
+    }
+
+    @GetMapping("/places")
+    public List<Place> getPlaces() throws NoContentException {
+        List<Place> places = placeService.retrievePlaces();
+        return places;
+    }
+
+    @PostMapping("/places")
+    public ResponseEntity savePlace(@RequestBody Place place) {
+        placeService.savePlace(place);
+        return new ResponseEntity(HttpStatus.CREATED);
+    }
+
+    @GetMapping("/places/{placeId}")
+    public Place getPlace(@PathVariable(name = "placeId") Long placeId) throws ElementNotFoundException {
+        return placeService.getPlace(placeId);
+    }
+
+    @DeleteMapping("/places/{placeId}")
+    public void deletePlace(@PathVariable(name = "placeId") Long placeId) throws ElementNotFoundException {
+        placeService.deletePlace(placeId);
+    }
+
+//    @PutMapping("/api/places/{placeId}")
+//    public void updatePlace(@RequestBody Place place, @PathVariable(name = "placeId") Long placeId) {
 //
-//import lombok.extern.slf4j.Slf4j;
-//import org.modelmapper.ModelMapper;
-//import org.springframework.web.bind.annotation.*;
-//import studies.project.tripadvisor.api.core.place.Place;
-//import studies.project.tripadvisor.api.exceptions.InvalidElementException;
-//import studies.project.tripadvisor.api.models.PlaceDTO;
-//import studies.project.tripadvisor.api.services.PlaceService;
-//
-//import java.rmi.ServerException;
-//
-//@Slf4j
-//@RestController
-//@RequestMapping("api/place")
-//public class PlaceController {
-//    private final PlaceService placeService;
-//    private final ModelMapper mapper = new ModelMapper();
-//
-//    public PlaceController(PlaceService placeService) {
-//        this.placeService = placeService;
 //    }
-//
-//    @PostMapping("/add")
-//    public Long add(@RequestBody PlaceDTO placeDto) throws ServerException, InvalidElementException {
-//        log.info("Adding new place");
-//        //mapper z placeDto na place
-//        final Place place = mapper.map(placeDto, Place.class);
-//        return placeService.add(place);
-//    }
-//
-//    @GetMapping("/")
-//    public PlaceDTO get() throws ServerException, InvalidElementException {
-//        return null;
-//    }
-//
-//}
+
+}

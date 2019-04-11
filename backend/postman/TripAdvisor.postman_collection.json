@@ -1,0 +1,95 @@
+{
+  "info": {
+    "_postman_id": "91c2071a-dc40-4a3a-87f6-ba287cb6da86",
+    "name": "TripAdvisor",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "AddPlace",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "name": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n\t\"name\": \"nazwa hotelu 222\",\r\n\t\"description\": \"To jest opis mojego hotelu\",\r\n\t\"email\": \"kklezc@qwe.pl\",\r\n\t\"phone\": \"+123123123\",\r\n\t\"entranceFee\": 1.000,\r\n\t\"categories\": [\"kat1\", \"kat2\", \"kat3\"]\r\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/places",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "places"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GetPlaces",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": ""
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GetPlace",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/places/2",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "places",
+            "2"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "DeletePlace",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": ""
+        }
+      },
+      "response": []
+    }
+  ]
+}
