@@ -1,6 +1,7 @@
 package studies.project.tripadvisor.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,8 +12,8 @@ import studies.project.tripadvisor.service.CredentialService;
 @RestController
 @RequestMapping("api/auth")
 public class CredentialRestController {
-    private static final String OK = "ok";
-    private static final String NO_OK = "no ok";
+    private static final HttpStatus OK = HttpStatus.OK;
+    private static final HttpStatus NO_OK = HttpStatus.UNAUTHORIZED;
 
     @Autowired
     private CredentialService credentialService;
@@ -22,7 +23,7 @@ public class CredentialRestController {
     }
 
     @PostMapping("/login")
-    public String loginUser(@RequestBody() Credential credential) {
+    public HttpStatus loginUser(@RequestBody() Credential credential) {
         if (checkCredential(credential)) {
             return NO_OK;
         }
@@ -35,7 +36,7 @@ public class CredentialRestController {
     }
 
     @PostMapping("/register")
-    public String registerUser(Credential credential) {
+    public HttpStatus registerUser(Credential credential) {
         if (checkCredential(credential)) {
             return NO_OK;
         } else {
