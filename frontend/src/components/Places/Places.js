@@ -73,7 +73,7 @@ class Places extends Component {
               New Place
             </button>
           )}
-          <div className="divider" />
+          {user != null && !loading && <div className="divider" />}
           {(!loading && (
             <Collection
               onDoubleClick={id => {

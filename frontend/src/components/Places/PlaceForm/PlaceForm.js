@@ -53,7 +53,7 @@ class PlaceForm extends Component {
     const { user, loading } = this.props;
     console.log("TCL: PlaceForm -> render -> loading", loading);
     const categoriesKeys = Object.keys(CATEGORIES_NAMES);
-    const isCommercial = user && user.type === USER_TYPES.comercial;
+    const isCommercial = user && user.type === USER_TYPES.regular;
     const isValid =
       name !== "" &&
       line !== "" &&
@@ -219,7 +219,7 @@ class PlaceForm extends Component {
                 </select>
               </div>
             </div>
-            {type === "premium" && (
+            {type === PLACE_TYPES.comercial && (
               <div className="col-md-6 mb-2">
                 <div className="form-group">
                   <label htmlFor="entranceFee">Entrance Fee</label>
