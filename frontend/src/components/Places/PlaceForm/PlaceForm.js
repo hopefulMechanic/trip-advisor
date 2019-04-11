@@ -51,9 +51,8 @@ class PlaceForm extends Component {
       categories
     } = this.state;
     const { user, loading } = this.props;
-    console.log("TCL: PlaceForm -> render -> loading", loading);
     const categoriesKeys = Object.keys(CATEGORIES_NAMES);
-    const isCommercial = user && user.type === USER_TYPES.regular;
+    const isCommercial = user && user.type === USER_TYPES.comercial;
     const isValid =
       name !== "" &&
       line !== "" &&
