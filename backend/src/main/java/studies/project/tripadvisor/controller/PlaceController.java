@@ -25,9 +25,9 @@ public class PlaceController {
     }
 
     @GetMapping("/places")
-    public List<Place> getPlaces() throws NoContentException {
+    public ResponseEntity getPlaces() throws NoContentException {
         List<Place> places = placeService.retrievePlaces();
-        return places;
+        return new ResponseEntity(places, HttpStatus.OK);
     }
 
     @PostMapping("/places")
@@ -37,13 +37,15 @@ public class PlaceController {
     }
 
     @GetMapping("/places/{placeId}")
-    public Place getPlace(@PathVariable(name = "placeId") Long placeId) throws ElementNotFoundException {
-        return placeService.getPlace(placeId);
+    public ResponseEntity getPlace(@PathVariable(name = "placeId") Long placeId) throws ElementNotFoundException {
+        Place place = placeService.getPlace(placeId);
+        return new ResponseEntity(place, HttpStatus.OK);
     }
 
     @DeleteMapping("/places/{placeId}")
-    public void deletePlace(@PathVariable(name = "placeId") Long placeId) throws ElementNotFoundException {
+    public ResponseEntity deletePlace(@PathVariable(name = "placeId") Long placeId) throws ElementNotFoundException {
         placeService.deletePlace(placeId);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @PutMapping("/places/{placeId}")
