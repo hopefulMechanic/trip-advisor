@@ -5,75 +5,35 @@ import {
   Switch,
   Redirect
 } from "react-router-dom";
-
 import { connect } from "react-redux";
-import LoginPage from "./components/LoginPage/LoginPage";
-import Dashboard from "./components/Dashboard/Dashboard";
-import RegisterForm from "./components/RegisterForm/RegisterForm";
-import Loader from "./common/Loader/Loader";
+
+import Places from "./components/Places/Places";
 import Header from "./components/Header/Header";
-import { authAction } from "./store/actions";
-import "./App.css";
-
+import "./App.scss";
+import PlaceDetail from "./components/Places/PlaceDetail/PlaceDetail";
+import PlaceForm from "./components/Places/PlaceForm/PlaceForm";
 class App extends Component {
-  componentDidMount() {
-    const { isLogged } = this.props;
-    isLogged();
-  }
-
   render() {
-    const { isAuthenticated, loading } = this.props;
-    const redirect = isAuthenticated ? (
-      <Redirect to="/dashboard" />
-    ) : (
-      <Redirect to="/login" />
-    );
-    let routes;
-    if (isAuthenticated) {
-      routes = [{ component: Dashboard, path: "/dashboard" }];
-    } else {
-      routes = [
-        { component: LoginPage, path: "/login" },
-        { component: RegisterForm, path: "/register" }
-      ];
-    }
-
+    const { isAuthenticated } = this.props;
+    console.log("TCL: App -> render -> isAuthenticated", isAuthenticated);
     return (
       <div className="App">
         <Router>
-          {isAuthenticated && <Header />}
-          <div className="container">
-            <main>
-              {(!loading && (
-                <Switch>
-                  {routes.map(route => (
-                    <Route
-                      key={route.path}
-                      exect
-                      path={route.path}
-                      component={route.component}
-                    />
-                  ))}
-                  {redirect}
-                </Switch>
-              )) || <Loader />}
-            </main>
-          </div>
+          <Header />
+          <main className="container">
+            <Switch>
+              <Route path={"/places"} exact component={Places} />
+              <Route path={"/places/new"} exact component={PlaceForm} />
+              <Route path={"/places/:id"} exact component={PlaceDetail} />
+              <Redirect to="/places" />
+            </Switch>
+          </main>
         </Router>
       </div>
     );
   }
 }
-const mapStateToProps = state => {
-  return {
-    isAuthenticated: state.auth.isAuthenticated,
-    loading: state.auth.loading
-  };
-};
-const mapDispatchToProps = {
-  isLogged: authAction.isLogged
-};
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(App);
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
+export default connect(mapStateToProps)(App);

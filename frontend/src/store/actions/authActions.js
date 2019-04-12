@@ -1,4 +1,5 @@
-import { LoginService } from "../../service/LoginService";
+import { AuthService } from "../../service/AuthService";
+import $ from "jquery";
 
 // login actions
 const LOGIN = "LOGIN";
@@ -17,10 +18,17 @@ const REGISTER_FAIL = "REGISTER_FAIL";
 const USER_DATA_KEY = "USER_DATA";
 
 // login actions
+
+const loginAction = () => ({
+  type: LOGIN
+});
+
 const login = payload => {
   return dispatch => {
-    LoginService.login(payload)
+    dispatch(loginAction());
+    AuthService.login(payload)
       .then(res => {
+        $("#loginModal").modal("hide");
         localStorage.setItem(USER_DATA_KEY, JSON.stringify(res));
         dispatch(loginSuccess({ data: res }));
       })
@@ -39,7 +47,7 @@ const loginFail = data => ({
 
 const isLogged = () => {
   const el = localStorage.getItem(USER_DATA_KEY);
-  let payload = { isAuthenticated: false, data: {} };
+  let payload = { isAuthenticated: false, data: null };
   if (el != null) {
     payload = { isAuthenticated: true, data: JSON.parse(el) };
   }
@@ -58,11 +66,17 @@ const logout = () => {
 };
 
 // register actions
+const registerAction = () => ({
+  type: REGISTER
+});
+
 const register = payload => {
   return dispatch => {
-    LoginService.register(payload).then(res =>
-      dispatch(registerSuccess({ data: res }))
-    );
+    dispatch(registerAction());
+    AuthService.register(payload).then(res => {
+      $("#loginModal").modal("hide");
+      dispatch(registerSuccess({ data: res }));
+    });
   };
 };
 

@@ -1,0 +1,34 @@
+.App {
+  text-align: center;
+}
+
+.btn__no-border {
+  background: "none" !important;
+  border: "none" !important;
+  color: white !important;
+  box-shadow: none !important;
+}
+
+.active {
+  .navbar-brand {
+    color: rgba(255, 255, 255, 0.3) !important;
+  }
+}
+
+.divider {
+  height: 0;
+  margin: 0.5rem 0;
+  overflow: hidden;
+  border-top: 1px solid #e9ecef;
+}
+
+form {
+  select {
+    .selected {
+      background: rgba(0, 0, 0, 0.2);
+    }
+  }
+  button {
+    width: 100%;
+  }
+}
