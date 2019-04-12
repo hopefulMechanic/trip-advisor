@@ -38,11 +38,9 @@ class PlaceDetail extends Component {
 
   render() {
     const { loading, selected } = this.props;
-		console.log("TCL: PlaceDetail -> render -> selected", selected)
-    let address;
+    console.log("TCL: PlaceDetail -> render -> selected", selected);
     let isCommerce;
     if (selected) {
-      address = selected.address;
       isCommerce = selected.entranceFee > 0;
     }
     return (
@@ -76,10 +74,10 @@ class PlaceDetail extends Component {
                 <div className="row mt-2">
                   <div className="d-flex flex-column align-items-start justify-content-start col-md-4 flex-wrap">
                     <div className="font-weight-bold"> Address Details </div>
-                    <div>{address.line}</div>
-                    <div>{address.city}</div>
-                    <div>{address.postalCode}</div>
-                    <div>{address.country}</div>
+                    <div>{selected.addressLine}</div>
+                    <div>{selected.city}</div>
+                    <div>{selected.postalCode}</div>
+                    <div>{selected.country}</div>
                   </div>
                   <div className="d-flex flex-column align-items-start justify-content-start col-md-4 flex-wrap">
                     <div className="font-weight-bold"> Kontakt Details </div>

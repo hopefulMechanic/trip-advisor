@@ -1,4 +1,5 @@
 import { USER_TYPES } from "../constans";
+import { axios } from "./Axios";
 
 export const AuthService = {
   login: payload => {

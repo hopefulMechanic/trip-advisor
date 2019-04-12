@@ -35,7 +35,7 @@ class Places extends Component {
           <div className="places--tile col-md-4">
             <div className="font-weight-bold">Address:</div>
             <div className="text-left">
-              {el.address.line} {el.address.city}
+              {el.addressLine} {el.city}
             </div>
           </div>
           <div className="absolute-center">

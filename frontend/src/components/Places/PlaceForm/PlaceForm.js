@@ -15,12 +15,10 @@ class PlaceForm extends Component {
     name: "",
     email: "",
     phone: "",
-    address: {
-      line: "",
-      city: "",
-      postalCode: "",
-      country: ""
-    },
+    addressLine: "",
+    city: "",
+    postalCode: "",
+    country: "",
     categories: [],
     entranceFee: 0,
     type: PLACE_TYPES.regular
@@ -44,19 +42,21 @@ class PlaceForm extends Component {
     const {
       name,
       type,
-      address: { line, city, postalCode, country },
+      addressLine,
+      city,
+      postalCode,
+      country,
       entranceFee,
       email,
       phone,
       categories
     } = this.state;
     const { user, loading } = this.props;
-    console.log("TCL: PlaceForm -> render -> loading", loading);
     const categoriesKeys = Object.keys(CATEGORIES_NAMES);
     const isCommercial = user && user.type === USER_TYPES.regular;
     const isValid =
       name !== "" &&
-      line !== "" &&
+      addressLine !== "" &&
       city !== "" &&
       postalCode !== "" &&
       country !== "" &&
@@ -127,15 +127,15 @@ class PlaceForm extends Component {
             </div>
             <div className="col-md-6  mb-2">
               <div className="form-group">
-                <label htmlFor="address.line">Address</label>
+                <label htmlFor="addressLine">Address</label>
                 <input
                   onChange={event =>
-                    this.handleChange(event.target.value, "address.line")
+                    this.handleChange(event.target.value, "addressLine")
                   }
-                  value={line}
+                  value={addressLine}
                   type="text"
                   className="form-control"
-                  id="address.line"
+                  id="addressLine"
                 />
               </div>
             </div>
@@ -143,14 +143,14 @@ class PlaceForm extends Component {
           <div className="form-row">
             <div className="col-md-6 mb-2">
               <div className="form-group">
-                <label htmlFor="address.city">City</label>
+                <label htmlFor="city">City</label>
                 <input
                   type="text"
                   className="form-control"
-                  id="address.city"
+                  id="city"
                   value={city}
                   onChange={event =>
-                    this.handleChange(event.target.value, "address.city")
+                    this.handleChange(event.target.value, "city")
                   }
                 />
               </div>
@@ -158,28 +158,28 @@ class PlaceForm extends Component {
 
             <div className="col-md-3 mb-2">
               <div className="form-group">
-                <label htmlFor="address.country">Country</label>
+                <label htmlFor="country">Country</label>
                 <input
                   type="text"
                   className="form-control"
-                  id="address.country"
+                  id="country"
                   value={country}
                   onChange={event =>
-                    this.handleChange(event.target.value, "address.country")
+                    this.handleChange(event.target.value, "country")
                   }
                 />
               </div>
             </div>
             <div className="col-md-3 mb-2">
               <div className="form-group">
-                <label htmlFor="address.postalCode">Postal Code</label>
+                <label htmlFor="postalCode">Postal Code</label>
                 <input
                   type="text"
                   className="form-control"
-                  id="address.postalCode"
+                  id="postalCode"
                   value={postalCode}
                   onChange={event =>
-                    this.handleChange(event.target.value, "address.postalCode")
+                    this.handleChange(event.target.value, "postalCode")
                   }
                 />
               </div>
