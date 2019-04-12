@@ -23,12 +23,10 @@ export const PlaceService = {
           name: "commece place",
           description:
             "nasz hotel , nasz hotelnasz hotelnasz hotelnasz hotelnasz hotelnasz hotelnasz hotel",
-          address: {
-            line: "ulica1",
-            city: "krzeszo",
-            postalCode: "12345",
-            country: "polska"
-          },
+          addressLine: "ulica1",
+          city: "krzeszo",
+          postalCode: "12345",
+          country: "polska",
           entranceFee: 12.12,
           email: "asd@qwe.pl",
           phone: "+123123123",
@@ -51,12 +49,10 @@ export const PlaceService = {
           id: 2,
           name: "public place",
           description: "nasz hotel",
-          address: {
-            line: "ulica1",
-            city: "krzeszo",
-            postalCode: "12345",
-            country: "polska"
-          },
+          addressLine: "ulica1",
+          city: "krzeszo",
+          postalCode: "12345",
+          country: "polska",
           entranceFee: 0.0,
           email: "asd@qwe.pl",
           phone: "+123123123",
