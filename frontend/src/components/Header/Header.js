@@ -56,7 +56,7 @@ class Header extends Component {
                 aria-haspopup="true"
                 aria-expanded="false"
               >
-                {user.name}
+                {user.username}
               </button>
               <div
                 className="dropdown-menu dropdown-menu-right"
