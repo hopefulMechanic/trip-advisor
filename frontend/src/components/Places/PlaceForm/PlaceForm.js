@@ -53,7 +53,7 @@ class PlaceForm extends Component {
     } = this.state;
     const { user, loading } = this.props;
     const categoriesKeys = Object.keys(CATEGORIES_NAMES);
-    const isCommercial = user && user.type === USER_TYPES.regular;
+    const isCommercial = user && user.type === USER_TYPES.comercial;
     const isValid =
       name !== "" &&
       addressLine !== "" &&

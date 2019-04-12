@@ -38,7 +38,6 @@ class PlaceDetail extends Component {
 
   render() {
     const { loading, selected } = this.props;
-    console.log("TCL: PlaceDetail -> render -> selected", selected);
     let isCommerce;
     if (selected) {
       isCommerce = selected.entranceFee > 0;
