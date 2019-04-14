@@ -17,10 +17,10 @@ class Places extends Component {
   }
 
   mapPlaceToRow(el) {
-    const rateSum = el.comments
-      .map(el => el.rate)
-      .reduce((prev, curr) => (prev += curr), 0);
-    const rateAmout = el.comments.length;
+    // const rateSum = el.comments
+    //   .map(el => el.rate)
+    //   .reduce((prev, curr) => (prev += curr), 0);
+    // const rateAmout = el.comments.length;
     return (
       <div key={el.id} className="places--row">
         <div className="row w-100">
@@ -39,9 +39,7 @@ class Places extends Component {
             </div>
           </div>
           <div className="absolute-center">
-            <span className="badge badge-secondary badge-pill">
-              {rateAmout > 0 ? `${rateSum.toFixed(1)} / ${RATE_SCALE}` : "-"}
-            </span>
+            <span className="badge badge-secondary badge-pill">{"-"}</span>
           </div>
           <div className="col-md-12 d-flex flex-wrap align-items-center justify-content-start mt-2">
             <div className="font-weight-bold mr-1">Categories:</div>

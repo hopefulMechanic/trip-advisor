@@ -20,7 +20,11 @@ const CategoryBadge = ({ category }) => {
     )
   };
 
-  return bages[category];
+  return (
+    bages[category] || (
+      <span className="badge badge-primary mr-1">{category}</span>
+    )
+  );
 };
 
 export default CategoryBadge;
