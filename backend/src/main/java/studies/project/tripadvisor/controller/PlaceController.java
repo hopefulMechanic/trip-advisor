@@ -13,6 +13,7 @@ import studies.project.tripadvisor.service.PlaceService;
 import java.util.List;
 
 @Slf4j
+@CrossOrigin()
 @RestController
 @RequestMapping("api")
 public class PlaceController {
