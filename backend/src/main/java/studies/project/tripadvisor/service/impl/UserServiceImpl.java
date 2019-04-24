@@ -1,14 +1,17 @@
 package studies.project.tripadvisor.service.impl;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import studies.project.tripadvisor.entity.User;
+import studies.project.tripadvisor.exception.ElementNotFoundException;
+import studies.project.tripadvisor.exception.NoContentException;
 import studies.project.tripadvisor.repository.UserRepository;
 import studies.project.tripadvisor.service.UserService;
 
 import java.util.List;
-import java.util.Optional;
 
+@Slf4j
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -16,28 +19,46 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     public void setUserRepository(UserRepository userRepository) {
+        log.info("UserService: setting user repository");
         this.userRepository = userRepository;
     }
 
     public List<User> retrieveUsers() {
+        log.info("UserService: retrieveUsers");
         List<User> users = userRepository.findAll();
+        if (users.isEmpty()) {
+            throw new NoContentException();
+        }
         return users;
     }
 
     public User getUser(Long userId) {
-        Optional<User> optEmp = userRepository.findById(userId);
-        return optEmp.get();
+        log.info("UserService: getUser");
+        if (!userRepository.existsById(userId)) {
+            throw new ElementNotFoundException();
+        }
+        User user = userRepository.getOne(userId);
+        return user;
     }
 
-    public void saveUser(User user){
+    public void saveUser(User user) {
+        log.info("UserService: saveUser");
+        log.info(user.toString());
         userRepository.save(user);
     }
 
-    public void deleteUser(Long userId){
+
+    public void deleteUser(Long userId) {
+        log.info("UserService: deleteUser");
+        if (!userRepository.existsById(userId)) {
+            throw new ElementNotFoundException();
+        }
         userRepository.deleteById(userId);
     }
 
     public void updateUser(User user) {
+        log.info("UserService: updateUser");
+        log.info(user.toString());
         userRepository.save(user);
     }
 }
