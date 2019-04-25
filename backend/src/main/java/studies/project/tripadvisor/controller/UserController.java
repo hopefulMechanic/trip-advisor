@@ -21,10 +21,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
-
     @GetMapping("/users")
     public ResponseEntity getUsers() throws NoContentException {
         List<User> users = userService.retrieveUsers();
@@ -37,23 +33,23 @@ public class UserController {
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
-    @GetMapping("/users/{userId}")
-    public ResponseEntity getUser(@PathVariable(name = "userId") Long userId) throws ElementNotFoundException {
-        User user = userService.getUser(userId);
+    @GetMapping("/users/{nickname}")
+    public ResponseEntity getUser(@PathVariable(name = "nickname") String nickname) throws ElementNotFoundException {
+        User user = userService.getUser(nickname);
         return new ResponseEntity(user, HttpStatus.OK);
     }
 
-    @DeleteMapping("/users/{userId}")
-    public ResponseEntity deleteUser(@PathVariable(name = "userId") Long userId) throws ElementNotFoundException {
-        userService.deleteUser(userId);
+    @DeleteMapping("/users/{nickname}")
+    public ResponseEntity deleteUser(@PathVariable(name = "nickname") String nickname) throws ElementNotFoundException {
+        userService.deleteUser(nickname);
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @PutMapping("/users/{userId}")
+    @PutMapping("/users/{nickname}")
     public ResponseEntity updateUser(@RequestBody User user,
-                                         @PathVariable(name = "userId") Long userId) throws ElementNotFoundException {
-        userService.getUser(userId);
-        user.setId(userId);
+                                         @PathVariable(name = "nickname") String nickname) throws ElementNotFoundException {
+        userService.getUser(nickname);
+        user.setNickname(nickname);
         userService.updateUser(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(user);
     }

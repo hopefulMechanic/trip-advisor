@@ -18,11 +18,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public void setUserRepository(UserRepository userRepository) {
-        log.info("UserService: setting user repository");
-        this.userRepository = userRepository;
-    }
-
     public List<User> retrieveUsers() {
         log.info("UserService: retrieveUsers");
         List<User> users = userRepository.findAll();
@@ -32,13 +27,12 @@ public class UserServiceImpl implements UserService {
         return users;
     }
 
-    public User getUser(Long userId) {
+    public User getUser(String nickname) {
         log.info("UserService: getUser");
-        if (!userRepository.existsById(userId)) {
+        if (!userRepository.existsById(nickname)) {
             throw new ElementNotFoundException();
         }
-        User user = userRepository.getOne(userId);
-        return user;
+        return userRepository.getOne(nickname);
     }
 
     public void saveUser(User user) {
@@ -47,13 +41,12 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
-
-    public void deleteUser(Long userId) {
+    public void deleteUser(String nickname) {
         log.info("UserService: deleteUser");
-        if (!userRepository.existsById(userId)) {
+        if (!userRepository.existsById(nickname)) {
             throw new ElementNotFoundException();
         }
-        userRepository.deleteById(userId);
+        userRepository.deleteById(nickname);
     }
 
     public void updateUser(User user) {
