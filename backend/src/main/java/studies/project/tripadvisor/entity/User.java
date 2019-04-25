@@ -5,46 +5,43 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Setter
 @Getter
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "USER")
-public class User {
+public class User implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(name = "USER_NICKNAME")
+    @Column(name = "NICKNAME")
     private String nickname;
 
-    @Column(name = "USER_PASSWORD")
-    private String password;
-
-    @Column(name = "USER_FIRST_NAME")
+    @Column(name = "FIRST_NAME")
     private String firstName;
 
-    @Column(name = "USER_LAST_NAME")
+    @Column(name = "LAST_NAME")
     private String lastName;
 
-    @Column(name = "USER_EMAIL")
+    @Column(name = "EMAIL")
     private String email;
 
     @Column(name = "NOTIFY_ME")
     private String notifyMe;
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Credential credential;
+
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
-                ", nickname='" + nickname + '\'' +
-                ", password='" + password + '\'' +
+                "nickname='" + nickname + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
-                ", notifyMe=" + notifyMe +
+                ", notifyMe=" + notifyMe + '\'' +
+                ", credential=" + credential +
                 '}';
     }
 }
