@@ -10,4 +10,6 @@ public interface CommentService {
 
     void updateComment(Comment comment);
 
+    Comment getComment(Long commentId);
+
 }

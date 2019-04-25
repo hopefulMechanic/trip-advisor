@@ -30,8 +30,8 @@ public class CommentController {
     @PostMapping("/places/{placeId}/comments")
     public ResponseEntity saveComment(@RequestBody Comment comment,
                                       @PathVariable(name = "placeId") Long placeId) throws ElementNotFoundException {
-        Place place = placeService.getPlace(placeId);
-        comment.setPlace(place);
+        Place p = placeService.getPlace(placeId);
+        comment.setPlace(p);
         commentService.saveComment(comment);
         return new ResponseEntity(HttpStatus.CREATED);
     }
@@ -40,6 +40,14 @@ public class CommentController {
     public ResponseEntity deleteComment(@PathVariable(name = "commentId") Long commentId) throws ElementNotFoundException {
         commentService.deleteComment(commentId);
         return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @PutMapping("/comments/{commentId}")
+    public ResponseEntity updateComment(@RequestBody Comment comment, @PathVariable(name = "commentId") Long commentId) throws ElementNotFoundException {
+        Comment c = commentService.getComment(commentId);
+        c.setText(comment.getText());
+        commentService.updateComment(c);
+        return ResponseEntity.status(HttpStatus.CREATED).body(c);
     }
 
 }

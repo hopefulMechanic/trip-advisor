@@ -28,8 +28,15 @@ public class CommentServiceImpl implements CommentService {
     }
 
     public void updateComment(Comment comment) {
-        log.info("PlaceService: updatePlace");
+        log.info("COmmentService: updateComment");
         commentRepository.save(comment);
+    }
+
+    public Comment getComment(Long commentId) {
+        if (!commentRepository.existsById(commentId))
+            throw new ElementNotFoundException();
+        Comment c = commentRepository.getOne(commentId);
+        return c;
     }
 
 }
