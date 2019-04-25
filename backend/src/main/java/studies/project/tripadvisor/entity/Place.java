@@ -1,12 +1,14 @@
 package studies.project.tripadvisor.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Setter
 @Getter
@@ -17,6 +19,7 @@ public class Place {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "PLACE_ID")
     private Long id;
 
     @Column(name = "NAME")
@@ -50,12 +53,8 @@ public class Place {
     @Column(name = "CATEGORIES")
     private List<String> categories = new ArrayList<>();
 
-    @Override
-    public String toString() {
-        return " Name: " + name
-                + " Description: " + description
-                + " email: " + email
-                + " phone " + phone
-                + " entrance fee " + entranceFee;
-    }
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "place")
+    @JsonManagedReference
+    private Set<Comment> comments;
+
 }
