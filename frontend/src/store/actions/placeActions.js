@@ -25,7 +25,6 @@ const getPlaces = () => {
     dispatch(getPlacesAction());
     PlaceService.getPlaces()
       .then(res => {
-        console.log("TCL: getPlaces -> res", res);
         dispatch(getPlacesSuccess({ data: res }));
       })
       .catch(err => dispatch(getPlacesFail()));

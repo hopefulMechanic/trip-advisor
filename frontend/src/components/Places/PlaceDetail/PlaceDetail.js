@@ -7,9 +7,10 @@ import Loader from "../../../common/Loader/Loader";
 import CategoryBadge from "../../../common/CategoryBadge/CategoryBadge";
 import { RATE_SCALE } from "../../../constans";
 import Collection from "../../../common/Collection/Collection";
+import CommentForm from "./CommentForm/CommentForm";
 
 class PlaceDetail extends Component {
-  state = {};
+  state = { isCommeting: false };
 
   componentDidMount() {
     const { getPlace, match } = this.props;
@@ -37,7 +38,8 @@ class PlaceDetail extends Component {
   }
 
   render() {
-    const { loading, selected } = this.props;
+    const { loading, selected, user } = this.props;
+    const { isCommeting } = this.state;
     let isCommerce;
     if (selected) {
       isCommerce = selected.entranceFee > 0;
@@ -80,7 +82,7 @@ class PlaceDetail extends Component {
                   </div>
                   <div className="d-flex flex-column align-items-start justify-content-start col-md-4 flex-wrap">
                     <div className="font-weight-bold"> Kontakt Details </div>
-                    <div>{selected.owner.name}</div>
+                    <div>{selected.name}</div>
                     <div>{selected.email}</div>
                     <div>{selected.phone}</div>
                   </div>
@@ -89,7 +91,7 @@ class PlaceDetail extends Component {
                     <div className="text-left">{selected.description}</div>
                   </div>
                 </div>
-                <div className="divider" />
+                {/* <div className="divider" />
                 <div className="row">
                   <div className="col-md-12">
                     <div className="font-weight-bold text-left">Comments:</div>
@@ -102,8 +104,28 @@ class PlaceDetail extends Component {
                       }))}
                     />
                   </div>
-                </div>
+                </div> */}
               </div>
+            </Card>
+            <Card header="Comments">
+              {user != null && !isCommeting && (
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={() => {
+                    this.setState({ isCommeting: !isCommeting });
+                  }}
+                >
+                  Add Comment
+                </button>
+              )}
+              {isCommeting && <CommentForm />}
+              <Collection
+                list={selected.comments.map(el => ({
+                  id: el.id,
+                  content: this.mapCommentToRow(el)
+                }))}
+              />
             </Card>
           </div>
         )) || <Loader size="large" />}

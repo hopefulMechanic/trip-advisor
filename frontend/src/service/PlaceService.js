@@ -5,7 +5,7 @@ export const PlaceService = {
     return axios.post("places", { ...payload }).then(res => res.data);
   },
   getPlaces: () => {
-    return axios.get("places").then(res => res.data);
+    return axios.get("places").then(res => res.data || []);
   },
   getPlace: id => {
     return axios.get(`places/${id}`).then(res => res.data);
