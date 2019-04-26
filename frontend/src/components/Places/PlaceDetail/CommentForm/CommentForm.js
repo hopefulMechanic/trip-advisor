@@ -7,6 +7,8 @@ class CommentForm extends Component {
   };
 
   submitHandler() {
+    const { submitHanlder } = this.props;
+    submitHanlder(this.state);
     // const { addPlace, history } = this.props;
     // addPlace(this.state, history);
   }
@@ -38,11 +40,11 @@ class CommentForm extends Component {
         </div>
         <button
           type="button"
-          className="btn btn-primary"
+          className="btn btn-secondary"
           disabled={text === ""}
           onClick={() => this.submitHandler()}
         >
-          Submit
+          Add Comment
         </button>
       </form>
     );

@@ -21,16 +21,17 @@ class PlaceDetail extends Component {
     return (
       <div key={comment.id} className="places--row">
         <div className="row w-100">
-          <div className="col-md-4 d-flex justify-content-start">
+          {/* <div className="col-md-4 d-flex justify-content-start">
             <div className="font-weight-bold">{comment.user.name}</div>
           </div>
           <div className="absolute-center">
             <span className="badge badge-secondary badge-pill">
               {`${comment.rate.toFixed(1)} / ${RATE_SCALE}`}
             </span>
-          </div>
+          </div> */}
           <div className="col-md-12 d-flex flex-wrap align-items-center justify-content-start mt-2">
-            {comment.content}
+            {/* {comment.content} */}
+            {comment.text}
           </div>
         </div>
       </div>
@@ -38,8 +39,15 @@ class PlaceDetail extends Component {
   }
 
   render() {
-    const { loading, selected, user } = this.props;
-    const { isCommeting } = this.state;
+    const {
+      loading,
+      selected,
+      user,
+      addingComment,
+      match,
+      addComment
+    } = this.props;
+    const placeId = match.params.id;
     let isCommerce;
     if (selected) {
       isCommerce = selected.entranceFee > 0;
@@ -108,24 +116,17 @@ class PlaceDetail extends Component {
               </div>
             </Card>
             <Card header="Comments">
-              {user != null && !isCommeting && (
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  onClick={() => {
-                    this.setState({ isCommeting: !isCommeting });
-                  }}
-                >
-                  Add Comment
-                </button>
-              )}
-              {isCommeting && <CommentForm />}
-              <Collection
-                list={selected.comments.map(el => ({
-                  id: el.id,
-                  content: this.mapCommentToRow(el)
-                }))}
+              <CommentForm
+                submitHanlder={comment => addComment(placeId, comment)}
               />
+              {(!addingComment && (
+                <Collection
+                  list={selected.comments.map(el => ({
+                    id: el.id,
+                    content: this.mapCommentToRow(el)
+                  }))}
+                />
+              )) || <Loader />}
             </Card>
           </div>
         )) || <Loader size="large" />}
@@ -138,12 +139,14 @@ const mapStateToProps = state => {
   return {
     user: state.auth.user,
     loading: state.place.loading,
-    selected: state.place.selected
+    selected: state.place.selected,
+    addingComment: state.place.addingComment
   };
 };
 
 const mapDispatchToProps = {
-  getPlace: placeAction.getPlace
+  getPlace: placeAction.getPlace,
+  addComment: placeAction.addComment
 };
 
 export default withRouter(
