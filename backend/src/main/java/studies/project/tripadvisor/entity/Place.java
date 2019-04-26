@@ -1,12 +1,15 @@
 package studies.project.tripadvisor.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Setter
 @Getter
@@ -16,9 +19,12 @@ import java.util.List;
 public class Place {
 
     @Id
+    @ApiModelProperty(hidden = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "PLACE_ID")
     private Long id;
 
+    @ApiModelProperty(required = true)
     @Column(name = "NAME")
     private String name;
 
@@ -50,12 +56,9 @@ public class Place {
     @Column(name = "CATEGORIES")
     private List<String> categories = new ArrayList<>();
 
-    @Override
-    public String toString() {
-        return " Name: " + name
-                + " Description: " + description
-                + " email: " + email
-                + " phone " + phone
-                + " entrance fee " + entranceFee;
-    }
+    @ApiModelProperty(hidden = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "place")
+    @JsonManagedReference
+    private Set<Comment> comments;
+
 }

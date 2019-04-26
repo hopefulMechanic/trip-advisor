@@ -41,7 +41,6 @@ public class PlaceServiceImpl implements PlaceService {
 
     public void savePlace(Place place) {
         log.info("PlaceService: savePlace");
-        log.info(place.toString());
         placeRepository.save(place);
     }
 
@@ -54,7 +53,7 @@ public class PlaceServiceImpl implements PlaceService {
 
     public void updatePlace(Place place) {
         log.info("PlaceService: updatePlace");
-        log.info(place.toString());
         placeRepository.save(place);
     }
+
 }
