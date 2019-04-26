@@ -33,23 +33,23 @@ public class UserController {
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
-    @GetMapping("/users/{nickname}")
-    public ResponseEntity getUser(@PathVariable(name = "nickname") String nickname) throws ElementNotFoundException {
-        User user = userService.getUser(nickname);
+    @GetMapping("/users/{userId}")
+    public ResponseEntity getUser(@PathVariable(name = "userId") Long userId) throws ElementNotFoundException {
+        User user = userService.getUser(userId);
         return new ResponseEntity(user, HttpStatus.OK);
     }
 
-    @DeleteMapping("/users/{nickname}")
-    public ResponseEntity deleteUser(@PathVariable(name = "nickname") String nickname) throws ElementNotFoundException {
-        userService.deleteUser(nickname);
+    @DeleteMapping("/users/{userId}")
+    public ResponseEntity deleteUser(@PathVariable(name = "userId") Long userId) throws ElementNotFoundException {
+        userService.deleteUser(userId);
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @PutMapping("/users/{nickname}")
+    @PutMapping("/users/{userId}")
     public ResponseEntity updateUser(@RequestBody User user,
-                                         @PathVariable(name = "nickname") String nickname) throws ElementNotFoundException {
-        userService.getUser(nickname);
-        user.setNickname(nickname);
+                                         @PathVariable(name = "userId") Long userId) throws ElementNotFoundException {
+        userService.getUser(userId);
+        user.setId(userId);
         userService.updateUser(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(user);
     }
