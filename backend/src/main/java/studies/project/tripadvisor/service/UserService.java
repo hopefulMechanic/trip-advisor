@@ -15,4 +15,6 @@ public interface UserService {
     void deleteUser(Long userId);
 
     void updateUser(User user);
+
+    boolean isNicknameTaken(String nickname);
 }
