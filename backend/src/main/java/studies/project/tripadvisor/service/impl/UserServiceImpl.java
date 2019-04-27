@@ -27,12 +27,12 @@ public class UserServiceImpl implements UserService {
         return users;
     }
 
-    public User getUser(String nickname) {
+    public User getUser(Long userId) {
         log.info("UserService: getUser");
-        if (!userRepository.existsById(nickname)) {
+        if (!userRepository.existsById(userId)) {
             throw new ElementNotFoundException();
         }
-        return userRepository.getOne(nickname);
+        return userRepository.getOne(userId);
     }
 
     public void saveUser(User user) {
@@ -41,12 +41,12 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
-    public void deleteUser(String nickname) {
+    public void deleteUser(Long userId) {
         log.info("UserService: deleteUser");
-        if (!userRepository.existsById(nickname)) {
+        if (!userRepository.existsById(userId)) {
             throw new ElementNotFoundException();
         }
-        userRepository.deleteById(nickname);
+        userRepository.deleteById(userId);
     }
 
     public void updateUser(User user) {
