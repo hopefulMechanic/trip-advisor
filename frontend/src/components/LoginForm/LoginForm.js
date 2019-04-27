@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { authAction } from "../../store/actions";
 class LoginForm extends Component {
-  state = { username: "", password: "" };
+  state = { nickname: "", password: "" };
 
   submitHandler() {
     const { login } = this.props;
@@ -14,7 +14,7 @@ class LoginForm extends Component {
   }
 
   render() {
-    const { username, password } = this.state;
+    const { nickname, password } = this.state;
     const { wrongCredetials } = this.props;
     return (
       <form
@@ -27,15 +27,15 @@ class LoginForm extends Component {
           {wrongCredetials && <p className="text-danger"> Wrong Credetials</p>}
         </div>
         <div className="form-group">
-          <label htmlFor="username">Username</label>
+          <label htmlFor="nickname">Username</label>
           <input
             onChange={event =>
-              this.handleChange(event.target.value, "username")
+              this.handleChange(event.target.value, "nickname")
             }
-            value={username}
+            value={nickname}
             type="text"
             className="form-control"
-            id="username"
+            id="nickname"
           />
         </div>
         <div className="form-group">
@@ -53,7 +53,7 @@ class LoginForm extends Component {
         <button
           type="button"
           className="btn btn-primary"
-          disabled={username === "" || password === ""}
+          disabled={nickname === "" || password === ""}
           onClick={() => this.submitHandler()}
         >
           Submit

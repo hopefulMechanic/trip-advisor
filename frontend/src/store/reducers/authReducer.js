@@ -37,8 +37,7 @@ const authReducer = (state = initState, action) => {
         ...state,
         loading: false,
         isAutheticated: false,
-        wrongCredetials: true,
-        user: {}
+        wrongCredetials: true
       };
     }
     case authActionTypes.LOGOUT: {

@@ -14,6 +14,11 @@ const ADD_PLACE = "ADD_PLACE";
 const ADD_PLACE_SUCCESS = "ADD_PLACE_SUCCESS";
 const ADD_PLACE_FAIL = "ADD_PLACE_FAIL";
 
+//add COMMENT
+const ADD_COMMENT = "ADD_COMMENT";
+const ADD_COMMENT_SUCCESS = "ADD_COMMENT_SUCCESS";
+const ADD_COMMENT_FAIL = "ADD_COMMENT_FAIL";
+
 // ACTIONS
 // LIST
 const getPlacesAction = () => ({
@@ -25,7 +30,6 @@ const getPlaces = () => {
     dispatch(getPlacesAction());
     PlaceService.getPlaces()
       .then(res => {
-        console.log("TCL: getPlaces -> res", res);
         dispatch(getPlacesSuccess({ data: res }));
       })
       .catch(err => dispatch(getPlacesFail()));
@@ -91,6 +95,32 @@ const addPlaceSuccess = () => ({
 const addPlaceFail = () => ({
   type: ADD_PLACE_FAIL
 });
+// Comment
+const addCommentAction = () => ({
+  type: ADD_COMMENT
+});
+
+const addComment = (id, comment) => {
+  return dispatch => {
+    dispatch(addCommentAction());
+    PlaceService.addComment(id, comment)
+      .then(res => {
+        PlaceService.getPlace(id).then(res => {
+          dispatch(getPlaceSuccess({ data: res }));
+          dispatch(addCommentSuccess());
+        });
+      })
+      .catch(err => dispatch(addCommentFail()));
+  };
+};
+
+const addCommentSuccess = () => ({
+  type: ADD_COMMENT_SUCCESS
+});
+
+const addCommentFail = () => ({
+  type: ADD_COMMENT_FAIL
+});
 
 export const placeActionTypes = {
   GET_PLACES,
@@ -101,6 +131,9 @@ export const placeActionTypes = {
   GET_PLACE_FAIL,
   ADD_PLACE,
   ADD_PLACE_SUCCESS,
-  ADD_PLACE_FAIL
+  ADD_PLACE_FAIL,
+  ADD_COMMENT,
+  ADD_COMMENT_SUCCESS,
+  ADD_COMMENT_FAIL
 };
-export const placeAction = { getPlaces, getPlace, addPlace };
+export const placeAction = { getPlaces, getPlace, addPlace, addComment };

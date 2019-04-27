@@ -15,7 +15,6 @@ import PlaceForm from "./components/Places/PlaceForm/PlaceForm";
 class App extends Component {
   render() {
     const { isAuthenticated } = this.props;
-    console.log("TCL: App -> render -> isAuthenticated", isAuthenticated);
     return (
       <div className="App">
         <Router>

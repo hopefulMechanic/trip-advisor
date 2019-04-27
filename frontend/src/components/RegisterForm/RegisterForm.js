@@ -5,18 +5,29 @@ import { USER_TYPES } from "../../constans";
 
 class RegisterForm extends Component {
   state = {
-    username: "",
+    nickname: "",
     password: "",
+    email: "",
+    lastName: "",
+    firstName: "",
     confirmPassword: "",
-    type: USER_TYPES.regular,
+    role: USER_TYPES.regular,
     passwordError: false
   };
 
   submitHandler() {
     const { register } = this.props;
-    const { username, password, confirmPassword, type } = this.state;
+    const {
+      nickname,
+      password,
+      email,
+      lastName,
+      firstName,
+      confirmPassword,
+      role
+    } = this.state;
     if (password === confirmPassword) {
-      const user = { username, password, type };
+      const user = { nickname, password, role, email, lastName, firstName };
       register(user);
     } else {
       this.setState({ passwordError: true });
@@ -27,7 +38,22 @@ class RegisterForm extends Component {
     this.setState({ [id]: value, passwordError: false });
   }
   render() {
-    const { username, password, confirmPassword, passwordError } = this.state;
+    const {
+      nickname,
+      password,
+      confirmPassword,
+      email,
+      lastName,
+      firstName,
+      passwordError
+    } = this.state;
+
+    const isDisabled =
+      nickname === "" ||
+      password === "" ||
+      email === "" ||
+      lastName === "" ||
+      firstName === "";
 
     return (
       <form
@@ -42,15 +68,49 @@ class RegisterForm extends Component {
           )}
         </div>
         <div className="form-group">
-          <label htmlFor="username">Username</label>
+          <label htmlFor="nickname">Username</label>
           <input
             onChange={event =>
-              this.handleChange(event.target.value, "username")
+              this.handleChange(event.target.value, "nickname")
             }
-            value={username}
+            value={nickname}
             type="text"
             className="form-control"
-            id="username"
+            id="nickname"
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="firstName">First Name</label>
+          <input
+            onChange={event =>
+              this.handleChange(event.target.value, "firstName")
+            }
+            value={firstName}
+            type="text"
+            className="form-control"
+            id="firstName"
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="lastName">Last Name</label>
+          <input
+            onChange={event =>
+              this.handleChange(event.target.value, "lastName")
+            }
+            value={lastName}
+            type="text"
+            className="form-control"
+            id="lastName"
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="email">Email</label>
+          <input
+            onChange={event => this.handleChange(event.target.value, "email")}
+            value={email}
+            type="text"
+            className="form-control"
+            id="email"
           />
         </div>
         <div className="form-group">
@@ -84,12 +144,12 @@ class RegisterForm extends Component {
               className="custom-control-input"
               id="accountType"
               onClick={event => {
-                const { type } = this.state;
+                const { role } = this.state;
                 this.handleChange(
-                  type === USER_TYPES.regular
+                  role === USER_TYPES.regular
                     ? USER_TYPES.comercial
                     : USER_TYPES.regular,
-                  "type"
+                  "role"
                 );
               }}
             />
@@ -101,7 +161,7 @@ class RegisterForm extends Component {
         <button
           type="button"
           className="btn btn-primary"
-          disabled={username === "" || password === ""}
+          disabled={isDisabled}
           onClick={() => this.submitHandler()}
         >
           Submit

@@ -33,6 +33,9 @@ public class User implements Serializable {
     @Column(name = "USER_EMAIL")
     private String email;
 
+    @Column(name = "USER_ROLEf")
+    private String role;
+
     @Override
     public String toString() {
         return "User{" +

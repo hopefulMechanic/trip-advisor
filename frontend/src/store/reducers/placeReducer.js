@@ -3,7 +3,8 @@ import { placeActionTypes } from "../actions";
 const initState = {
   list: [],
   selected: null,
-  loading: false
+  loading: false,
+  addingComment: false
 };
 
 const placeReducer = (state = initState, action) => {
@@ -21,6 +22,13 @@ const placeReducer = (state = initState, action) => {
     case placeActionTypes.GET_PLACE_FAIL:
     case placeActionTypes.GET_PLACES_FAIL:
       return { ...state, loading: false };
+    case placeActionTypes.ADD_COMMENT: {
+      return { ...state, addingComment: true };
+    }
+    case placeActionTypes.ADD_COMMENT_FAIL:
+    case placeActionTypes.ADD_COMMENT_SUCCESS: {
+      return { ...state, addingComment: false };
+    }
     default:
       return state;
   }

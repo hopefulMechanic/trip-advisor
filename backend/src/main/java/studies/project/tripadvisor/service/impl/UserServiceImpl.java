@@ -54,4 +54,9 @@ public class UserServiceImpl implements UserService {
         log.info(user.toString());
         userRepository.save(user);
     }
+
+    @Override
+    public boolean isNicknameTaken(String nickname) {
+        return userRepository.existsByNickname(nickname);
+    }
 }

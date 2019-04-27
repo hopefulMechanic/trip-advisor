@@ -1,4 +1,4 @@
-package studies.project.tripadvisor.entity.dto;
+package studies.project.tripadvisor.entity.dto.request;
 
 import lombok.Getter;
 import lombok.Setter;

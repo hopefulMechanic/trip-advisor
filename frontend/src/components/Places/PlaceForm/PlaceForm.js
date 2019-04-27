@@ -13,14 +13,15 @@ import Loader from "../../../common/Loader/Loader";
 class PlaceForm extends Component {
   state = {
     name: "",
-    email: "",
-    phone: "",
+    description: "",
     addressLine: "",
     city: "",
     postalCode: "",
     country: "",
-    categories: [],
     entranceFee: 0,
+    email: "",
+    phone: "",
+    categories: [],
     type: PLACE_TYPES.regular
   };
 
@@ -187,14 +188,6 @@ class PlaceForm extends Component {
           </div>
           <div className="form-row">
             <div className="col-md-6 mb-2">
-              {categories.length > 0 && (
-                <div>
-                  Selected:{" "}
-                  {categories.map(category => (
-                    <CategoryBadge key={category} category={category} />
-                  ))}
-                </div>
-              )}
               <div className="form-group">
                 <label htmlFor="categories">Categories</label>
                 <select multiple className="form-control" id="categories">
@@ -217,6 +210,26 @@ class PlaceForm extends Component {
                     </option>
                   ))}
                 </select>
+                {categories.length > 0 && (
+                  <div>
+                    Selected:{" "}
+                    {categories.map(category => (
+                      <CategoryBadge key={category} category={category} />
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+            <div className="col-md-6 mb-2">
+              <div className="form-group">
+                <label htmlFor="description">Description</label>
+                <textarea
+                  id="description"
+                  className="form-control"
+                  onChange={event =>
+                    this.handleChange(event.target.value, "description")
+                  }
+                />
               </div>
             </div>
             {type === PLACE_TYPES.comercial && (
