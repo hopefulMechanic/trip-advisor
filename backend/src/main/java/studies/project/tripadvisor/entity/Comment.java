@@ -31,9 +31,11 @@ public class Comment {
     @JoinColumn(name = "PLACE_ID")
     private Place place;
 
-//    @Column(name = "USER_ID")
-//    private Long userId;
+    @ApiModelProperty(hidden = true)
+    @OneToOne(fetch = FetchType.LAZY)
+    private User user;
 
-//    @Column(name = "ADDED_DATE")
-//    private DateFormat date;
+    @ApiModelProperty(hidden = true)
+    @Column(name = "MODIFY_DATE")
+    private String modifyDate;
 }

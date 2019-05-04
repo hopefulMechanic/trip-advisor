@@ -7,9 +7,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import studies.project.tripadvisor.entity.Comment;
 import studies.project.tripadvisor.entity.Place;
+import studies.project.tripadvisor.entity.User;
 import studies.project.tripadvisor.exception.ElementNotFoundException;
 import studies.project.tripadvisor.service.CommentService;
 import studies.project.tripadvisor.service.PlaceService;
+import studies.project.tripadvisor.service.UserService;
 
 @Slf4j
 @CrossOrigin()
@@ -21,17 +23,23 @@ public class CommentController {
     private CommentService commentService;
     @Autowired
     private PlaceService placeService;
+    @Autowired
+    private UserService userService;
 
-    public void setCommentService(CommentService commentService, PlaceService placeService) {
+    public void setCommentService(CommentService commentService, PlaceService placeService, UserService userService) {
         this.commentService = commentService;
         this.placeService = placeService;
+        this.userService = userService;
     }
 
-    @PostMapping("/places/{placeId}/comments")
+    @PostMapping("/places/{placeId}/comments/user/{userId}")
     public ResponseEntity saveComment(@RequestBody Comment comment,
-                                      @PathVariable(name = "placeId") Long placeId) throws ElementNotFoundException {
+                                      @PathVariable(name = "placeId") Long placeId,
+                                      @PathVariable(name = "userId") Long userId) throws ElementNotFoundException {
         Place p = placeService.getPlace(placeId);
+        User u = userService.getUser(userId);
         comment.setPlace(p);
+        comment.setUser(u);
         commentService.saveComment(comment);
         return new ResponseEntity(HttpStatus.CREATED);
     }
