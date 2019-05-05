@@ -31,9 +31,7 @@ public class Comment {
     @JoinColumn(name = "PLACE_ID")
     private Place place;
 
-//    @Column(name = "USER_ID")
-//    private Long userId;
-
-//    @Column(name = "ADDED_DATE")
-//    private DateFormat date;
+    @ApiModelProperty(required = true)
+    @Column(name = "SCORE")
+    private Integer score;
 }
