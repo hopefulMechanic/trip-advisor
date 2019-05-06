@@ -18,20 +18,32 @@ class PlaceDetail extends Component {
   }
 
   mapCommentToRow(comment) {
+    const { user, deleteComment, match } = this.props;
+    const placeId = match.params.id;
     return (
       <div key={comment.id} className="places--row">
         <div className="row w-100">
-          {/* <div className="col-md-4 d-flex justify-content-start">
-            <div className="font-weight-bold">{comment.user.name}</div>
+          <div className="col-md-2 d-flex justify-content-start">
+            <div className="font-weight-bold">{comment.user.firstName}:</div>
           </div>
-          <div className="absolute-center">
-            <span className="badge badge-secondary badge-pill">
-              {`${comment.rate.toFixed(1)} / ${RATE_SCALE}`}
-            </span>
-          </div> */}
+          <div className="col-md-6 d-flex justify-content-start">
+            <div>{comment.text}</div>
+          </div>
+          {user != null && user.id === comment.user.id && (
+            <div className="absolute-center">
+              <span
+                className="badge badge-secondary badge-pill"
+                onClick={() => {
+                  deleteComment(comment.id, placeId);
+                }}
+              >
+                usun
+              </span>
+            </div>
+          )}
           <div className="col-md-12 d-flex flex-wrap align-items-center justify-content-start mt-2">
             {/* {comment.content} */}
-            {comment.text}
+            {/* {comment.text} */}
           </div>
         </div>
       </div>
@@ -39,14 +51,7 @@ class PlaceDetail extends Component {
   }
 
   render() {
-    const {
-      loading,
-      selected,
-      user,
-      addingComment,
-      match,
-      addComment
-    } = this.props;
+    const { loading, selected, addingComment, match, addComment } = this.props;
     const placeId = match.params.id;
     let isCommerce;
     if (selected) {
@@ -99,20 +104,6 @@ class PlaceDetail extends Component {
                     <div className="text-left">{selected.description}</div>
                   </div>
                 </div>
-                {/* <div className="divider" />
-                <div className="row">
-                  <div className="col-md-12">
-                    <div className="font-weight-bold text-left">Comments:</div>
-                  </div>
-                  <div className="col-md-12">
-                    <Collection
-                      list={selected.comments.map(el => ({
-                        id: el.id,
-                        content: this.mapCommentToRow(el)
-                      }))}
-                    />
-                  </div>
-                </div> */}
               </div>
             </Card>
             <Card header="Comments">
@@ -146,7 +137,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
   getPlace: placeAction.getPlace,
-  addComment: placeAction.addComment
+  addComment: placeAction.addComment,
+  deleteComment: placeAction.deleteComment
 };
 
 export default withRouter(

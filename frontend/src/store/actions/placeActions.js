@@ -19,6 +19,11 @@ const ADD_COMMENT = "ADD_COMMENT";
 const ADD_COMMENT_SUCCESS = "ADD_COMMENT_SUCCESS";
 const ADD_COMMENT_FAIL = "ADD_COMMENT_FAIL";
 
+//delete COMMENT
+const DELETE_COMMENT = "DELETE_COMMENT";
+const DELETE_COMMENT_SUCCESS = "DELETE_COMMENT_SUCCESS";
+const DELETE_COMMENT_FAIL = "DELETE_COMMENT_FAIL";
+
 // ACTIONS
 // LIST
 const getPlacesAction = () => ({
@@ -122,6 +127,32 @@ const addCommentFail = () => ({
   type: ADD_COMMENT_FAIL
 });
 
+const deleteCommentAction = () => ({
+  type: DELETE_COMMENT
+});
+
+const deleteComment = (commentId, placeId) => {
+  return dispatch => {
+    dispatch(deleteCommentAction());
+    PlaceService.deleteComment(commentId)
+      .then(res => {
+        PlaceService.getPlace(placeId).then(res => {
+          dispatch(getPlaceSuccess({ data: res }));
+          dispatch(deleteCommenSuccess());
+        });
+      })
+      .catch(err => dispatch(deleteCommenFail()));
+  };
+};
+
+const deleteCommenSuccess = () => ({
+  type: DELETE_COMMENT_SUCCESS
+});
+
+const deleteCommenFail = () => ({
+  type: DELETE_COMMENT_FAIL
+});
+
 export const placeActionTypes = {
   GET_PLACES,
   GET_PLACES_SUCCESS,
@@ -136,4 +167,10 @@ export const placeActionTypes = {
   ADD_COMMENT_SUCCESS,
   ADD_COMMENT_FAIL
 };
-export const placeAction = { getPlaces, getPlace, addPlace, addComment };
+export const placeAction = {
+  getPlaces,
+  getPlace,
+  addPlace,
+  addComment,
+  deleteComment
+};
