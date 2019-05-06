@@ -34,4 +34,12 @@ public class Comment {
     @ApiModelProperty(required = true)
     @Column(name = "SCORE")
     private Integer score;
+  
+    @ApiModelProperty(hidden = true)
+    @OneToOne(fetch = FetchType.LAZY)
+    private User user;
+
+    @ApiModelProperty(hidden = true)
+    @Column(name = "MODIFY_DATE")
+    private String modifyDate;
 }
