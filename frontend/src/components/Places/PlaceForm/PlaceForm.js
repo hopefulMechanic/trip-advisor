@@ -54,7 +54,7 @@ class PlaceForm extends Component {
     } = this.state;
     const { user, loading } = this.props;
     const categoriesKeys = Object.keys(CATEGORIES_NAMES);
-    const isCommercial = user && user.type === USER_TYPES.comercial;
+    const isCommercial = user && user.role === USER_TYPES.commercial;
     const isValid =
       name !== "" &&
       addressLine !== "" &&
@@ -84,7 +84,7 @@ class PlaceForm extends Component {
                       onClick={event => {
                         this.handleChange(
                           type === PLACE_TYPES.regular
-                            ? PLACE_TYPES.comercial
+                            ? PLACE_TYPES.commercial
                             : PLACE_TYPES.regular,
                           "type"
                         );
@@ -232,7 +232,7 @@ class PlaceForm extends Component {
                 />
               </div>
             </div>
-            {type === PLACE_TYPES.comercial && (
+            {type === PLACE_TYPES.commercial && (
               <div className="col-md-6 mb-2">
                 <div className="form-group">
                   <label htmlFor="entranceFee">Entrance Fee</label>
