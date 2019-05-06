@@ -147,7 +147,7 @@ class RegisterForm extends Component {
                 const { role } = this.state;
                 this.handleChange(
                   role === USER_TYPES.regular
-                    ? USER_TYPES.comercial
+                    ? USER_TYPES.commercial
                     : USER_TYPES.regular,
                   "role"
                 );

@@ -1,4 +1,5 @@
 import { axios } from "./Axios";
+import { USER_DATA_KEY } from "./../store/actions/authActions";
 
 export const PlaceService = {
   addPlace: payload => {
@@ -11,6 +12,11 @@ export const PlaceService = {
     return axios.get(`places/${id}`).then(res => res.data);
   },
   addComment: (placeId, comment) => {
-    return axios.post(`places/${placeId}/comments`, comment);
+    const el = localStorage.getItem(USER_DATA_KEY);
+    const user = JSON.parse(el);
+    return axios.post(`places/${placeId}/comments/user/${user.id}`, comment);
+  },
+  deleteComment: commentId => {
+    return axios.delete(`comments/${commentId}`);
   }
 };

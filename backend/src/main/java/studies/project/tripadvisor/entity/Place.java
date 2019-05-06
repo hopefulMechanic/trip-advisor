@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -15,6 +16,7 @@ import java.util.Set;
 @Getter
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@NoArgsConstructor
 @Table(name = "PLACE")
 public class Place {
 
@@ -61,4 +63,16 @@ public class Place {
     @JsonManagedReference
     private Set<Comment> comments;
 
+    public Place(String name, String description, String addressLine, String city, String postalCode, String country, float entranceFee, String email, String phone, List<String> categories) {
+        this.name = name;
+        this.description = description;
+        this.addressLine = addressLine;
+        this.city = city;
+        this.postalCode = postalCode;
+        this.country = country;
+        this.entranceFee = entranceFee;
+        this.email = email;
+        this.phone = phone;
+        this.categories = categories;
+    }
 }
