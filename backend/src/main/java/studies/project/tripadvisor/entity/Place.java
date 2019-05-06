@@ -46,7 +46,7 @@ public class Place {
     private String country;
 
     @Column(name = "ENTRANCE_FEE")
-    private float entranceFee;
+    private Double entranceFee;
 
     @Column(name = "EMAIL")
     private String email;
