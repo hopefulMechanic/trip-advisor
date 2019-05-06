@@ -8,6 +8,9 @@ import studies.project.tripadvisor.exception.ElementNotFoundException;
 import studies.project.tripadvisor.repository.CommentRepository;
 import studies.project.tripadvisor.service.CommentService;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 @Slf4j
 @Service
 public class CommentServiceImpl implements CommentService {
@@ -17,6 +20,9 @@ public class CommentServiceImpl implements CommentService {
 
     public void saveComment(Comment comment) {
         log.info("CommentService: saveComment");
+        String pattern = "yyyy/MM/dd HH:mm:ss";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        comment.setModifyDate(simpleDateFormat.format(new Date()));
         commentRepository.save(comment);
     }
 
@@ -29,6 +35,9 @@ public class CommentServiceImpl implements CommentService {
 
     public void updateComment(Comment comment) {
         log.info("COmmentService: updateComment");
+        String pattern = "yyyy/MM/dd HH:mm:ss";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        comment.setModifyDate(simpleDateFormat.format(new Date()));
         commentRepository.save(comment);
     }
 
