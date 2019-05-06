@@ -23,7 +23,8 @@ class PlaceDetail extends Component {
     return (
       <div key={comment.id} className="places--row">
         <div className="row w-100">
-          <div className="col-md-2 d-flex justify-content-start">
+          <div className="col-md-3 d-flex justify-content-start flex-column">
+            <div className="font-weight-bold">{comment.modifyDate}</div>
             <div className="font-weight-bold">{comment.user.firstName}:</div>
           </div>
           <div className="col-md-6 d-flex justify-content-start">
