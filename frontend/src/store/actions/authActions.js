@@ -15,7 +15,7 @@ const REGISTER = "REGISTER";
 const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 const REGISTER_FAIL = "REGISTER_FAIL";
 
-const USER_DATA_KEY = "USER_DATA";
+export const USER_DATA_KEY = "USER_DATA";
 
 // login actions
 

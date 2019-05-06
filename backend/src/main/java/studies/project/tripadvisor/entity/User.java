@@ -2,6 +2,7 @@ package studies.project.tripadvisor.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -11,6 +12,7 @@ import java.io.Serializable;
 @Getter
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@NoArgsConstructor
 @Table(name = "USER")
 public class User implements Serializable {
 
@@ -35,6 +37,15 @@ public class User implements Serializable {
 
     @Column(name = "USER_ROLEf")
     private String role;
+
+    public User(String nickname, String password, String firstName, String lastName, String email, String role) {
+        this.nickname = nickname;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.role = role;
+    }
 
     @Override
     public String toString() {

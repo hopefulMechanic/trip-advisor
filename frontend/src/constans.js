@@ -9,11 +9,11 @@ export const CATEGORIES_NAMES = {
 };
 
 export const USER_TYPES = {
-  comercial: "comercial",
+  commercial: "commercial",
   regular: "regular"
 };
 
 export const PLACE_TYPES = {
-  comercial: "comercial",
+  commercial: "commercial",
   regular: "regular"
 };
