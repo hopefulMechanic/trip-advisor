@@ -2,6 +2,7 @@ package studies.project.tripadvisor.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import studies.project.tripadvisor.exception.ElementNotFoundException;
 import studies.project.tripadvisor.exception.NoContentException;
 import studies.project.tripadvisor.service.PlaceService;
 
+import java.lang.reflect.Type;
 import java.util.List;
 
 @Slf4j
@@ -85,8 +87,18 @@ public class PlaceController {
 
     private List<PlaceResponseDTO> convertToDto(List<Place> places) {
         ModelMapper modelMapper = new ModelMapper();
-        List<PlaceResponseDTO> placesResponseDto = modelMapper.map(places, List.class);
-//        placesResponseDto.stream().filter(o -> o.getComments()).stream().mapToDouble(Comment::getScore));
+
+        Type listType = new TypeToken<List<PlaceResponseDTO>>() {
+        }.getType();
+        List<PlaceResponseDTO> placesResponseDto = modelMapper.map(places, listType);
+
+        placesResponseDto.forEach(p -> p.setScore(
+                p.getComments()
+                        .stream()
+                        .mapToDouble(Comment::getScore)
+                        .average()
+                        .orElse(Double.NaN)
+        ));
         return placesResponseDto;
     }
 
