@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -12,18 +13,15 @@ import javax.persistence.*;
 @Getter
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@Table(name = "COMMENT")
-public class Comment {
+@NoArgsConstructor
+@Table(name = "OBSERVER")
+public class Observer {
 
     @Id
     @ApiModelProperty(hidden = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "COMMENT_ID")
+    @Column(name = "OBSERVER_ID")
     private Long id;
-
-    @ApiModelProperty(required = true)
-    @Column(name = "TEXT")
-    private String text;
 
     @ApiModelProperty(hidden = true)
     @ManyToOne(fetch = FetchType.LAZY)
@@ -32,14 +30,13 @@ public class Comment {
     private Place place;
 
     @ApiModelProperty(required = true)
-    @Column(name = "SCORE")
-    private Integer score;
-  
-    @ApiModelProperty(hidden = true)
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
+    @JoinColumn(name = "USER_ID")
     private User user;
 
-    @ApiModelProperty(hidden = true)
-    @Column(name = "MODIFY_DATE")
-    private String modifyDate;
+    public Observer(Place place, User user) {
+        this.place = place;
+        this.user = user;
+    }
 }

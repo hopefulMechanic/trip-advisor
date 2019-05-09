@@ -3,7 +3,6 @@ package studies.project.tripadvisor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import studies.project.tripadvisor.entity.Place;
@@ -15,7 +14,7 @@ import javax.annotation.PostConstruct;
 import java.util.List;
 
 
-@ComponentScan(basePackages = "studies.project.tripadvisor")
+//@ComponentScan(basePackages = "studies.project.tripadvisor")
 @CrossOrigin
 @EnableSwagger2
 @SpringBootApplication
@@ -38,11 +37,11 @@ public class TripAdvisorApplication {
         userRepository.save(commercial);
 
         Place commercialPlace = new Place("Commercial Place", "Test commercial Place",
-                "Klimeckiego", "Krakow", "123", "Polska", 100, "commercialPlace@gmail.com",
+                "Klimeckiego", "Krakow", "123", "Polska", 100.0, "commercialPlace@gmail.com",
                 "123456789", List.of("hotel", "parking"));
 
         Place nonCommercialPlace = new Place("Non commercial Place", "Test none commercial Place",
-                "Klimeckiego", "Berlin", "123", "Niemcy", 0, "non-commercialPlace@gmail.com",
+                "Klimeckiego", "Berlin", "123", "Niemcy", 0.0, "non-commercialPlace@gmail.com",
                 "123456789", List.of("food", "5star"));
 
         placeRepository.save(commercialPlace);
