@@ -47,10 +47,14 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     public void addObserver(Long placeId, Long userId) {
         log.info("NotificationService: addObserver");
-        Place place = placeRepository.getOne(placeId);
-        User user = userRepository.getOne(userId);
-        log.info("Place:\n" + place + "\nUser:\n" + user);
-        observerRepository.save(new Observer(place, user));
+        if (!userRepository.existsById(userId) || !placeRepository.existsById(placeId)) {
+            throw new ElementNotFoundException();
+        } else {
+            Place place = placeRepository.getOne(placeId);
+            User user = userRepository.getOne(userId);
+            log.info("Place:\n" + place + "\nUser:\n" + user);
+            observerRepository.save(new Observer(place, user));
+        }
     }
 
     @Override
@@ -67,10 +71,14 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     public List<String> retrieveMessages(Long userId) {
         log.info("NotificationService: retrieveMessages");
-        return messageRepository.findByUser(userRepository.getOne(userId))
-                .orElse(Collections.emptyList())
-                .stream()
-                .map(Message::getText)
-                .collect(Collectors.toList());
+        if (!userRepository.existsById(userId)) {
+            throw new ElementNotFoundException();
+        } else {
+            return messageRepository.findByUser(userRepository.getOne(userId))
+                    .orElse(Collections.emptyList())
+                    .stream()
+                    .map(Message::getText)
+                    .collect(Collectors.toList());
+        }
     }
 }
