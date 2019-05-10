@@ -6,6 +6,9 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.TermVector;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -15,6 +18,7 @@ import java.util.Set;
 @Setter
 @Getter
 @Entity
+@Indexed
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @NoArgsConstructor
 @Table(name = "PLACE")
@@ -26,6 +30,7 @@ public class Place {
     @Column(name = "PLACE_ID")
     private Long id;
 
+    @Field(termVector = TermVector.YES)
     @ApiModelProperty(required = true)
     @Column(name = "NAME")
     private String name;
@@ -33,15 +38,19 @@ public class Place {
     @Column(name = "DESCRIPTION")
     private String description;
 
+    @Field(termVector = TermVector.YES)
     @Column(name = "ADDRESS_LINE")
     private String addressLine;
 
+    @Field(termVector = TermVector.YES)
     @Column(name = "CITY")
     private String city;
 
+    @Field(termVector = TermVector.YES)
     @Column(name = "POSTAL_CODE")
     private String postalCode;
 
+    @Field(termVector = TermVector.YES)
     @Column(name = "COUNTRY")
     private String country;
 
@@ -63,7 +72,7 @@ public class Place {
     @JsonManagedReference
     private Set<Comment> comments;
 
-    public Place(String name, String description, String addressLine, String city, String postalCode, String country, float entranceFee, String email, String phone, List<String> categories) {
+    public Place(String name, String description, String addressLine, String city, String postalCode, String country, Double entranceFee, String email, String phone, List<String> categories) {
         this.name = name;
         this.description = description;
         this.addressLine = addressLine;
