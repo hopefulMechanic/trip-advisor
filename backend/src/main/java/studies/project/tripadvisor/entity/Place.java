@@ -63,7 +63,7 @@ public class Place {
     @JsonManagedReference
     private Set<Comment> comments;
 
-    public Place(String name, String description, String addressLine, String city, String postalCode, String country, float entranceFee, String email, String phone, List<String> categories) {
+    public Place(String name, String description, String addressLine, String city, String postalCode, String country, Double entranceFee, String email, String phone, List<String> categories) {
         this.name = name;
         this.description = description;
         this.addressLine = addressLine;

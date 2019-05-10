@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import studies.project.tripadvisor.entity.User;
 import studies.project.tripadvisor.entity.dto.request.CredentialDTO;
-import studies.project.tripadvisor.entity.dto.request.UserRequest;
+import studies.project.tripadvisor.entity.dto.request.UserRequestDTO;
 import studies.project.tripadvisor.entity.dto.response.UserResponse;
 import studies.project.tripadvisor.exception.ElementNotFoundException;
 import studies.project.tripadvisor.exception.InvalidPasswordException;
@@ -46,15 +46,15 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity register(@RequestBody UserRequest userRequest) {
-        if (!userService.isNicknameTaken(userRequest.getNickname())) {
+    public ResponseEntity register(@RequestBody UserRequestDTO userRequestDTO) {
+        if (!userService.isNicknameTaken(userRequestDTO.getNickname())) {
             User user = new User();
-            user.setNickname(userRequest.getNickname());
-            user.setPassword(userRequest.getPassword());
-            user.setFirstName(userRequest.getFirstName());
-            user.setLastName(userRequest.getLastName());
-            user.setEmail(userRequest.getEmail());
-            user.setRole(userRequest.getRole());
+            user.setNickname(userRequestDTO.getNickname());
+            user.setPassword(userRequestDTO.getPassword());
+            user.setFirstName(userRequestDTO.getFirstName());
+            user.setLastName(userRequestDTO.getLastName());
+            user.setEmail(userRequestDTO.getEmail());
+            user.setRole(userRequestDTO.getRole());
             userService.saveUser(user);
             return new ResponseEntity(HttpStatus.CREATED);
         } else {
