@@ -91,13 +91,14 @@ public class PlaceController {
         Type listType = new TypeToken<List<PlaceResponseDTO>>() {
         }.getType();
         List<PlaceResponseDTO> placesResponseDto = modelMapper.map(places, listType);
-
+        // -1 mowi ze nie ma zadnej oceny
+        // NaN tez byl dobrym wyjsciem ale latwiej mi porownac do liczby na froncie :)
         placesResponseDto.forEach(p -> p.setScore(
                 p.getComments()
                         .stream()
                         .mapToDouble(Comment::getScore)
                         .average()
-                        .orElse(Double.NaN)
+                        .orElse(-1)
         ));
         return placesResponseDto;
     }

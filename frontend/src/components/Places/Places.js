@@ -39,7 +39,9 @@ class Places extends Component {
             </div>
           </div>
           <div className="absolute-center">
-            <span className="badge badge-secondary badge-pill">{"-"}</span>
+            <span className="badge badge-secondary badge-pill">
+              {el.score < 0 ? "-" : el.score}
+            </span>
           </div>
           <div className="col-md-12 d-flex flex-wrap align-items-center justify-content-start mt-2">
             <div className="font-weight-bold mr-1">Categories:</div>

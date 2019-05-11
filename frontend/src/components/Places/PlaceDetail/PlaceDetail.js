@@ -8,6 +8,7 @@ import CategoryBadge from "../../../common/CategoryBadge/CategoryBadge";
 import { RATE_SCALE } from "../../../constans";
 import Collection from "../../../common/Collection/Collection";
 import CommentForm from "./CommentForm/CommentForm";
+import Rating from "react-rating";
 
 class PlaceDetail extends Component {
   state = { isCommeting: false };
@@ -27,8 +28,9 @@ class PlaceDetail extends Component {
             <div className="font-weight-bold">{comment.user.firstName}:</div>
             <div>{comment.modifyDate}</div>
           </div>
-          <div className="col-md-6 d-flex justify-content-start">
+          <div className="col-md-6 d-flex flex-column justify-content-start">
             <div>{comment.text}</div>
+            <Rating readonly initialRating={comment.score} stop={10} />
           </div>
           {user != null && user.id === comment.user.id && (
             <div className="absolute-center">
@@ -52,7 +54,14 @@ class PlaceDetail extends Component {
   }
 
   render() {
-    const { loading, selected, addingComment, match, addComment } = this.props;
+    const {
+      loading,
+      selected,
+      addingComment,
+      match,
+      addComment,
+      user
+    } = this.props;
     const placeId = match.params.id;
     let isCommerce;
     if (selected) {
@@ -108,9 +117,11 @@ class PlaceDetail extends Component {
               </div>
             </Card>
             <Card header="Comments">
-              <CommentForm
-                submitHanlder={comment => addComment(placeId, comment)}
-              />
+              {user != null && (
+                <CommentForm
+                  submitHanlder={comment => addComment(placeId, comment)}
+                />
+              )}
               {(!addingComment && (
                 <Collection
                   list={selected.comments.map(el => ({
