@@ -81,4 +81,14 @@ public class NotificationServiceImpl implements NotificationService {
                     .collect(Collectors.toList());
         }
     }
+
+    @Override
+    public void deleteMessages(Long userId) {
+        log.info("NotificationService: deleteMessages");
+        if (!userRepository.existsById(userId)) {
+            throw new ElementNotFoundException();
+        } else {
+            messageRepository.deleteByUser(userRepository.getOne(userId));
+        }
+    }
 }

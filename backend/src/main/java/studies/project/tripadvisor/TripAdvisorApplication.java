@@ -13,8 +13,6 @@ import studies.project.tripadvisor.repository.UserRepository;
 import javax.annotation.PostConstruct;
 import java.util.List;
 
-
-//@ComponentScan(basePackages = "studies.project.tripadvisor")
 @CrossOrigin
 @EnableSwagger2
 @SpringBootApplication

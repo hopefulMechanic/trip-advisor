@@ -43,4 +43,10 @@ public class NotificationController {
         notificationService.removeObserver(placeId, userId);
         return new ResponseEntity(HttpStatus.OK);
     }
+
+    @DeleteMapping("deleteMessages/{userId}")
+    public ResponseEntity deleteMessages(@PathVariable(name = "userId") Long userId) throws ElementNotFoundException {
+        notificationService.deleteMessages(userId);
+        return new ResponseEntity(HttpStatus.OK);
+    }
 }

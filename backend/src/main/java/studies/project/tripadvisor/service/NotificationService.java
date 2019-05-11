@@ -11,4 +11,6 @@ public interface NotificationService {
     void removeObserver(Long placeId, Long userId);
 
     List<String> retrieveMessages(Long userId);
+
+    void deleteMessages(Long userId);
 }
