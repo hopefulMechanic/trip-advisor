@@ -3,7 +3,6 @@ package studies.project.tripadvisor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import studies.project.tripadvisor.entity.Place;
@@ -15,7 +14,7 @@ import javax.annotation.PostConstruct;
 import java.util.List;
 
 
-@ComponentScan(basePackages = "studies.project.tripadvisor")
+//@ComponentScan(basePackages = "studies.project.tripadvisor")
 @CrossOrigin
 @EnableSwagger2
 @SpringBootApplication

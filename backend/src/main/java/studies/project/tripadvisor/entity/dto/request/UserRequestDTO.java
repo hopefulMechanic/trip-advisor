@@ -5,11 +5,10 @@ import lombok.Setter;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
-import java.io.Serializable;
 
 @Setter
 @Getter
-public class UserRequest implements Serializable {
+public class UserRequestDTO {
 
     private Long id;
 
