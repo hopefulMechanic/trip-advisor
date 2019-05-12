@@ -35,10 +35,10 @@ public class Place {
     @Column(name = "NAME")
     private String name;
 
+    @Field(termVector = TermVector.YES)
     @Column(name = "DESCRIPTION")
     private String description;
 
-    @Field(termVector = TermVector.YES)
     @Column(name = "ADDRESS_LINE")
     private String addressLine;
 
@@ -46,7 +46,6 @@ public class Place {
     @Column(name = "CITY")
     private String city;
 
-    @Field(termVector = TermVector.YES)
     @Column(name = "POSTAL_CODE")
     private String postalCode;
 

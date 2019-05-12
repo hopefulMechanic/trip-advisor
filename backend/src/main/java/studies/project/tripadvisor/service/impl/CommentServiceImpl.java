@@ -44,8 +44,7 @@ public class CommentServiceImpl implements CommentService {
     public Comment getComment(Long commentId) {
         if (!commentRepository.existsById(commentId))
             throw new ElementNotFoundException();
-        Comment c = commentRepository.getOne(commentId);
-        return c;
+        return commentRepository.getOne(commentId);
     }
 
 }

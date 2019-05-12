@@ -35,8 +35,7 @@ public class PlaceServiceImpl implements PlaceService {
         log.info("PlaceService: getPlace");
         if (!placeRepository.existsById(placeId))
             throw new ElementNotFoundException();
-        Place place = placeRepository.getOne(placeId);
-        return place;
+        return placeRepository.getOne(placeId);
     }
 
     public void savePlace(Place place) {

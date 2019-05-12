@@ -26,17 +26,13 @@ public class SearchController {
     @Autowired
     private SearchServiceImpl searchService;
 
-    @Autowired
-    private PlaceService placeService;
-
     public void setUserService(SearchServiceImpl searchService, PlaceService placeService) {
         this.searchService = searchService;
-        this.placeService = placeService;
     }
 
     @GetMapping("/search")
-    public ResponseEntity search(@RequestParam(value = "q", required = false) String q) throws NoContentException {
-        List<Place> searchResults = null;
+    public ResponseEntity search(@RequestParam(value = "query", required = false) String q) throws NoContentException {
+        List<Place> searchResults;
         searchResults = searchService.fuzzySearch(q);
         List<PlaceResponseDTO> placesResponseDto = convertToDto(searchResults);
         return new ResponseEntity(placesResponseDto, HttpStatus.OK);

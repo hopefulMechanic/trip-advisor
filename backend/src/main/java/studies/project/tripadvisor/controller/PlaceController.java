@@ -70,8 +70,7 @@ public class PlaceController {
 
     private Place convertToEntity(PlaceRequestDTO placeRequestDto) {
         ModelMapper modelMapper = new ModelMapper();
-        Place place = modelMapper.map(placeRequestDto, Place.class);
-        return place;
+        return modelMapper.map(placeRequestDto, Place.class);
     }
 
     private PlaceResponseDTO convertToDto(Place place) {

@@ -11,21 +11,23 @@ import studies.project.tripadvisor.entity.Place;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Service
 public class SearchServiceImpl {
 
+    @PersistenceContext
     @Autowired
     private final EntityManager entityManager;
 
     @Autowired
-    public SearchServiceImpl(EntityManager entityManager) {
+    protected SearchServiceImpl(EntityManager entityManager) {
         super();
         this.entityManager = entityManager;
     }
 
-    public void initializeSearchServiceImpl() {
+    protected void initializeSearchServiceImpl() {
         try {
             FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(entityManager);
             fullTextEntityManager.createIndexer().startAndWait();
@@ -38,7 +40,7 @@ public class SearchServiceImpl {
     public List<Place> fuzzySearch(String searchTerm) {
         FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(entityManager);
         QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(Place.class).get();
-        Query luceneQuery = qb.keyword().fuzzy().withEditDistanceUpTo(1).withPrefixLength(1).onFields("name")
+        Query luceneQuery = qb.keyword().fuzzy().withEditDistanceUpTo(1).withPrefixLength(1).onFields("name", "description", "city", "country")
                 .matching(searchTerm).createQuery();
 
         javax.persistence.Query jpaQuery = fullTextEntityManager.createFullTextQuery(luceneQuery, Place.class);
