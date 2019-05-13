@@ -1,12 +1,15 @@
 package studies.project.tripadvisor.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @Setter
 @Getter
@@ -37,6 +40,11 @@ public class User implements Serializable {
 
     @Column(name = "USER_ROLEf")
     private String role;
+
+    @ApiModelProperty(hidden = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    @JsonManagedReference
+    private Set<Message> messages;
 
     public User(String nickname, String password, String firstName, String lastName, String email, String role) {
         this.nickname = nickname;
