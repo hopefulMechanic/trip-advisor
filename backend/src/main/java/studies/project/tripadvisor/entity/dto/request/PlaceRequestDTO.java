@@ -30,7 +30,7 @@ public class PlaceRequestDTO {
     @NotEmpty
     private String country;
 
-    private float entranceFee;
+    private Double entranceFee;
 
     @NotEmpty
     private String email;
@@ -39,5 +39,18 @@ public class PlaceRequestDTO {
     private String phone;
 
     private List<String> categories;
+
+    public PlaceRequestDTO(String name, String description, String addressLine, String city, String postalCode, String country, Double entranceFee, String email, String phone, List<String> categories) {
+        this.name = name;
+        this.description = description;
+        this.addressLine = addressLine;
+        this.city = city;
+        this.postalCode = postalCode;
+        this.country = country;
+        this.entranceFee = entranceFee;
+        this.email = email;
+        this.phone = phone;
+        this.categories = categories;
+    }
 
 }
