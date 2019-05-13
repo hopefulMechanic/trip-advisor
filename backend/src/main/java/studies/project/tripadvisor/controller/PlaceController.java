@@ -14,6 +14,7 @@ import studies.project.tripadvisor.entity.dto.response.PlaceResponseDTO;
 import studies.project.tripadvisor.exception.ElementNotFoundException;
 import studies.project.tripadvisor.exception.NoContentException;
 import studies.project.tripadvisor.service.PlaceService;
+import studies.project.tripadvisor.service.impl.SearchServiceImpl;
 
 import java.lang.reflect.Type;
 import java.util.List;
@@ -27,13 +28,21 @@ public class PlaceController {
     @Autowired
     private PlaceService placeService;
 
-    public void setUserService(PlaceService placeService) {
+    @Autowired
+    private SearchServiceImpl searchService;
+
+    public void setUserService(PlaceService placeService, SearchServiceImpl searchService) {
         this.placeService = placeService;
+        this.searchService = searchService;
     }
 
     @GetMapping("/places")
-    public ResponseEntity getPlaces() throws NoContentException {
-        List<Place> places = placeService.retrievePlaces();
+    public ResponseEntity getPlaces(@RequestParam(value = "filter", required = false) String query) throws NoContentException {
+        List<Place> places;
+        if (query == null)
+            places = placeService.retrievePlaces();
+        else
+            places = searchService.fuzzySearch(query);
         List<PlaceResponseDTO> placesResponseDto = convertToDto(places);
         return new ResponseEntity(placesResponseDto, HttpStatus.OK);
     }
@@ -68,12 +77,12 @@ public class PlaceController {
         return ResponseEntity.status(HttpStatus.CREATED).body(placeResponseDto);
     }
 
-    private Place convertToEntity(PlaceRequestDTO placeRequestDto) {
+    public Place convertToEntity(PlaceRequestDTO placeRequestDto) {
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(placeRequestDto, Place.class);
     }
 
-    private PlaceResponseDTO convertToDto(Place place) {
+    public PlaceResponseDTO convertToDto(Place place) {
         ModelMapper modelMapper = new ModelMapper();
         PlaceResponseDTO placeResponseDto = modelMapper.map(place, PlaceResponseDTO.class);
         placeResponseDto.setScore(placeResponseDto.getComments()
@@ -84,7 +93,7 @@ public class PlaceController {
         return placeResponseDto;
     }
 
-    private List<PlaceResponseDTO> convertToDto(List<Place> places) {
+    public List<PlaceResponseDTO> convertToDto(List<Place> places) {
         ModelMapper modelMapper = new ModelMapper();
 
         Type listType = new TypeToken<List<PlaceResponseDTO>>() {

@@ -6,6 +6,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.apache.lucene.analysis.core.KeywordAnalyzer;
+import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.TermVector;
@@ -31,10 +33,12 @@ public class Place {
     private Long id;
 
     @Field(termVector = TermVector.YES)
+    @Analyzer(impl = KeywordAnalyzer.class)
     @ApiModelProperty(required = true)
     @Column(name = "NAME")
     private String name;
 
+    @Analyzer(impl = KeywordAnalyzer.class)
     @Field(termVector = TermVector.YES)
     @Column(name = "DESCRIPTION")
     private String description;
@@ -42,6 +46,7 @@ public class Place {
     @Column(name = "ADDRESS_LINE")
     private String addressLine;
 
+    @Analyzer(impl = KeywordAnalyzer.class)
     @Field(termVector = TermVector.YES)
     @Column(name = "CITY")
     private String city;
@@ -49,6 +54,7 @@ public class Place {
     @Column(name = "POSTAL_CODE")
     private String postalCode;
 
+    @Analyzer(impl = KeywordAnalyzer.class)
     @Field(termVector = TermVector.YES)
     @Column(name = "COUNTRY")
     private String country;
