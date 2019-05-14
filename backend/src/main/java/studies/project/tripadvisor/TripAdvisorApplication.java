@@ -37,11 +37,11 @@ public class TripAdvisorApplication {
         userRepository.save(commercial);
 
         Place commercialPlace = new Place("Commercial Place", "Test commercial Place",
-                "Klimeckiego", "Krakow", "123", "Polska", 100.0, "commercialPlace@gmail.com",
+                "Klimeckiego", "Krakow", "123", "Polska", 100.00, "commercialPlace@gmail.com",
                 "123456789", List.of("hotel", "parking"));
 
         Place nonCommercialPlace = new Place("Non commercial Place", "Test none commercial Place",
-                "Klimeckiego", "Berlin", "123", "Niemcy", 0.0, "non-commercialPlace@gmail.com",
+                "Klimeckiego", "Berlin", "123", "Niemcy", 0.00, "non-commercialPlace@gmail.com",
                 "123456789", List.of("food", "5star"));
 
         placeRepository.save(commercialPlace);

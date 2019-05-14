@@ -6,6 +6,11 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.apache.lucene.analysis.core.KeywordAnalyzer;
+import org.hibernate.search.annotations.Analyzer;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.TermVector;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -15,6 +20,7 @@ import java.util.Set;
 @Setter
 @Getter
 @Entity
+@Indexed
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @NoArgsConstructor
 @Table(name = "PLACE")
@@ -26,22 +32,30 @@ public class Place {
     @Column(name = "PLACE_ID")
     private Long id;
 
+    @Field(termVector = TermVector.YES)
+    @Analyzer(impl = KeywordAnalyzer.class)
     @ApiModelProperty(required = true)
     @Column(name = "NAME")
     private String name;
 
+    @Analyzer(impl = KeywordAnalyzer.class)
+    @Field(termVector = TermVector.YES)
     @Column(name = "DESCRIPTION")
     private String description;
 
     @Column(name = "ADDRESS_LINE")
     private String addressLine;
 
+    @Analyzer(impl = KeywordAnalyzer.class)
+    @Field(termVector = TermVector.YES)
     @Column(name = "CITY")
     private String city;
 
     @Column(name = "POSTAL_CODE")
     private String postalCode;
 
+    @Analyzer(impl = KeywordAnalyzer.class)
+    @Field(termVector = TermVector.YES)
     @Column(name = "COUNTRY")
     private String country;
 
