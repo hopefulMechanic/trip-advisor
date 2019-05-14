@@ -12,4 +12,6 @@ import java.util.Optional;
 public interface MessageRepository extends JpaRepository<Message, Long> {
 
     Optional<List<Message>> findByUser(User user);
+
+    void deleteByUser(User user);
 }
