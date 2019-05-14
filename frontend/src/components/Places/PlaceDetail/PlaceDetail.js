@@ -8,6 +8,7 @@ import CategoryBadge from "../../../common/CategoryBadge/CategoryBadge";
 import Collection from "../../../common/Collection/Collection";
 import CommentForm from "./CommentForm/CommentForm";
 import Rating from "react-rating";
+import { NotificiationService } from "../../../service/NotificiationService";
 
 class PlaceDetail extends Component {
   state = { isCommeting: false };
@@ -61,6 +62,7 @@ class PlaceDetail extends Component {
       addComment,
       user
     } = this.props;
+    console.log("TCL: PlaceDetail -> render -> user", user);
     const placeId = match.params.id;
     let isCommerce;
     if (selected) {
@@ -83,6 +85,27 @@ class PlaceDetail extends Component {
                       {(isCommerce && `${selected.entranceFee}$`) || "Free"}
                     </span>
                   }
+                  <div style={{ position: "absolute", top: "5px", right: 0 }}>
+                    <button
+                      className="btn btn-danger"
+                      onClick={() => {
+                        NotificiationService.removeSubscription(
+                          user.id,
+                          placeId
+                        );
+                      }}
+                    >
+                      Unsubscribe
+                    </button>
+                    <button
+                      className="btn btn-success"
+                      onClick={() => {
+                        NotificiationService.addSubscripiton(user.id, placeId);
+                      }}
+                    >
+                      Subscribe
+                    </button>
+                  </div>
                 </span>
               }
             >
