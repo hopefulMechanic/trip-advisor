@@ -49,4 +49,14 @@ public class NotificationController {
         notificationService.deleteMessages(userId);
         return new ResponseEntity(HttpStatus.OK);
     }
+
+    @GetMapping("check/{placeId}/{userId}")
+    public ResponseEntity checkIfObserve(@PathVariable(name = "placeId") Long placeId,
+                                         @PathVariable(name = "userId") Long userId) throws ElementNotFoundException {
+        if (notificationService.checkIfObserve(placeId, userId)) {
+            return new ResponseEntity(Boolean. TRUE, HttpStatus.OK);
+        } else {
+            return new ResponseEntity(Boolean.FALSE, HttpStatus.OK);
+        }
+    }
 }

@@ -13,4 +13,6 @@ public interface NotificationService {
     List<String> retrieveMessages(Long userId);
 
     void deleteMessages(Long userId);
+
+    Boolean checkIfObserve(Long placeId, Long userId);
 }

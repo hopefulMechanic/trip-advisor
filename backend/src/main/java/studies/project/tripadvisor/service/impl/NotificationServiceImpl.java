@@ -91,4 +91,16 @@ public class NotificationServiceImpl implements NotificationService {
             messageRepository.deleteByUser(userRepository.getOne(userId));
         }
     }
+
+    @Override
+    public Boolean checkIfObserve(Long placeId, Long userId) {
+        log.info("NotificationService: checkIfObserve");
+        if (!placeRepository.existsById(placeId) || !userRepository.existsById(userId)) {
+            throw new ElementNotFoundException();
+        }
+        Place place = placeRepository.getOne(placeId);
+        User user = userRepository.getOne(userId);
+        log.info("Place:\n" + place + "\nUser:\n" + user);
+        return observerRepository.existsByPlaceAndUser(place, user);
+    }
 }
