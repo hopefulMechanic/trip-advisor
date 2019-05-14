@@ -6,6 +6,7 @@ import studies.project.tripadvisor.entity.Observer;
 import studies.project.tripadvisor.entity.Place;
 import studies.project.tripadvisor.entity.User;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,7 +15,8 @@ public interface ObserverRepository extends JpaRepository<Observer, Long> {
 
     Optional<List<Observer>> findByPlace(Place place);
 
-    Boolean existsByPlaceAndUser(Place place, User User);
+    Boolean existsByPlaceAndUser(Place place, User user);
 
-    Boolean deleteByPlaceAndUser(Place place, User User);
+    @Transactional
+    void deleteByPlaceAndUser(Place place, User user);
 }
