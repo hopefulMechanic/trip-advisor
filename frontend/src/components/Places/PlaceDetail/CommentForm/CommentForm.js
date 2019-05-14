@@ -31,7 +31,7 @@ class CommentForm extends Component {
             this.setState({ isCommenting: !isCommenting });
           }}
         >
-          +
+          Add Comment
         </button>
         {isCommenting && (
           <form

@@ -89,7 +89,7 @@ public class PlaceController {
                 .stream()
                 .mapToDouble(Comment::getScore)
                 .average()
-                .orElse(Double.NaN));
+                .orElse(-1));
         return placeResponseDto;
     }
 

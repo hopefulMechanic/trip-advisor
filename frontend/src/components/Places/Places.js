@@ -5,22 +5,21 @@ import Card from "../../common/Card/Card";
 import Collection from "../../common/Collection/Collection";
 import { placeAction } from "../../store/actions";
 import Loader from "../../common/Loader/Loader";
-import { RATE_SCALE } from "../../constans";
 import "./Places.scss";
 import CategoryBadge from "../../common/CategoryBadge/CategoryBadge";
+import debounce from "lodash-es/debounce";
 class Places extends Component {
-  state = {};
-
+  state = {
+    query: ""
+  };
+  filter;
   componentDidMount() {
     const { getPlaces } = this.props;
     getPlaces();
+    this.fitler = debounce(getPlaces, 500);
   }
 
   mapPlaceToRow(el) {
-    // const rateSum = el.comments
-    //   .map(el => el.rate)
-    //   .reduce((prev, curr) => (prev += curr), 0);
-    // const rateAmout = el.comments.length;
     return (
       <div key={el.id} className="places--row">
         <div className="row w-100">
@@ -40,7 +39,7 @@ class Places extends Component {
           </div>
           <div className="absolute-center">
             <span className="badge badge-secondary badge-pill">
-              {el.score < 0 ? "-" : el.score}
+              {el.score < 0 ? "No Score" : `${el.score}/10`}
             </span>
           </div>
           <div className="col-md-12 d-flex flex-wrap align-items-center justify-content-start mt-2">
@@ -59,10 +58,11 @@ class Places extends Component {
 
   render() {
     const { history, list, loading, user } = this.props;
+    const { query } = this.state;
     return (
       <div className="places">
         <Card header="Places List">
-          {user != null && !loading && (
+          {user != null && (
             <button
               type="button"
               className="btn btn-secondary"
@@ -73,7 +73,20 @@ class Places extends Component {
               New Place
             </button>
           )}
-          {user != null && !loading && <div className="divider" />}
+          {user != null && <div className="divider" />}
+          <div className="form-group">
+            <input
+              onChange={event => {
+                this.setState({ query: event.target.value });
+                this.fitler(event.target.value);
+              }}
+              value={query}
+              type="text"
+              placeholder="Find Place"
+              className="form-control"
+              id="query"
+            />
+          </div>
           {(!loading && (
             <Collection
               onDoubleClick={id => {

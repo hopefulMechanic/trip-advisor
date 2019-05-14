@@ -5,7 +5,6 @@ import { placeAction } from "../../../store/actions";
 import Card from "../../../common/Card/Card";
 import Loader from "../../../common/Loader/Loader";
 import CategoryBadge from "../../../common/CategoryBadge/CategoryBadge";
-import { RATE_SCALE } from "../../../constans";
 import Collection from "../../../common/Collection/Collection";
 import CommentForm from "./CommentForm/CommentForm";
 import Rating from "react-rating";

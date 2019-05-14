@@ -5,8 +5,12 @@ export const PlaceService = {
   addPlace: payload => {
     return axios.post("places", { ...payload }).then(res => res.data);
   },
-  getPlaces: () => {
-    return axios.get("places").then(res => res.data || []);
+  getPlaces: query => {
+    let url = "places";
+    if (query != null && query !== "") {
+      url += `?filter=${query}`;
+    }
+    return axios.get(url).then(res => res.data || []);
   },
   getPlace: id => {
     return axios.get(`places/${id}`).then(res => res.data);
