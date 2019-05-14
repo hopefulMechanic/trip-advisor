@@ -8,15 +8,35 @@ import Loader from "../../common/Loader/Loader";
 import "./Places.scss";
 import CategoryBadge from "../../common/CategoryBadge/CategoryBadge";
 import debounce from "lodash-es/debounce";
+import { NotificationService } from "../../service/NotificationService";
 class Places extends Component {
   state = {
-    query: ""
+    query: "",
+    notifications: null
   };
   filter;
   componentDidMount() {
     const { getPlaces } = this.props;
     getPlaces();
     this.fitler = debounce(getPlaces, 500);
+  }
+
+  componentDidUpdate() {
+    const { user } = this.props;
+    const { notifications } = this.state;
+    if (user != null && notifications == null) {
+      NotificationService.retrieveMessages(user.id).then(res =>
+        this.setState({ notifications: res })
+      );
+    }
+  }
+
+  mapNotificationsRow(el) {
+    return (
+      <div key={el} className="notification--row font-weight-bold text-center w-100">
+        {el}
+      </div>
+    );
   }
 
   mapPlaceToRow(el) {
@@ -58,9 +78,19 @@ class Places extends Component {
 
   render() {
     const { history, list, loading, user } = this.props;
-    const { query } = this.state;
+    const { query, notifications } = this.state;
     return (
       <div className="places">
+        {notifications != null && (
+          <Card header="Current Notifications">
+            <Collection
+              list={notifications.map(el => ({
+                id: el.id,
+                content: this.mapNotificationsRow(el)
+              }))}
+            />
+          </Card>
+        )}
         <Card header="Places List">
           {user != null && (
             <button

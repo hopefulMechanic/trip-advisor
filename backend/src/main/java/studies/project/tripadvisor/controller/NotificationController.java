@@ -26,6 +26,7 @@ public class NotificationController {
     @PostMapping("notify/{placeId}")
     public ResponseEntity notifyObservers(@RequestBody String message,
                                           @PathVariable(name = "placeId") Long placeId) {
+        log.info("message {}", message);
         notificationService.notifyObservers(placeId, message);
         return new ResponseEntity(HttpStatus.OK);
     }

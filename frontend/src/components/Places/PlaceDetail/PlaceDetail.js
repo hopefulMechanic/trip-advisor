@@ -8,10 +8,10 @@ import CategoryBadge from "../../../common/CategoryBadge/CategoryBadge";
 import Collection from "../../../common/Collection/Collection";
 import CommentForm from "./CommentForm/CommentForm";
 import Rating from "react-rating";
-import { NotificiationService } from "../../../service/NotificiationService";
+import { NotificationService } from "../../../service/NotificationService";
 
 class PlaceDetail extends Component {
-  state = { isCommeting: false };
+  state = { isCommeting: false, message: "" };
 
   componentDidMount() {
     const { getPlace, match } = this.props;
@@ -44,10 +44,6 @@ class PlaceDetail extends Component {
               </span>
             </div>
           )}
-          <div className="col-md-12 d-flex flex-wrap align-items-center justify-content-start mt-2">
-            {/* {comment.content} */}
-            {/* {comment.text} */}
-          </div>
         </div>
       </div>
     );
@@ -62,7 +58,8 @@ class PlaceDetail extends Component {
       addComment,
       user
     } = this.props;
-    console.log("TCL: PlaceDetail -> render -> user", user);
+
+    const { message } = this.state;
     const placeId = match.params.id;
     let isCommerce;
     if (selected) {
@@ -89,7 +86,7 @@ class PlaceDetail extends Component {
                     <button
                       className="btn btn-danger"
                       onClick={() => {
-                        NotificiationService.removeSubscription(
+                        NotificationService.removeSubscription(
                           user.id,
                           placeId
                         );
@@ -100,7 +97,7 @@ class PlaceDetail extends Component {
                     <button
                       className="btn btn-success"
                       onClick={() => {
-                        NotificiationService.addSubscripiton(user.id, placeId);
+                        NotificationService.addSubscripiton(user.id, placeId);
                       }}
                     >
                       Subscribe
@@ -137,6 +134,31 @@ class PlaceDetail extends Component {
                   </div>
                 </div>
               </div>
+            </Card>
+            <Card header="Add Notification">
+              <form
+                className="form-inline"
+                onSubmit={event => {
+                  const { message } = this.state;
+                  NotificationService.notifyObservers(placeId, message);
+                  event.preventDefault();
+                }}
+              >
+                <input
+                  type="text"
+                  value={message}
+                  style={{ width: "100%" }}
+                  className="form-control mb-2 mr-sm-2"
+                  id="message"
+                  placeholder="Message"
+                  onChange={event =>
+                    this.setState({ message: event.target.value })
+                  }
+                />
+                <button type="submit" className="btn btn-secondary mb-2">
+                  Notify Users
+                </button>
+              </form>
             </Card>
             <Card header="Comments">
               {user != null && (
