@@ -37,15 +37,35 @@ public class TripAdvisorApplication {
         userRepository.save(nonCommercial);
         userRepository.save(commercial);
 
-        Place commercialPlace = new Place("Commercial Place", "Test commercial Place",
+        Place commercialPlace = new Place("Restauracja A", "Test commercial Place",
                 "Klimeckiego", "Krakow", "123", "Polska", 100.00, "commercialPlace@gmail.com",
                 "123456789", List.of("hotel", "parking"));
 
-        Place nonCommercialPlace = new Place("Non commercial Place", "Test none commercial Place",
+        Place commercialPlace2 = new Place("Restauracja A", "Test commercial Place",
+                "Klimeckiego", "Krakow", "123", "Polska", 100.00, "commercialPlace@gmail.com",
+                "123456789", List.of("hotel", "parking"));
+
+        Place commercialPlace3 = new Place("Hotel A", "Test commercial Place",
+                "Klimeckiego", "Krakow", "123", "Polska", 100.00, "commercialPlace@gmail.com",
+                "123456789", List.of("hotel", "parking"));
+
+        Place commercialPlace4 = new Place("Biblioteka A", "Test commercial Place",
+                "Klimeckiego", "Krakow", "123", "Polska", 100.00, "commercialPlace@gmail.com",
+                "123456789", List.of("hotel", "parking"));
+
+        Place commercialPlace5 = new Place("Kino", "Biblioteka jest dostepna",
+                "Klimeckiego", "Krakow", "123", "Polska", 100.00, "commercialPlace@gmail.com",
+                "123456789", List.of("hotel", "parking"));
+
+        Place nonCommercialPlace = new Place("Restauracja B", "Test none commercial Place",
                 "Klimeckiego", "Berlin", "123", "Niemcy", 0.00, "non-commercialPlace@gmail.com",
                 "123456789", List.of("food", "5star"));
 
         placeRepository.save(commercialPlace);
+        placeRepository.save(commercialPlace2);
+        placeRepository.save(commercialPlace3);
+        placeRepository.save(commercialPlace4);
+        placeRepository.save(commercialPlace5);
         placeRepository.save(nonCommercialPlace);
     }
 
