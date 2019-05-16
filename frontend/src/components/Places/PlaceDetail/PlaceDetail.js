@@ -17,6 +17,7 @@ class PlaceDetail extends Component {
     const { getPlace, match } = this.props;
     getPlace(match.params.id);
   }
+
   componentDidUpdate() {
     const { match, user } = this.props;
     const { isSubscriber } = this.state;
@@ -24,13 +25,9 @@ class PlaceDetail extends Component {
       const placeId = match.params.id;
       NotificationService.checkIfIsObserver(placeId, user.id)
         .then(() => {
-          console.log("is  subscriber");
-
           this.setState({ isSubscriber: true });
         })
         .catch(() => {
-          console.log("is not subscriber");
-
           this.setState({ isSubscriber: false });
         });
     }
@@ -73,11 +70,16 @@ class PlaceDetail extends Component {
       addingComment,
       match,
       addComment,
-      user
+      user,
+      history
     } = this.props;
 
     const { message, isSubscriber } = this.state;
     const placeId = match.params.id;
+    const userOwnPlace =
+      user != null &&
+      (selected != null && selected.createdBy) &&
+      selected.createdBy.id === user.id;
     let isCommerce;
     if (selected) {
       isCommerce = selected.entranceFee > 0;
@@ -103,6 +105,16 @@ class PlaceDetail extends Component {
                     <div
                       style={{ position: "absolute", top: "5px", right: "5px" }}
                     >
+                      {userOwnPlace && (
+                        <button
+                          className="btn btn-primary"
+                          onClick={() => {
+                            history.push(`/places/${placeId}/edit`);
+                          }}
+                        >
+                          Edit
+                        </button>
+                      )}
                       {isSubscriber === true && (
                         <button
                           className="btn btn-danger"
@@ -165,31 +177,41 @@ class PlaceDetail extends Component {
                 </div>
               </div>
             </Card>
-            <Card header="Add Notification">
-              <form
-                className="form-inline"
-                onSubmit={event => {
-                  const { message } = this.state;
-                  NotificationService.notifyObservers(placeId, message);
-                  event.preventDefault();
-                }}
-              >
-                <input
-                  type="text"
-                  value={message}
-                  style={{ width: "100%" }}
-                  className="form-control mb-2 mr-sm-2"
-                  id="message"
-                  placeholder="Message"
-                  onChange={event =>
-                    this.setState({ message: event.target.value })
-                  }
-                />
-                <button type="submit" className="btn btn-secondary mb-2">
-                  Notify Users
-                </button>
-              </form>
-            </Card>
+            {userOwnPlace && isCommerce && (
+              <Card header="Add Notification">
+                <form
+                  className="form-inline"
+                  onSubmit={event => {
+                    const { message } = this.state;
+                    NotificationService.notifyObservers(placeId, message).then(
+                      () => {
+                        this.setState({ message: "" });
+                      }
+                    );
+                    event.preventDefault();
+                  }}
+                >
+                  <input
+                    type="text"
+                    value={message}
+                    style={{ width: "100%" }}
+                    className="form-control mb-2 mr-sm-2"
+                    id="message"
+                    placeholder="Message"
+                    onChange={event =>
+                      this.setState({ message: event.target.value })
+                    }
+                  />
+                  <button
+                    type="submit"
+                    disabled={message === ""}
+                    className="btn btn-secondary mb-2"
+                  >
+                    Notify Users
+                  </button>
+                </form>
+              </Card>
+            )}
             <Card header="Comments">
               {user != null && (
                 <CommentForm

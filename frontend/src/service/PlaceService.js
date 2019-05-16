@@ -3,6 +3,14 @@ import { USER_DATA_KEY } from "./../store/actions/authActions";
 
 export const PlaceService = {
   addPlace: payload => {
+    if (payload.id) {
+      console.log("updating");
+      return axios
+        .put(`places/${payload.id}`, { ...payload })
+        .then(res => res.data);
+    }
+    console.log("adding new");
+
     return axios.post("places", { ...payload }).then(res => res.data);
   },
   getPlaces: query => {

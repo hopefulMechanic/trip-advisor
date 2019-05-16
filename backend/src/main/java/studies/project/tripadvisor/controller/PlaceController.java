@@ -80,10 +80,11 @@ public class PlaceController {
     public ResponseEntity updatePlace(@RequestBody PlaceRequestDTO placeRequestDto, @PathVariable(name = "placeId") Long placeId) throws ElementNotFoundException {
         Place place = convertToEntity(placeRequestDto);
         placeService.getPlace(placeId);
+        User user = userService.getUser(placeRequestDto.getCreatedBy());
         place.setId(placeId);
+        place.setCreatedBy(user);
         placeService.updatePlace(place);
-        PlaceResponseDTO placeResponseDto = convertToDto(place);
-        return ResponseEntity.status(HttpStatus.CREATED).body(placeResponseDto);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     public Place convertToEntity(PlaceRequestDTO placeRequestDto) {

@@ -3,7 +3,7 @@ import set from "lodash-es/set";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import Card from "../../../common/Card/Card";
-
+import omit from "lodash-es/omit";
 import { CATEGORIES_NAMES, PLACE_TYPES, USER_TYPES } from "../../../constans";
 import CategoryBadge from "../../../common/CategoryBadge/CategoryBadge";
 import { placeAction } from "../../../store/actions";
@@ -22,12 +22,71 @@ class PlaceForm extends Component {
     email: "",
     phone: "",
     categories: [],
-    type: PLACE_TYPES.regular
+    type: PLACE_TYPES.regular,
+    loaded: false
   };
 
+  componentDidMount() {
+    const { getPlace, match } = this.props;
+    if (match.params.id) {
+      getPlace(match.params.id);
+    }
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    if (props.match.params.id) {
+      if (props.selected && !state.loaded) {
+        const {
+          selected: {
+            name,
+            description,
+            addressLine,
+            city,
+            postalCode,
+            country,
+            entranceFee,
+            email,
+            phone,
+            categories
+          }
+        } = props;
+        return {
+          name,
+          description,
+          addressLine,
+          city,
+          postalCode,
+          country,
+          entranceFee,
+          email,
+          phone,
+          categories,
+          type:
+            entranceFee !== 0 ? PLACE_TYPES.commercial : PLACE_TYPES.regular,
+          loaded: true
+        };
+      }
+    } else {
+      return { loaded: true };
+    }
+
+    return null;
+  }
+
   submitHandler() {
-    const { addPlace, history } = this.props;
-    addPlace(this.state, history);
+    const { addPlace, history, user, match, selected } = this.props;
+    if (match.params.id) {
+      addPlace(
+        {
+          ...selected,
+          ...omit(this.state, "loaded"),
+          createdBy: selected.createdBy.id
+        },
+        history
+      );
+    } else {
+      addPlace({ ...omit(this.state, "loaded"), createdBy: user.id }, history);
+    }
   }
 
   handleChange(value, id) {
@@ -48,9 +107,11 @@ class PlaceForm extends Component {
       postalCode,
       country,
       entranceFee,
+      description,
       email,
       phone,
-      categories
+      categories,
+      loaded
     } = this.state;
     const { user, loading } = this.props;
     const categoriesKeys = Object.keys(CATEGORIES_NAMES);
@@ -77,19 +138,22 @@ class PlaceForm extends Component {
               <div className="col-md-12 mb-2">
                 <div className="form-group">
                   <div className="custom-control custom-switch">
-                    <input
-                      type="checkbox"
-                      className="custom-control-input"
-                      id="accountType"
-                      onClick={event => {
-                        this.handleChange(
-                          type === PLACE_TYPES.regular
-                            ? PLACE_TYPES.commercial
-                            : PLACE_TYPES.regular,
-                          "type"
-                        );
-                      }}
-                    />
+                    {loaded && (
+                      <input
+                        type="checkbox"
+                        defaultChecked={type === PLACE_TYPES.commercial}
+                        className="custom-control-input"
+                        id="accountType"
+                        onClick={event => {
+                          this.handleChange(
+                            type === PLACE_TYPES.regular
+                              ? PLACE_TYPES.commercial
+                              : PLACE_TYPES.regular,
+                            "type"
+                          );
+                        }}
+                      />
+                    )}
                     <label
                       className="custom-control-label"
                       htmlFor="accountType"
@@ -226,6 +290,7 @@ class PlaceForm extends Component {
                 <textarea
                   id="description"
                   className="form-control"
+                  value={description}
                   onChange={event =>
                     this.handleChange(event.target.value, "description")
                   }
@@ -315,7 +380,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-  addPlace: placeAction.addPlace
+  addPlace: placeAction.addPlace,
+  getPlace: placeAction.getPlace
 };
 
 export default withRouter(
