@@ -2,10 +2,10 @@ import { axios } from "./Axios";
 
 export const NotificationService = {
   addSubscripiton: (userId, placeId) =>
-    axios.post(`notification/add/${placeId}/${userId}`).then(res => res.data),
+    axios.post(`notification/${placeId}/${userId}`).then(res => res.data),
   removeSubscription: (userId, placeId) =>
     axios
-      .delete(`notification/remove/${placeId}/${userId}`)
+      .delete(`notification/${placeId}/${userId}`)
       .then(res => res.data),
   notifyObservers: (placeId, message) =>
     axios
@@ -14,5 +14,7 @@ export const NotificationService = {
       })
       .then(res => res.data),
   retrieveMessages: userId =>
-    axios.get(`notification/${userId}`).then(res => res.data)
+    axios.get(`notification/${userId}`).then(res => res.data),
+  checkIfIsObserver: (placeId, userId) =>
+    axios.get(`notification/check/${placeId}/${userId}`).then(res => res.data)
 };

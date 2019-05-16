@@ -11,13 +11,30 @@ import Rating from "react-rating";
 import { NotificationService } from "../../../service/NotificationService";
 
 class PlaceDetail extends Component {
-  state = { isCommeting: false, message: "" };
+  state = { isCommeting: false, message: "", isSubscriber: null };
 
   componentDidMount() {
     const { getPlace, match } = this.props;
     getPlace(match.params.id);
   }
+  componentDidUpdate() {
+    const { match, user } = this.props;
+    const { isSubscriber } = this.state;
+    if (user != null && isSubscriber == null) {
+      const placeId = match.params.id;
+      NotificationService.checkIfIsObserver(placeId, user.id)
+        .then(() => {
+          console.log("is  subscriber");
 
+          this.setState({ isSubscriber: true });
+        })
+        .catch(() => {
+          console.log("is not subscriber");
+
+          this.setState({ isSubscriber: false });
+        });
+    }
+  }
   mapCommentToRow(comment) {
     const { user, deleteComment, match } = this.props;
     const placeId = match.params.id;
@@ -59,7 +76,7 @@ class PlaceDetail extends Component {
       user
     } = this.props;
 
-    const { message } = this.state;
+    const { message, isSubscriber } = this.state;
     const placeId = match.params.id;
     let isCommerce;
     if (selected) {
@@ -82,27 +99,40 @@ class PlaceDetail extends Component {
                       {(isCommerce && `${selected.entranceFee}$`) || "Free"}
                     </span>
                   }
-                  <div style={{ position: "absolute", top: "5px", right: 0 }}>
-                    <button
-                      className="btn btn-danger"
-                      onClick={() => {
-                        NotificationService.removeSubscription(
-                          user.id,
-                          placeId
-                        );
-                      }}
+                  {user && (
+                    <div
+                      style={{ position: "absolute", top: "5px", right: "5px" }}
                     >
-                      Unsubscribe
-                    </button>
-                    <button
-                      className="btn btn-success"
-                      onClick={() => {
-                        NotificationService.addSubscripiton(user.id, placeId);
-                      }}
-                    >
-                      Subscribe
-                    </button>
-                  </div>
+                      {isSubscriber === true && (
+                        <button
+                          className="btn btn-danger"
+                          onClick={() => {
+                            NotificationService.removeSubscription(
+                              user.id,
+                              placeId
+                            ).then(() =>
+                              this.setState({ isSubscriber: false })
+                            );
+                          }}
+                        >
+                          Unsubscribe
+                        </button>
+                      )}
+                      {isSubscriber === false && (
+                        <button
+                          className="btn btn-success"
+                          onClick={() => {
+                            NotificationService.addSubscripiton(
+                              user.id,
+                              placeId
+                            ).then(() => this.setState({ isSubscriber: true }));
+                          }}
+                        >
+                          Subscribe
+                        </button>
+                      )}
+                    </div>
+                  )}
                 </span>
               }
             >

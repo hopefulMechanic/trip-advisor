@@ -31,7 +31,7 @@ public class NotificationController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @PostMapping("/notification/add/{placeId}/{userId}")
+    @PostMapping("/notification/{placeId}/{userId}")
     public ResponseEntity addObserver(@PathVariable(name = "placeId") Long placeId,
                                       @PathVariable(name = "userId") Long userId) throws ElementNotFoundException {
         notificationService.addObserver(placeId, userId);
@@ -57,7 +57,7 @@ public class NotificationController {
         if (notificationService.checkIfObserve(placeId, userId)) {
             return new ResponseEntity(Boolean. TRUE, HttpStatus.OK);
         } else {
-            return new ResponseEntity(Boolean.FALSE, HttpStatus.OK);
+            return new ResponseEntity(Boolean.FALSE, HttpStatus.BAD_REQUEST);
         }
     }
 }
