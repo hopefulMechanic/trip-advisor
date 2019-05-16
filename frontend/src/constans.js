@@ -1,4 +1,4 @@
-export const RATE_SCALE = 10;
+export const RATE_SCALE = 5;
 
 export const CATEGORIES_NAMES = {
   hotel: "hotel",

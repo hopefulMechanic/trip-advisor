@@ -7,7 +7,7 @@ const Collection = ({ list = [], onDoubleClick }) => {
         list.map(el => (
           <button
             type="button"
-            key={el.id}
+            key={el.id || el}
             className="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
             onClick={() => onDoubleClick && onDoubleClick(el.id)}
           >

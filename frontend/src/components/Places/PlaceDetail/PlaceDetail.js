@@ -5,18 +5,33 @@ import { placeAction } from "../../../store/actions";
 import Card from "../../../common/Card/Card";
 import Loader from "../../../common/Loader/Loader";
 import CategoryBadge from "../../../common/CategoryBadge/CategoryBadge";
-import { RATE_SCALE } from "../../../constans";
 import Collection from "../../../common/Collection/Collection";
 import CommentForm from "./CommentForm/CommentForm";
+import Rating from "react-rating";
+import { NotificationService } from "../../../service/NotificationService";
 
 class PlaceDetail extends Component {
-  state = { isCommeting: false };
+  state = { isCommeting: false, message: "", isSubscriber: null };
 
   componentDidMount() {
     const { getPlace, match } = this.props;
     getPlace(match.params.id);
   }
 
+  componentDidUpdate() {
+    const { match, user } = this.props;
+    const { isSubscriber } = this.state;
+    if (user != null && isSubscriber == null) {
+      const placeId = match.params.id;
+      NotificationService.checkIfIsObserver(placeId, user.id)
+        .then(() => {
+          this.setState({ isSubscriber: true });
+        })
+        .catch(() => {
+          this.setState({ isSubscriber: false });
+        });
+    }
+  }
   mapCommentToRow(comment) {
     const { user, deleteComment, match } = this.props;
     const placeId = match.params.id;
@@ -27,8 +42,9 @@ class PlaceDetail extends Component {
             <div className="font-weight-bold">{comment.user.firstName}:</div>
             <div>{comment.modifyDate}</div>
           </div>
-          <div className="col-md-6 d-flex justify-content-start">
+          <div className="col-md-6 d-flex flex-column justify-content-start">
             <div>{comment.text}</div>
+            <Rating readonly initialRating={comment.score} stop={10} />
           </div>
           {user != null && user.id === comment.user.id && (
             <div className="absolute-center">
@@ -42,18 +58,28 @@ class PlaceDetail extends Component {
               </span>
             </div>
           )}
-          <div className="col-md-12 d-flex flex-wrap align-items-center justify-content-start mt-2">
-            {/* {comment.content} */}
-            {/* {comment.text} */}
-          </div>
         </div>
       </div>
     );
   }
 
   render() {
-    const { loading, selected, addingComment, match, addComment } = this.props;
+    const {
+      loading,
+      selected,
+      addingComment,
+      match,
+      addComment,
+      user,
+      history
+    } = this.props;
+
+    const { message, isSubscriber } = this.state;
     const placeId = match.params.id;
+    const userOwnPlace =
+      user != null &&
+      (selected != null && selected.createdBy) &&
+      selected.createdBy.id === user.id;
     let isCommerce;
     if (selected) {
       isCommerce = selected.entranceFee > 0;
@@ -75,6 +101,50 @@ class PlaceDetail extends Component {
                       {(isCommerce && `${selected.entranceFee}$`) || "Free"}
                     </span>
                   }
+                  {user && (
+                    <div
+                      style={{ position: "absolute", top: "5px", right: "5px" }}
+                    >
+                      {userOwnPlace && (
+                        <button
+                          className="btn btn-primary"
+                          onClick={() => {
+                            history.push(`/places/${placeId}/edit`);
+                          }}
+                        >
+                          Edit
+                        </button>
+                      )}
+                      {isSubscriber === true && (
+                        <button
+                          className="btn btn-danger"
+                          onClick={() => {
+                            NotificationService.removeSubscription(
+                              user.id,
+                              placeId
+                            ).then(() =>
+                              this.setState({ isSubscriber: false })
+                            );
+                          }}
+                        >
+                          Unsubscribe
+                        </button>
+                      )}
+                      {isSubscriber === false && (
+                        <button
+                          className="btn btn-success"
+                          onClick={() => {
+                            NotificationService.addSubscripiton(
+                              user.id,
+                              placeId
+                            ).then(() => this.setState({ isSubscriber: true }));
+                          }}
+                        >
+                          Subscribe
+                        </button>
+                      )}
+                    </div>
+                  )}
                 </span>
               }
             >
@@ -107,10 +177,47 @@ class PlaceDetail extends Component {
                 </div>
               </div>
             </Card>
+            {userOwnPlace && isCommerce && (
+              <Card header="Add Notification">
+                <form
+                  className="form-inline"
+                  onSubmit={event => {
+                    const { message } = this.state;
+                    NotificationService.notifyObservers(placeId, message).then(
+                      () => {
+                        this.setState({ message: "" });
+                      }
+                    );
+                    event.preventDefault();
+                  }}
+                >
+                  <input
+                    type="text"
+                    value={message}
+                    style={{ width: "100%" }}
+                    className="form-control mb-2 mr-sm-2"
+                    id="message"
+                    placeholder="Message"
+                    onChange={event =>
+                      this.setState({ message: event.target.value })
+                    }
+                  />
+                  <button
+                    type="submit"
+                    disabled={message === ""}
+                    className="btn btn-secondary mb-2"
+                  >
+                    Notify Users
+                  </button>
+                </form>
+              </Card>
+            )}
             <Card header="Comments">
-              <CommentForm
-                submitHanlder={comment => addComment(placeId, comment)}
-              />
+              {user != null && (
+                <CommentForm
+                  submitHanlder={comment => addComment(placeId, comment)}
+                />
+              )}
               {(!addingComment && (
                 <Collection
                   list={selected.comments.map(el => ({

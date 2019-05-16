@@ -31,32 +31,37 @@ public class TripAdvisorApplication {
     void loadTestData() {
         User nonCommercial = new User("regular", "test", "Kamil", "Kleczek", "regular@gmail.com", "regular");
         User commercial = new User("commercial", "test", "Dominik", "Zurek", "comercial@gmail.com", "commercial");
-        userRepository.save(nonCommercial);
-        userRepository.save(commercial);
+        User nonCommercialSaved = userRepository.save(nonCommercial);
+        User commercialSavedd = userRepository.save(commercial);
 
         Place commercialPlace = new Place("Restauracja A", "Test commercial Place",
                 "Klimeckiego", "Krakow", "123", "Polska", 100.00, "commercialPlace@gmail.com",
                 "123456789", List.of("hotel", "parking"));
-
+        commercialPlace.setCreatedBy(commercialSavedd);
         Place commercialPlace2 = new Place("Restauracja A", "Test commercial Place",
                 "Klimeckiego", "Krakow", "123", "Polska", 100.00, "commercialPlace@gmail.com",
                 "123456789", List.of("hotel", "parking"));
+        commercialPlace2.setCreatedBy(commercialSavedd);
 
         Place commercialPlace3 = new Place("Hotel A", "Test commercial Place",
                 "Klimeckiego", "Krakow", "123", "Polska", 100.00, "commercialPlace@gmail.com",
                 "123456789", List.of("hotel", "parking"));
+        commercialPlace3.setCreatedBy(commercialSavedd);
 
         Place commercialPlace4 = new Place("Biblioteka A", "Test commercial Place",
                 "Klimeckiego", "Krakow", "123", "Polska", 100.00, "commercialPlace@gmail.com",
                 "123456789", List.of("hotel", "parking"));
+        commercialPlace4.setCreatedBy(commercialSavedd);
 
         Place commercialPlace5 = new Place("Kino", "Biblioteka jest dostepna",
                 "Klimeckiego", "Krakow", "123", "Polska", 100.00, "commercialPlace@gmail.com",
                 "123456789", List.of("hotel", "parking"));
+        commercialPlace5.setCreatedBy(commercialSavedd);
 
         Place nonCommercialPlace = new Place("Restauracja B", "Test none commercial Place",
                 "Klimeckiego", "Berlin", "123", "Niemcy", 0.00, "non-commercialPlace@gmail.com",
                 "123456789", List.of("food", "5star"));
+        nonCommercialPlace.setCreatedBy(nonCommercialSaved);
 
         placeRepository.save(commercialPlace);
         placeRepository.save(commercialPlace2);

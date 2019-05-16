@@ -5,22 +5,41 @@ import Card from "../../common/Card/Card";
 import Collection from "../../common/Collection/Collection";
 import { placeAction } from "../../store/actions";
 import Loader from "../../common/Loader/Loader";
-import { RATE_SCALE } from "../../constans";
 import "./Places.scss";
 import CategoryBadge from "../../common/CategoryBadge/CategoryBadge";
+import debounce from "lodash-es/debounce";
+import { NotificationService } from "../../service/NotificationService";
 class Places extends Component {
-  state = {};
-
+  state = {
+    query: "",
+    notifications: null
+  };
+  filter;
   componentDidMount() {
     const { getPlaces } = this.props;
     getPlaces();
+    this.fitler = debounce(getPlaces, 500);
+  }
+
+  componentDidUpdate() {
+    const { user } = this.props;
+    const { notifications } = this.state;
+    if (user != null && notifications == null) {
+      NotificationService.retrieveMessages(user.id).then(res =>
+        this.setState({ notifications: res })
+      );
+    }
+  }
+
+  mapNotificationsRow(el) {
+    return (
+      <div key={el} className="notification--row font-weight-bold text-center w-100">
+        {el}
+      </div>
+    );
   }
 
   mapPlaceToRow(el) {
-    // const rateSum = el.comments
-    //   .map(el => el.rate)
-    //   .reduce((prev, curr) => (prev += curr), 0);
-    // const rateAmout = el.comments.length;
     return (
       <div key={el.id} className="places--row">
         <div className="row w-100">
@@ -39,7 +58,9 @@ class Places extends Component {
             </div>
           </div>
           <div className="absolute-center">
-            <span className="badge badge-secondary badge-pill">{"-"}</span>
+            <span className="badge badge-secondary badge-pill">
+              {el.score < 0 ? "No Score" : `${el.score}/10`}
+            </span>
           </div>
           <div className="col-md-12 d-flex flex-wrap align-items-center justify-content-start mt-2">
             <div className="font-weight-bold mr-1">Categories:</div>
@@ -57,10 +78,21 @@ class Places extends Component {
 
   render() {
     const { history, list, loading, user } = this.props;
+    const { query, notifications } = this.state;
     return (
       <div className="places">
+        {notifications != null && (
+          <Card header="Current Notifications">
+            <Collection
+              list={notifications.map(el => ({
+                id: el.id,
+                content: this.mapNotificationsRow(el)
+              }))}
+            />
+          </Card>
+        )}
         <Card header="Places List">
-          {user != null && !loading && (
+          {user != null && (
             <button
               type="button"
               className="btn btn-secondary"
@@ -71,7 +103,20 @@ class Places extends Component {
               New Place
             </button>
           )}
-          {user != null && !loading && <div className="divider" />}
+          {user != null && <div className="divider" />}
+          <div className="form-group">
+            <input
+              onChange={event => {
+                this.setState({ query: event.target.value });
+                this.fitler(event.target.value);
+              }}
+              value={query}
+              type="text"
+              placeholder="Find Place"
+              className="form-control"
+              id="query"
+            />
+          </div>
           {(!loading && (
             <Collection
               onDoubleClick={id => {

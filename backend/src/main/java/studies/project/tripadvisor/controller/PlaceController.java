@@ -80,10 +80,11 @@ public class PlaceController {
     public ResponseEntity updatePlace(@RequestBody PlaceRequestDTO placeRequestDto, @PathVariable(name = "placeId") Long placeId) throws ElementNotFoundException {
         Place place = convertToEntity(placeRequestDto);
         placeService.getPlace(placeId);
+        User user = userService.getUser(placeRequestDto.getCreatedBy());
         place.setId(placeId);
+        place.setCreatedBy(user);
         placeService.updatePlace(place);
-        PlaceResponseDTO placeResponseDto = convertToDto(place);
-        return ResponseEntity.status(HttpStatus.CREATED).body(placeResponseDto);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     public Place convertToEntity(PlaceRequestDTO placeRequestDto) {
@@ -98,7 +99,7 @@ public class PlaceController {
                 .stream()
                 .mapToDouble(Comment::getScore)
                 .average()
-                .orElse(Double.NaN));
+                .orElse(-1));
         return placeResponseDto;
     }
 
@@ -108,13 +109,14 @@ public class PlaceController {
         Type listType = new TypeToken<List<PlaceResponseDTO>>() {
         }.getType();
         List<PlaceResponseDTO> placesResponseDto = modelMapper.map(places, listType);
-
+        // -1 mowi ze nie ma zadnej oceny
+        // NaN tez byl dobrym wyjsciem ale latwiej mi porownac do liczby na froncie :)
         placesResponseDto.forEach(p -> p.setScore(
                 p.getComments()
                         .stream()
                         .mapToDouble(Comment::getScore)
                         .average()
-                        .orElse(Double.NaN)
+                        .orElse(-1)
         ));
         return placesResponseDto;
     }

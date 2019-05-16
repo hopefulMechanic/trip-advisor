@@ -1,16 +1,18 @@
 import React, { Component } from "react";
 import set from "lodash-es/set";
+import Rating from "react-rating";
 
 class CommentForm extends Component {
   state = {
     text: "",
-    isCommenting: false
+    isCommenting: false,
+    score: 10
   };
 
   submitHandler() {
     const { submitHanlder } = this.props;
     submitHanlder(this.state);
-    this.setState({ text: "" });
+    this.setState({ text: "", score: 10 });
   }
 
   handleChange(value, id) {
@@ -20,7 +22,7 @@ class CommentForm extends Component {
   }
 
   render() {
-    const { text, isCommenting } = this.state;
+    const { text, isCommenting, score } = this.state;
     return (
       <>
         <button
@@ -29,7 +31,7 @@ class CommentForm extends Component {
             this.setState({ isCommenting: !isCommenting });
           }}
         >
-          +
+          Add Comment
         </button>
         {isCommenting && (
           <form
@@ -48,6 +50,15 @@ class CommentForm extends Component {
                 value={text}
                 className="form-control"
                 id="text"
+              />
+            </div>
+            <div className="form-group d-flex flex-column">
+              <label htmlFor="text">Rate:</label>
+              <i class="fas fa-ad" />
+              <Rating
+                initialRating={score}
+                stop={10}
+                onChange={value => this.setState({ score: value })}
               />
             </div>
             <button

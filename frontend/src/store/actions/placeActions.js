@@ -30,10 +30,10 @@ const getPlacesAction = () => ({
   type: GET_PLACES
 });
 
-const getPlaces = () => {
+const getPlaces = (query) => {
   return dispatch => {
     dispatch(getPlacesAction());
-    PlaceService.getPlaces()
+    PlaceService.getPlaces(query)
       .then(res => {
         dispatch(getPlacesSuccess({ data: res }));
       })
