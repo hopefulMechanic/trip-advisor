@@ -40,7 +40,10 @@ public class PlaceRequestDTO {
 
     private List<String> categories;
 
-    public PlaceRequestDTO(String name, String description, String addressLine, String city, String postalCode, String country, Double entranceFee, String email, String phone, List<String> categories) {
+    @NotEmpty
+    private Long createdBy;
+
+    public PlaceRequestDTO(String name, String description, String addressLine, String city, String postalCode, String country, Double entranceFee, String email, String phone, List<String> categories, Long createdBy) {
         this.name = name;
         this.description = description;
         this.addressLine = addressLine;
@@ -51,6 +54,7 @@ public class PlaceRequestDTO {
         this.email = email;
         this.phone = phone;
         this.categories = categories;
+        this.createdBy = createdBy;
     }
 
 }

@@ -9,11 +9,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import studies.project.tripadvisor.entity.Comment;
 import studies.project.tripadvisor.entity.Place;
+import studies.project.tripadvisor.entity.User;
 import studies.project.tripadvisor.entity.dto.request.PlaceRequestDTO;
 import studies.project.tripadvisor.entity.dto.response.PlaceResponseDTO;
 import studies.project.tripadvisor.exception.ElementNotFoundException;
 import studies.project.tripadvisor.exception.NoContentException;
 import studies.project.tripadvisor.service.PlaceService;
+import studies.project.tripadvisor.service.UserService;
 import studies.project.tripadvisor.service.impl.SearchServiceImpl;
 
 import java.lang.reflect.Type;
@@ -31,9 +33,13 @@ public class PlaceController {
     @Autowired
     private SearchServiceImpl searchService;
 
-    public void setUserService(PlaceService placeService, SearchServiceImpl searchService) {
+    @Autowired
+    private UserService userService;
+
+    public void setUserService(PlaceService placeService, SearchServiceImpl searchService, UserService userService) {
         this.placeService = placeService;
         this.searchService = searchService;
+        this.userService = userService;
     }
 
     @GetMapping("/places")
@@ -49,7 +55,10 @@ public class PlaceController {
 
     @PostMapping("/places")
     public ResponseEntity savePlace(@RequestBody PlaceRequestDTO placeRequestDto) {
+        Long userId = placeRequestDto.getCreatedBy();
+        User user = userService.getUser(userId);
         Place place = convertToEntity(placeRequestDto);
+        place.setCreatedBy(user);
         placeService.savePlace(place);
         return new ResponseEntity(HttpStatus.CREATED);
     }

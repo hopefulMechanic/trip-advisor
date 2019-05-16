@@ -6,16 +6,30 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.apache.lucene.analysis.core.KeywordAnalyzer;
-import org.hibernate.search.annotations.Analyzer;
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Indexed;
-import org.hibernate.search.annotations.TermVector;
+import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
+import org.apache.lucene.analysis.core.WhitespaceTokenizerFactory;
+import org.apache.lucene.analysis.ngram.EdgeNGramFilterFactory;
+import org.apache.lucene.analysis.snowball.SnowballPorterFilterFactory;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Parameter;
+import org.hibernate.search.annotations.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+
+@AnalyzerDef(name = "customanalyzer", tokenizer = @TokenizerDef(factory = WhitespaceTokenizerFactory.class), filters = {
+        @TokenFilterDef(factory = LowerCaseFilterFactory.class),
+        @TokenFilterDef(factory = SnowballPorterFilterFactory.class, params = {@Parameter(name = "language", value = "English")}),
+        @TokenFilterDef(factory = EdgeNGramFilterFactory.class, params = {@Parameter(name = "maxGramSize", value = "5")})
+
+})
+@AnalyzerDef(name = "customanalyzer_query", tokenizer = @TokenizerDef(factory = WhitespaceTokenizerFactory.class), filters = {
+        @TokenFilterDef(factory = LowerCaseFilterFactory.class),
+        @TokenFilterDef(factory = SnowballPorterFilterFactory.class, params = {@Parameter(name = "language", value = "English")})
+
+})
 
 @Setter
 @Getter
@@ -32,30 +46,26 @@ public class Place {
     @Column(name = "PLACE_ID")
     private Long id;
 
-    @Field(termVector = TermVector.YES)
-    @Analyzer(impl = KeywordAnalyzer.class)
+    @Field(index = Index.YES, store = Store.YES, analyze = Analyze.YES, analyzer = @Analyzer(definition = "customanalyzer"))
     @ApiModelProperty(required = true)
     @Column(name = "NAME")
     private String name;
 
-    @Analyzer(impl = KeywordAnalyzer.class)
-    @Field(termVector = TermVector.YES)
+    @Field(index = Index.YES, store = Store.YES, analyze = Analyze.YES, analyzer = @Analyzer(definition = "customanalyzer"))
     @Column(name = "DESCRIPTION")
     private String description;
 
     @Column(name = "ADDRESS_LINE")
     private String addressLine;
 
-    @Analyzer(impl = KeywordAnalyzer.class)
-    @Field(termVector = TermVector.YES)
+    @Field(index = Index.YES, store = Store.YES, analyze = Analyze.YES, analyzer = @Analyzer(definition = "customanalyzer"))
     @Column(name = "CITY")
     private String city;
 
     @Column(name = "POSTAL_CODE")
     private String postalCode;
 
-    @Analyzer(impl = KeywordAnalyzer.class)
-    @Field(termVector = TermVector.YES)
+    @Field(index = Index.YES, store = Store.YES, analyze = Analyze.YES, analyzer = @Analyzer(definition = "customanalyzer"))
     @Column(name = "COUNTRY")
     private String country;
 
@@ -76,6 +86,10 @@ public class Place {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "place")
     @JsonManagedReference
     private Set<Comment> comments;
+
+    @ApiModelProperty(hidden = true)
+    @OneToOne(fetch = FetchType.LAZY)
+    private User createdBy;
 
     public Place(String name, String description, String addressLine, String city, String postalCode, String country, Double entranceFee, String email, String phone, List<String> categories) {
         this.name = name;

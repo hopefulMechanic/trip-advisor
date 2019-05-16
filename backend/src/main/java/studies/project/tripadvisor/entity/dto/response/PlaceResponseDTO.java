@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import studies.project.tripadvisor.entity.Comment;
+import studies.project.tripadvisor.entity.User;
 
 import java.util.List;
 import java.util.Set;
@@ -39,5 +40,7 @@ public class PlaceResponseDTO {
     private Set<Comment> comments;
 
     private Double score;
+
+    private User createdBy;
 
 }

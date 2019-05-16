@@ -39,9 +39,12 @@ public class SearchServiceImpl {
     @Transactional
     public List<Place> fuzzySearch(String searchTerm) {
         FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(entityManager);
-        QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(Place.class).get();
-        Query luceneQuery = qb.keyword().fuzzy().withEditDistanceUpTo(1).withPrefixLength(1).onFields("name", "description", "city", "country")
-                .matching(searchTerm).createQuery();
+        QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(Place.class)
+                .overridesForField("fname", "customanalyzer_query")
+                .overridesForField("lname", "customanalyzer_query")
+                .get();
+
+        Query luceneQuery = qb.keyword().onFields("name", "description", "city", "country").matching(searchTerm).createQuery();
 
         javax.persistence.Query jpaQuery = fullTextEntityManager.createFullTextQuery(luceneQuery, Place.class);
 
