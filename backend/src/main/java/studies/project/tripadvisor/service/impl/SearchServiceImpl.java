@@ -40,8 +40,10 @@ public class SearchServiceImpl {
     public List<Place> fuzzySearch(String searchTerm) {
         FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(entityManager);
         QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(Place.class)
-                .overridesForField("fname", "customanalyzer_query")
-                .overridesForField("lname", "customanalyzer_query")
+                .overridesForField("name", "customanalyzer_query")
+                .overridesForField("description", "customanalyzer_query")
+                .overridesForField("city", "customanalyzer_query")
+                .overridesForField("country", "customanalyzer_query")
                 .get();
 
         Query luceneQuery = qb.keyword().onFields("name", "description", "city", "country").matching(searchTerm).createQuery();
