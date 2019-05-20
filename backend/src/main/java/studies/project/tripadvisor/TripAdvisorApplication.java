@@ -34,31 +34,31 @@ public class TripAdvisorApplication {
         User nonCommercialSaved = userRepository.save(nonCommercial);
         User commercialSavedd = userRepository.save(commercial);
 
-        Place commercialPlace = new Place("Restauracja A", "Test commercial Place",
-                "Klimeckiego", "Krakow", "123", "Polska", 100.00, "commercialPlace@gmail.com",
+        Place commercialPlace = new Place("Restauracja A", "First Place",
+                "Klimeckiego", "Krakow", "123", "Slowacja", 100.00, "commercialPlace@gmail.com",
                 "123456789", List.of("hotel", "parking"));
         commercialPlace.setCreatedBy(commercialSavedd);
-        Place commercialPlace2 = new Place("Restauracja A", "Test commercial Place",
-                "Klimeckiego", "Krakow", "123", "Polska", 100.00, "commercialPlace@gmail.com",
+        Place commercialPlace2 = new Place("Restauracja A", "Second Place",
+                "Klimeckiego", "Krzeszowice", "123", "Czechy", 100.00, "commercialPlace@gmail.com",
                 "123456789", List.of("hotel", "parking"));
         commercialPlace2.setCreatedBy(commercialSavedd);
 
-        Place commercialPlace3 = new Place("Hotel A", "Test commercial Place",
-                "Klimeckiego", "Krakow", "123", "Polska", 100.00, "commercialPlace@gmail.com",
+        Place commercialPlace3 = new Place("Hotel A", "Three Place",
+                "Klimeckiego", "Chrzanow", "123", "Ukraina", 100.00, "commercialPlace@gmail.com",
                 "123456789", List.of("hotel", "parking"));
         commercialPlace3.setCreatedBy(commercialSavedd);
 
-        Place commercialPlace4 = new Place("Biblioteka A", "Test commercial Place",
-                "Klimeckiego", "Krakow", "123", "Polska", 100.00, "commercialPlace@gmail.com",
+        Place commercialPlace4 = new Place("Biblioteka A", "Fourth Place",
+                "Klimeckiego", "Trzebinia", "123", "Polska", 100.00, "commercialPlace@gmail.com",
                 "123456789", List.of("hotel", "parking"));
         commercialPlace4.setCreatedBy(commercialSavedd);
 
-        Place commercialPlace5 = new Place("Kino", "Biblioteka jest dostepna",
-                "Klimeckiego", "Krakow", "123", "Polska", 100.00, "commercialPlace@gmail.com",
+        Place commercialPlace5 = new Place("Kino", "Fifth Place",
+                "Klimeckiego", "Zabierzow", "123", "Grecja", 100.00, "commercialPlace@gmail.com",
                 "123456789", List.of("hotel", "parking"));
         commercialPlace5.setCreatedBy(commercialSavedd);
 
-        Place nonCommercialPlace = new Place("Restauracja B", "Test none commercial Place",
+        Place nonCommercialPlace = new Place("Restauracja B", "Six Place",
                 "Klimeckiego", "Berlin", "123", "Niemcy", 0.00, "non-commercialPlace@gmail.com",
                 "123456789", List.of("food", "5star"));
         nonCommercialPlace.setCreatedBy(nonCommercialSaved);
