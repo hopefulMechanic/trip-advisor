@@ -129,12 +129,29 @@ Wyszukuje obiekt i przechodzimy dwuklikiem do jego detali.
 Użytkownik klika przycisk anuluj subskrypcję.
 System usuwa użytkownika z listy subskrybentów.
 
-## documentation
+## dokumentacja
 
 [Dokumentacja projektu](https://docs.google.com/document/d/1D8wIUmMs7kQ3UNHuGCAnZvQh7-DAUwTEI3hzsNaRPGk/edit?usp=sharing)
 
-## diagram
+## diagramy klas
 
-![alt text](https://github.com/hopefulMechanic/trip-advisor/raw/master/docs/CRC.png)
+![alt text](https://github.com/hopefulMechanic/trip-advisor/raw/master/docs/1entity.png)
 
-![alt text](https://github.com/hopefulMechanic/trip-advisor/raw/master/docs/places.png)
+
+![alt text](https://github.com/hopefulMechanic/trip-advisor/raw/master/docs/2repository.png)
+
+
+![alt text](https://github.com/hopefulMechanic/trip-advisor/raw/master/docs/3service.png)
+
+
+![alt text](https://github.com/hopefulMechanic/trip-advisor/raw/master/docs/4controller.png)
+
+
+![alt text](https://github.com/hopefulMechanic/trip-advisor/raw/master/docs/5requestdto.png)
+
+
+![alt text](https://github.com/hopefulMechanic/trip-advisor/raw/master/docs/6responsedto.png)
+
+
+![alt text](https://github.com/hopefulMechanic/trip-advisor/raw/master/docs/7exception.png)
+
